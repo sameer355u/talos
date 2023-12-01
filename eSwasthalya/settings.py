@@ -123,8 +123,8 @@ WSGI_APPLICATION = 'eSwasthalya.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'Talos_DB',
-        'USER': 'postgres',
+        'NAME': 'talos_db',
+        'USER': 'talos_user',
         'PASSWORD': 'admin',
         'HOST': 'localhost',
         'PORT': '5432',
