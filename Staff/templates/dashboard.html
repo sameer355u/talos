@@ -1,0 +1,48 @@
+{% extends 'account/base.html' %}
+{% block title %} Dashboard {% endblock %}
+{% block body %}
+{% load static %}
+
+{% if request.user.is_authenticated %}
+
+{% if request.user.profession.name == 'Doctor' %}
+Doctor Dashboard
+<div class="w-25">
+    <ul class="list-group">
+        <li><a href="{% url 'Medical-Professional-Onboarding' %}" class="list-group-item list-group-item-action">Medical-Professional-Onboarding</a></li>
+        <li><a href="{% url 'Slot' %}" class="list-group-item list-group-item-action">Slot Management</a></li>
+        <li><a href="{% url 'doctor-consultation-list' %}" class="list-group-item list-group-item-action">Doctor Consultation</a></li>
+    </ul>
+</div>
+{% endif %}
+
+{% if request.user.profession.name == 'Patient' %}
+Patient Dashboard
+<div class="w-25">
+    <ul class="list-group">
+        <li><a href="{% url 'patient_registration' %}" class="list-group-item list-group-item-action">Patient Registration</a></li>
+        <li><a href="{% url 'book-appointment' %}" class="list-group-item list-group-item-action">Book Appointment with Doctor</a></li>
+    </ul>
+</div>
+{% endif %}
+
+{% if request.user.profession.name == 'Admin' %}
+Admin Dashboard
+<!--<a href="/admin/">Admin</a>-->
+{% endif %}
+
+<div class="w-25">
+    <ul class="list-group">
+        {% if user.is_authenticated %}
+        <li><a href="{% url 'account_email' %}" class="list-group-item list-group-item-action">Change Email</a></li>
+<!--        <li><a href="{% url 'socialaccount_signup' %}" class="list-group-item list-group-item-action">Social accounts Signup</a></li>-->
+        <li><a href="{% url 'socialaccount_connections' %}" class="list-group-item list-group-item-action">Social accounts</a></li>
+        <li><a href="{% url 'account_logout' %}" class="list-group-item list-group-item-action">Sign Out</a></li>
+        {% else %}
+        <li><a href="{% url 'account_login' %}" class="list-group-item list-group-item-action">Sign In</a></li>
+        <li><a href="{% url 'account_signup' %}" class="list-group-item list-group-item-action">Sign Up</a></li>
+        {% endif %}
+    </ul>
+</div>
+{% endif %}
+{% endblock %}

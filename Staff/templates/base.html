@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>{% block title %} {% endblock %}</title>
+{% load static %}
+{% include 'source_css.html' %}
+</head>
+<body style="background-color: #eee;">
+<div class="header w-100">
+{% include 'base_menu.html' %}
+</div>
+{% block body %} {% endblock %}
+<div class="d-flex w-100"></div>
+{% include 'footer.html' %}
+{% include 'source_js.html' %}
+</body>
+</html>

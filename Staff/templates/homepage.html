@@ -1,0 +1,612 @@
+{% extends 'base.html' %}
+{% block title %} Talos {% endblock %}
+{% block body %}
+{% load static %}
+<style>
+
+    }
+    .textbluecolor{
+        color: #003a70;
+    }
+    .backgroundneela{
+        background-color: #003a70;
+        color:white;
+    }
+    .backgroundlal{
+        background-color: #ec0909;
+        color:white;
+    }
+    .backgroundlal:hover{
+        background-color: #003a70;
+        color:white;
+    }
+    .backgroundneela:hover {
+        background-color: #6ecbc9;
+       color: #003a70;
+    }
+    .textlightwalacolor{
+        color: #6ecbc9  ;
+    }
+    .backgroundlightwala{
+        background-color: #6ecbc9  ;
+        color: white;
+
+    }
+
+    .backgroundgradient{
+        background: linear-gradient(45deg,#6ecbc9, #003a70);
+
+        color: white;
+        transition: all;
+    }
+    .backgroundgradient:hover{
+        background: linear-gradient(45deg, #003a70, #ec0909);
+        color: white;
+    }
+
+    .backgroundredgradient{
+        background: linear-gradient(45deg, Yellow, #ec0909);
+        color: white;
+        transition: all;
+    }
+    .backgroundredgradient:hover{
+        background: linear-gradient(45deg,#6ecbc9, #003a70);
+        color: white;
+    }
+
+    .customtext {
+        position: absolute;
+        left: 0%;
+        top: .8rem;
+        padding-top: 1.25rem;
+        padding-bottom: 1.25rem;
+        width: 90%;
+    }
+    .homebtn {
+        border: 1px solid #fff;
+        color: #fff;
+        padding: .79rem 1.5rem;
+        font-size: 1.2rem;
+        margin-top: 0.5rem;
+    }
+
+
+    .footer {
+      display: flex;
+      flex-flow: row wrap;
+      padding: 30px 30px 20px 30px;
+      color: #003a70;
+      background-color: #6ecbc9;
+      border-top: 1px solid #003a70;
+    }
+
+    .footer > * {
+      flex:  1 100%;
+    }
+
+    .footer__addr {
+      margin-right: 1.25em;
+      margin-bottom: 2em;
+    }
+
+    .footer__logo {
+      font-family: 'Pacifico', cursive;
+      font-weight: 400;
+      text-transform: lowercase;
+      font-size: 1.5rem;
+    }
+
+    .footer__addr h2 {
+      margin-top: 1.3em;
+      font-size: 15px;
+      font-weight: 400;
+    }
+
+
+
+    .footer address {
+      font-style: normal;
+      color: white;
+    }
+
+    .footer__btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 36px;
+      max-width: max-content;
+
+      border-radius: 100px;
+
+      line-height: 0;
+      margin: 0.6em 0;
+      font-size: 1rem;
+      padding: 0 1.3em;
+    }
+
+    .footer ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .footer li {
+      line-height: 2em;
+    }
+
+    .footer a {
+      text-decoration: none;
+    }
+
+    .footer__nav {
+      display: flex;
+        flex-flow: row wrap;
+    }
+
+    .footer__nav > * {
+      flex: 1 50%;
+      margin-right: 1.25em;
+    }
+
+    .nav__ul a {
+      color: white;
+    }
+
+    .nav__ul--extra {
+      column-count: 2;
+      column-gap: 1.25em;
+    }
+
+    .legal {
+      display: flex;
+      flex-wrap: wrap;
+      color: white;
+
+    }
+
+    .legal__links {
+      display: flex;
+      align-items: center;
+    }
+
+    .heart {
+      color: #ee0909;
+    }
+
+    @media screen and (min-width: 24.375em) {
+      .legal .legal__links {
+        margin-left: auto;
+      }
+    }
+
+    @media screen and (min-width: 40.375em) {
+      .footer__nav > * {
+        flex: 1;
+      }
+
+      .nav__item--extra {
+        flex-grow: 2;
+      }
+
+      .footer__addr {
+        flex: 1 0px;
+      }
+
+      .footer__nav {
+        flex: 2 0px;
+      }
+    }
+
+
+
+    .custom-card {
+        transition: 0.5s;
+        cursor: pointer;
+    }
+
+    .custom-card .card-title {
+        font-size: 15px;
+        transition: 1s;
+        cursor: pointer;
+    }
+
+    .custom-card .card-title i {
+        font-size: 15px;
+        transition: 1s;
+        cursor: pointer;
+        color: #ffa710;
+    }
+
+    .custom-card .card-title i:hover {
+        transform: scale(1.25) rotate(100deg);
+        color: #18d4ca;
+    }
+
+    .custom-card:hover {
+        transform: scale(1.05);
+        box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .custom-card::before,
+    .custom-card::after {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        transform: scale3d(0, 0, 1);
+        transition: transform 0.3s ease-out 0s;
+        background: rgba(255, 255, 255, 0.1);
+        content: '';
+        pointer-events: none;
+    }
+
+    .custom-card::before {
+        transform-origin: left top;
+    }
+
+    .custom-card::after {
+        transform-origin: right bottom;
+    }
+
+    .custom-card:hover::before,
+    .custom-card:hover::after,
+    .custom-card:focus::before,
+    .custom-card:focus::after {
+        transform: scale3d(1, 1, 1);
+    }
+
+
+    /* Define the custom class for image zoom */
+    .image-zoom {
+      overflow: hidden; /* Hide overflow content when zoomed */
+    }
+
+    /* Apply the zoom effect on hover */
+    .image-zoom img {
+      transition: transform 0.3s; /* Smooth transition effect */
+    }
+
+    .image-zoom img:hover {
+      transform: scale(1.1); /* Adjust the scale value to control the zoom level */
+    }
+
+    #btn-back-to-top {
+    position: fixed;
+    bottom: 10px;
+    right: 15px;
+    display: none;
+    opacity: 0.5;
+     transition: all 0.4s;
+        -webkit-transition: all 0.4s;
+        -o-transition: all 0.4s;
+        -moz-transition: all 0.4s;
+    }
+
+
+</style>
+<div class="container-fluid w-100 m-0 p-0 ">
+    <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleInterval" data-bs-slide-to="0" class="active"
+                    aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleInterval" data-bs-slide-to="1"
+                    aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleInterval" data-bs-slide-to="2"
+                    aria-label="Slide 3"></button>
+            <button type="button" data-bs-target="#carouselExampleInterval" data-bs-slide-to="3"
+                    aria-label="Slide 4"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active" data-bs-interval="1500">
+                <img src="{% static 'Talos/img/doc2.png' %}" alt="" class="d-none d-sm-block"
+                     style="width: 100%; height: 410px;">
+                <img src="https://cdn.apollohospitals.com/dev-apollohospitals/2022/05/d-chairman-scaled-mob.jpg" alt=""
+                     class="d-sm-none d-sm-block" style="width: 100%;">
+                <div class="carousel-caption customtext">
+                    <div class="row">
+                        <div class="col-sm-8 col-xxl-8"></div>
+                        <div class="col-sm-4 col-xxl-4">
+                            <h1 class="d-none d-sm-block textbluecolor">The Talos</h1>
+                            <p class="dp-col4">Our team of over 1000 doctors join me in giving you the best of modern
+                                healthcare to ensure you stay healthy, always.</p>
+                            <div class="d-flex justify-content-center">
+                                <a class="btn btn-outline-light homebtn align-self-center" id="" href="#" alt=""
+                                   target="_blank">Book an Appointment</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item" data-bs-interval="1500">
+                <img src="{% static 'Talos/img/daddu.jpg' %}" alt="" class="d-none d-sm-block"
+                     style="width: 100%; height: 410px;">
+                <div class="carousel-caption d-none d-md-block">
+                    <div class="row">
+                        <div class="col-sm-8 col-xxl-8"></div>
+                        <div class="col-sm-4 col-xxl-4">
+                            <h1 class="d-none d-sm-block textbluecolor">The Talos</h1>
+                            <p class="dp-col4 text-black">Our team of over 1000 doctors join me in giving you the best
+                                of modern healthcare to ensure you stay healthy, always.</p>
+                            <div class="d-flex justify-content-center">
+                                <a class="btn btn-outline-light homebtn align-self-center" id="" href="#" alt=""
+                                   target="_blank">Book an Appointment</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item" data-bs-interval="1000">
+                <img src="{% static 'Talos/img/doc3.jpg' %}" style="width: 100%; height: 410px;" class="d-block w-100"
+                     alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Third slide label</h5>
+                    <p>Some representative placeholder content for the third slide.</p>
+                </div>
+            </div>
+            <div class="carousel-item" data-bs-interval="1500">
+                <img src="{% static 'Talos/img/doc4.jpg' %}" style="width: 100%; height: 410px;" class="d-block w-100"
+                     alt="...">
+                <div class="carousel-caption d-none d-md-block customtext">
+                    <div class="row justify-content-around">
+
+                        <div class="col-sm-4 col-xxl-4">
+                            <h1 class="d-none d-sm-block textbluecolor">The Talos</h1>
+                            <p class="dp-col4 textbluecolor">Our team of over 1000 doctors join me in giving you the
+                                best of modern healthcare to ensure you stay healthy, always.</p>
+                            <div class="d-flex justify-content-center">
+                                <a class="btn btn-outline-light backgroundlightwala homebtn align-self-center" id=""
+                                   href="#" alt="" target="_blank">Book an Appointment</a>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 col-xxl-4"></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval"
+                data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval"
+                data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    <div class="row g-2 my-1 w-100">
+        <div class="col-md-12 col-lg-6 col-sm-12 text-center d-flex flex-column justify-content-center "
+             data-aos="fade-down" data-aos-duration="3000">
+            <h4 class="align-self-center textlightwalacolor">Walk-in</h4>
+            <p class="align-self-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo et incidunt
+                sit recusandae similique temporibus ipsa fugiat, animi quam, odit placeat ratione vero nisi distinctio
+                id quo aliquid ut aspernatur libero illo repellat voluptas. Praesentium consectetur fugit molestias.
+                Earum!</p>
+            <a href="" class="text-black text-decoration-none">
+                Book Appointment <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div class="col-md-12 col-lg-6 col-sm-12 text-center " data-aos="fade-up" data-aos-duration="1500">
+            <div class="image-zoom">
+                <img src="https://www.hnrspeechandhearing.com/wp-content/uploads/2021/03/hnr-websize-300x255.png"
+                     alt="">
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row g-2 mt-2 w-100">
+        <div class=" col-lg-6 col-sm-12 d-md-block d-sm-block d-lg-none text-center d-flex flex-column justify-content-center "
+             data-aos="zoom-out-right" data-aos-duration="1000">
+            <h4 class="align-self-center textlightwalacolor">Remote Consultation</h4>
+            <p class="align-self-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo et incidunt
+                sit recusandae similique temporibus ipsa fugiat, animi quam, odit placeat ratione vero nisi distinctio
+                id quo aliquid ut aspernatur libero illo repellat voluptas. Praesentium consectetur fugit molestias.
+                Earum!</p>
+            <a href="" class="text-black text-decoration-none"><i class="fa fa-long-arrow-left" aria-hidden="true"></i>
+                Book Appointment
+            </a>
+        </div>
+        <div class="col-md-12 col-lg-6 col-sm-12 text-center " data-aos="zoom-in-left" data-aos-duration="1000">
+            <div class="image-zoom">
+                <img src="https://images.pexels.com/photos/4225920/pexels-photo-4225920.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                     class="w-75" alt="">
+            </div>
+        </div>
+        <div class=" col-lg-6 d-lg-block d-none text-center d-flex flex-column justify-content-center "
+             data-aos="zoom-out-right" data-aos-duration="1000">
+            <h4 class="align-self-center textlightwalacolor">Remote Consultation</h4>
+            <p class="align-self-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo et incidunt
+                sit recusandae similique temporibus ipsa fugiat, animi quam, odit placeat ratione vero nisi distinctio
+                id quo aliquid ut aspernatur libero illo repellat voluptas. Praesentium consectetur fugit molestias.
+                Earum!</p>
+            <a href="" class="text-black text-decoration-none"><i class="fa fa-long-arrow-left" aria-hidden="true"></i>
+                Book Appointment
+            </a>
+        </div>
+    </div>
+    <div class="row g-2 my-2 w-100">
+        <div class=" col-md-12 col-lg-6 col-sm-12 text-center d-flex flex-column justify-content-center "
+             data-aos="fade-right" data-aos-offset="100" data-aos-easing="ease-in-sine">
+            <h4 class="align-self-center textlightwalacolor">Security</h4>
+            <p class="align-self-center">Talos meets or exceeds all regulations of DISHA(India), GDPR(EU),
+                PIPEDA(Canada), and HIPAA(USA).
+                <br>
+                Whenever your data is sent between us, it’s encrypted using HTTPS (end-to-end encryption). We use a
+                2048-bit SSL certification for encryption in transit. All data is also encrypted at rest and backed up
+                daily, using the industry-standard AES-256 encryption algorithm.</p>
+            <p class="align-self-center">We are the custodians of your data, but you remain the owner.</p>
+            <a href="" class="text-black text-decoration-none">
+                Privacy Policy <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div class="col-md-12 col-lg-6 col-sm-12 text-center " data-aos="flip-left"
+             data-aos-easing="ease-out-cubic"
+             data-aos-duration="1500">
+            <div class="image-zoom">
+                <img src="{% static 'Talos/img/cyber-security.png' %}" alt=""></div>
+        </div>
+    </div>
+
+    <div id="carouselExampleSlidesOnly" class="carousel slide w" data-bs-ride="carousel">
+        <div class="carousel-inner ps-3 w-100">
+            <div class="carousel-item active" data-bs-interval="3000">
+                <div class="row  justify-content-sm-center justify-content-md-evenly">
+                    <div class="col-lg-3 col-md-5 my-5">
+                        <div class="card custom-card" style="width: 18rem;">
+                            <img src="https://images.pexels.com/photos/4031818/pexels-photo-4031818.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                                 class="card-img-top" alt="Sunset Over the Sea"/>
+                            <div class="card-body">
+                                <p class="card-text">Some quick example text to build on the card title and make up the
+                                    bulk of the card's content.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-5 my-5">
+                        <div class="card custom-card" style="width: 18rem;">
+                            <img src="https://images.pexels.com/photos/3957992/pexels-photo-3957992.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                                 class="card-img-top" alt="Sunset Over the Sea"/>
+                            <div class="card-body">
+                                <p class="card-text">Some quick example text to build on the card title and make up the
+                                    bulk of the card's content.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-5 my-5">
+                        <div class="card custom-card" style="width: 18rem;">
+                            <img src="https://images.pexels.com/photos/3279209/pexels-photo-3279209.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                                 class="card-img-top" alt="Sunset Over the Sea"/>
+                            <div class="card-body">
+                                <p class="card-text">Some quick example text to build on the card title and make up the
+                                    bulk of the card's content.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-5 my-5">
+                        <div class="card custom-card" style="width: 18rem;">
+                            <img src="https://images.pexels.com/photos/3951901/pexels-photo-3951901.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                                 class="card-img-top" alt="Sunset Over the Sea"/>
+                            <div class="card-body">
+                                <p class="card-text">Some quick example text to build on the card title and make up the
+                                    bulk of the card's content.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item" data-bs-interval="3000">
+                <div class="row  my-5 ">
+                    <div class="col">
+                        <div class="card custom-card" style="width: 18rem;">
+                            <img src="https://images.pexels.com/photos/5699424/pexels-photo-5699424.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                                 class="card-img-top" alt="Sunset Over the Sea"/>
+                            <div class="card-body">
+                                <p class="card-text">Some quick example text to build on the card title and make up the
+                                    bulk of the card's content.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card custom-card" style="width: 18rem;">
+                            <img src="https://images.pexels.com/photos/7579831/pexels-photo-7579831.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                                 class="card-img-top" alt="Sunset Over the Sea"/>
+                            <div class="card-body">
+                                <p class="card-text">Some quick example text to build on the card title and make up the
+                                    bulk of the card's content.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card custom-card" style="width: 18rem;">
+                            <img src="https://images.pexels.com/photos/5752281/pexels-photo-5752281.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                                 class="card-img-top" alt="Sunset Over the Sea"/>
+                            <div class="card-body">
+                                <p class="card-text">Some quick example text to build on the card title and make up the
+                                    bulk of the card's content.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card custom-card" style="width: 18rem;">
+                            <img src="https://images.pexels.com/photos/4098199/pexels-photo-4098199.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                                 class="card-img-top" alt="Sunset Over the Sea"/>
+                            <div class="card-body">
+                                <p class="card-text">Some quick example text to build on the card title and make up the
+                                    bulk of the card's content.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="row m-auto w-100 mt-2 rounded rounded-bottom-0 rounded-3" style="background-color: #3e3f46;">
+        <div class="col text-center">
+            <span><img src="{% static 'Talos/img/gplay.png' %}" width="162 px"></span>
+            <span><img src="{% static 'Talos/img/appstore.png' %}" width="144 px"></span>
+        </div>
+    </div>
+    <div class="row bggrey m-auto w-100 py-1">
+        <div class="col text-center py-2">
+            <span><img src="{% static 'Talos/img/fb.png' %}" width="38px"></span>
+            <span><img src="{% static 'Talos/img/x.png' %}" width="38px"></span>
+            <span><img src="{% static 'Talos/img/yt.png' %}" width="38px"></span>
+            <span><img src="{% static 'Talos/img/insta.png' %}" width="38px"></span>
+            <span><img src="{% static 'Talos/img/linkedin.png' %}" width="38px"></span>
+            <span><img src="{% static 'Talos/img/snapchat.png' %}" width="38px"></span>
+        </div>
+    </div>
+</div>
+
+{% load static %}
+{% include 'source_js.html' %}
+<script>
+    //Get the button
+let mybutton = document.getElementById("btn-back-to-top");
+
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function () {
+scrollFunction();
+};
+
+function scrollFunction(){
+if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20)
+{
+  mybutton.style.display = "block";
+}
+else
+{
+  mybutton.style.display = "none";
+}
+}
+// When the user clicks on the button, scroll to the top of the document
+mybutton.addEventListener("click", backToTop);
+function backToTop() {
+document.body.scrollTop = 0;
+document.documentElement.scrollTop = 0;
+}
+</script>
+<script>
+    AOS.init();
+</script>
+_____________________________________________________________________
+
+{% for i in obj %}
+    {{ i.phone }}
+    {{ i.email }}
+    {{ i.email }}
+    {{ i.profession.name }}
+    {{ i.profession.active }}
+{% endfor %}
+_____________________________________________________________________
+<br>
+<br>
+<br>
+{% endblock %}

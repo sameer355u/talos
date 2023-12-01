@@ -1,0 +1,956 @@
+{% extends 'account/base.html' %}
+{% block title %}Slot Management{% endblock %}
+{% block body %}
+{% load static %}
+<!--    <meta charset="utf-8" />-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1" />-->
+<!--    <title>Slot Management</title>-->
+<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"-->
+<!--        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />-->
+<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">-->
+<!--    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">-->
+<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"-->
+<!--        crossorigin="anonymous" referrerpolicy="no-referrer" />-->
+<!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">-->
+    <style>
+        .navbar a {
+            color: white;
+        }
+
+        .navbar-nav a {
+            color: white;
+        }
+
+        .btn-gr {
+            background: linear-gradient(45deg, #003a70, #ec0909);
+        }
+
+        .btn-gr:hover {
+            background: linear-gradient(45deg, #003a70, #6ecbc9);
+        }
+
+        .btn-grr {
+            background: linear-gradient(45deg, #6ecbc9, #003a70);
+        }
+
+        .btn-grr:hover {
+            background: linear-gradient(45deg, #ec0909, #003a70);
+        }
+
+        .btn-theme {
+            background-color: #003a70;
+            color: white;
+        }
+
+        .btn-theme:hover {
+            background-color: #003789 !important;
+            color: white !important;
+        }
+
+        .btn-outline-theme {
+            background-color: transparent;
+            border: 1px solid #003a70;
+            color: #003a70;
+        }
+
+        .btn-outline-theme:hover {
+            background-color: transparent;
+            color: #003789;
+            border: 1px solid #003789;
+        }
+
+        .border-theme {
+            border-color: #003a70 !important;
+        }
+
+        .border-theme:hover {
+            border-color: #003789 !important;
+        }
+
+        .label-theme {
+            color: #ec0909;
+        }
+
+        .theme {
+            background-color: #003a70;
+        }
+
+        .text-theme {
+            color: #003a70 !important;
+        }
+
+        .theme-light {
+            background-color: #f2f3ff;
+        }
+
+        .search-container {
+            border-radius: 5px;
+            background-color: white;
+            display: flex;
+            justify-content: center;
+            margin-left: 4px;
+        }
+
+        .search-container-mf {
+            margin-left: 4px;
+            width: 130px;
+            border-radius: 5px;
+            background-color: white;
+            justify-content: space-evenly;
+            display: flex;
+            border: 1px solid #dfe1e5;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+        }
+
+        .search-box-doctor {
+            width: 200px;
+            padding: 0px 20px 0px 35px;
+            border: 1px solid #dfe1e5;
+            border-radius: 4px;
+            font-size: 12px;
+            outline: none;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            background: url('/Doctor/static/Talos/img/search.png') no-repeat 10px center;
+            background-size: 17px 17px;
+        }
+
+        .search-box-patient {
+            width: 150px;
+            height: 31px;
+            padding: 0px 10px 0px 35px;
+            border: 1px solid #dfe1e5;
+            border-radius: 4px;
+            font-size: 12px;
+            outline: none;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            background: url('/Doctor/static/Talos/img/search.png') no-repeat 10px center;
+            background-size: 17px 17px;
+        }
+
+        .search-box-specialization {
+            width: 200px;
+            padding: 0px 20px 0px 45px;
+            border: 1px solid #dfe1e5;
+            border-radius: 4px;
+            font-size: 12px;
+            outline: none;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            background: url('/Doctor/static/Talos/img/location.png') no-repeat 10px center;
+            background-size: 12px 19px;
+        }
+
+        .horizontal-calendar {
+            display: flex;
+            justify-content: space-between;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .calendar-slots {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn-calendar {
+            display: block;
+            border: 1px solid white;
+            border-radius: 7px;
+            background-color: #6ecbc9;
+            padding: 0px 10px;
+            min-width: 90px;
+            text-align: center;
+        }
+
+        .btn-calendar-clicked:checked+.btn-calendar {
+            display: block;
+            color: white;
+            border: 1px solid white;
+            border-radius: 10px;
+            background-color: #003a70;
+            padding: 0px 10px;
+            text-align: center;
+            min-width: 60px;
+        }
+
+        .btn-calendar:hover {
+            border: 1px solid white;
+            border-radius: 10px;
+            background-color: #44bae5;
+            padding: 0px 10px;
+            text-align: center;
+        }
+
+        ::-webkit-scrollbar-track {
+            -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+            background-color: white;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+            border-radius: 10px;
+            background-color: #F5F5F5;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            background-color: #FFF;
+            background-image: -webkit-linear-gradient(top,
+                    #003a70 0%,
+                    #6ecbc9 50%,
+                    #6ecbc9 51%,
+                    #003a70 100%);
+        }
+
+        .horizontal-calendar::-webkit-scrollbar-track {
+            -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+            background-color: white;
+            border-radius: 10px;
+        }
+
+        .horizontal-calendar::-webkit-scrollbar {
+            -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+            background-color: white;
+            border-radius: 10px;
+        }
+
+        .horizontal-calendar::-webkit-scrollbar-thumb {
+            border-radius: 10px !important;
+            background-color: #FFF !important;
+            background-image: -webkit-linear-gradient(left, #003a70 0%, #6ecbc9 50%, #6ecbc9 51%, #003a70 100%) !important;
+        }
+    </style>
+{% include 'base_menu_2.html' %}
+    <div class="container-fluid mt-2">
+        <form action="" class="needs-validation" method="post">
+             {% csrf_token %}
+            <div class="row g-2">
+                <div class="col-lg-2 col-sm-12 " id="cl2">
+                    <div class="card shadow border border-danger">
+                        <div class="card-body">
+                            <div class="d-flex flex-column align-items-center text-center">
+                                <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin"
+                                    class="rounded-circle" width="70" />
+                                <div class="mt-3">
+                                    <h4>{{ request.user.first_name }}</h4>
+                                    <p class="text-secondary mb-1">MBBS,MD</p>
+                                    <p class="text-muted font-size-sm">
+                                        Bay Area, San Francisco, CA
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card shadow my-2">
+                        <div class="card-header text-center fw-semibold fs-6" style="background-color: #6ecbc9;">Menu
+                        </div>
+                        <div class="card-body border border-danger rounded-bottom-2">
+                            <div class="row g-2 text-center">
+                                <button type="button" class="col-12 btn my-2 btn-theme"
+                                    onclick="openSchedule()">Schedule
+                                    Slots</button>
+                                <button type="button" class="col-12 btn my-2 btn-theme" onclick="editSchedule()">Edit
+                                    Slots</button>
+                                <button type="button" class="col-12 btn my-2 btn-theme" onclick="">Delete Slots</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-10  col-sm-12">
+                    <div class="card bg-transparent border-0 ">
+                        <div class="card-header bg-white">
+                            <h5 class="m-0"><i class="bi bi-calendar-check mx-3"></i>Schedule Management</h5>
+                        </div>
+                        <div class="card-body bg-transparent p-1 overflow-y-scroll" id="openSchedule"
+                            style="height: 72vh;">
+                            <div class="row g-2 justify-content-evenly">
+                                <div class="col-lg-6  pe-1">
+                                    <div class="px-3 bg-white border rounded-4 border-danger"
+                                        style="height: fit-content !important;" id="col_in">
+                                        <div class="row my-2">
+                                            <div class="col-lg-6">
+                                                <label for="slot_start_date" class="fw-semibold">Select Start
+                                                    Date</label>
+                                                <input type="date" class="form-control inputs form-control-sm"
+                                                    id="slot_start_date" name="slot_start_date" oninput="nextDate()"
+                                                    min="" value="" required>
+                                            </div>
+
+                                            <div class="col-lg-6">
+                                                <label for="slot_end_date" class="fw-semibold">Select End Date</label>
+                                                <input type="date" id="slot_end_date"
+                                                    class="form-control inputs form-control-sm" name="slot_end_date"
+                                                    min="" value="" required readonly>
+                                            </div>
+                                        </div>
+                                        <div class="row my-2">
+                                            <div class="col-lg-6">
+                                                <label class="fw-medium">Slot Duration<span
+                                                        class="text-danger">*</span></label><br>
+                                                <div class="d-flex">
+                                                    <input type="range" id="time_slot" name="time_slot" required
+                                                        value="10" class="form-range inputs form-control-sm" min="1"
+                                                        max="60" step=""
+                                                        oninput="this.nextElementSibling.value = this.value"
+                                                        style="width:80%; margin-right: 10px;">
+                                                    <output id="time_slot_output" class="fw-semibold">10
+                                                    </output><span class=""> minute</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <label for="select_facility" class="fw-medium">Facility<span
+                                                        class="text-danger">*</span></label>
+                                                <select class="form-select inputs form-select-sm" name="select_facility"
+                                                    id="select_facility" required>
+                                                    <option disabled selected>Select Facility</option>
+                                                    <option value="My Health Clinic">My Health Clinic</option>
+                                                    <option value="Max Hospital">Max Hospital</option>
+                                                    <option value="Apollo Hospital">Apollo Hospital</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row my-2">
+                                            <div class="col-lg-6">
+                                                <label class="fw-medium">Start Time</label>
+                                                <input type="time" id="start_time" oninput="fun_start_time_all()"
+                                                    name="start_time" value=""
+                                                    class="form-control inputs form-control-sm"
+                                                    placeholder="Start Time">
+                                                <input name="start_time_same_for_all_days" type="checkbox" id="start_time_all" oninput="fun_start_time_all()" class="mt-1 me-1 inputs">
+                                                <label for="start_time_all">Same for all days</label>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <label class="fw-medium">Number of Slot</label>
+                                                <input type="number" id="number_slot" oninput="fun_number_slot_all()" name="number_slot" min="1" max="20" value=""
+                                                    class="form-control inputs form-control-sm" placeholder="Number of Slots">
+                                                <input name="slots_same_for_all_days" type="checkbox" id="number_slot_all" oninput="fun_number_slot_all()" class="mt-1 me-1 inputs">
+                                                <label for="number_slot_all">Same for all days</label>
+                                            </div>
+                                        </div>
+                                        <div class="row border border-black rounded-4 mx-1 p-2 my-3">
+                                            <div class="col-4 ">
+                                                <label for="all_days"><input type="checkbox" name="all_days"
+                                                        id="all_days" oninput="select_all_days()" class=" inputs"
+                                                        value="">
+                                                    Select Days</label>
+                                                <div class="">
+                                                    <div class="form-control-sm my-1"><input type="checkbox"
+                                                            name="weekday_mon" id="weekday-mon" class="weekdays inputs"
+                                                            value="Mon">
+                                                        <label for="weekday-mon" class=""
+                                                            style="min-width: 60px;">Monday</label>
+                                                    </div>
+                                                    <div class="form-control-sm my-1"><input type="checkbox"
+                                                            name="weekday_tue" id="weekday-tue" class="weekdays inputs"
+                                                            value="Tue">
+                                                        <label for="weekday-tue" class=""
+                                                            style="min-width: 60px;">Tuesday</label>
+                                                    </div>
+                                                    <div class="form-control-sm my-1"><input type="checkbox"
+                                                            name="weekday_wed" id="weekday-wed" class="weekdays inputs"
+                                                            value="Wed">
+                                                        <label for="weekday-wed" class=""
+                                                            style="min-width: 60px;">Wednesday</label>
+                                                    </div>
+                                                    <div class="form-control-sm my-1"><input type="checkbox"
+                                                            name="weekday_thu" id="weekday-thu" class="weekdays inputs"
+                                                            value="Thu">
+                                                        <label for="weekday-thu" class=""
+                                                            style="min-width: 60px;">Thursday</label>
+                                                    </div>
+                                                    <div class="form-control-sm my-1"><input type="checkbox"
+                                                            name="weekday_fri" id="weekday-fri" class="weekdays inputs"
+                                                            value="Fri">
+                                                        <label for="weekday-fri" class=""
+                                                            style="min-width: 60px;">Friday</label>
+                                                    </div>
+                                                    <div class="form-control-sm my-1"><input type="checkbox"
+                                                            name="weekday_sat" id="weekday-sat" class="weekdays inputs"
+                                                            value="Sat">
+                                                        <label for="weekday-sat" class=""
+                                                            style="min-width: 60px;">Saturday</label>
+                                                    </div>
+                                                    <div class="form-control-sm my-1"><input type="checkbox"
+                                                            name="weekday_sun" id="weekday-sun" class="weekdays inputs"
+                                                            value="Sun">
+                                                        <label for="weekday-sun" class=""
+                                                            style="min-width: 60px;">Sunday</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <label for="slot_start_time">Slot Start Time</label>
+                                                <div class="">
+                                                    <input type="time" name="mon_start_time" id="weekday-mon"
+                                                        class="form-control inputs form-control-sm my-1 days_slot_time"
+                                                        value="">
+                                                    <input type="time" name="tus_start_time" id="weekday-tue"
+                                                        class="form-control inputs form-control-sm my-1 days_slot_time"
+                                                        value="">
+                                                    <input type="time" name="wed_start_time" id="weekday-wed"
+                                                        class="form-control inputs form-control-sm my-1 days_slot_time"
+                                                        value="">
+                                                    <input type="time" name="thu_start_time" id="weekday-thu"
+                                                        class="form-control inputs form-control-sm my-1 days_slot_time"
+                                                        value="">
+                                                    <input type="time" name="fri_start_time" id="weekday-fri"
+                                                        class="form-control inputs form-control-sm my-1 days_slot_time"
+                                                        value="">
+                                                    <input type="time" name="sat_start_time" id="weekday-sat"
+                                                        class="form-control inputs form-control-sm my-1 days_slot_time"
+                                                        value="">
+                                                    <input type="time" name="sun_start_time" id="weekday-sun"
+                                                        class="form-control inputs form-control-sm my-1 days_slot_time"
+                                                        value="">
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <label for="slot_days_number">Number of Slots</label>
+                                                <div class="">
+                                                    <input type="number" name="mon_slot_number" min="1" max="20"
+                                                        id="weekday-mon"
+                                                        class="form-control inputs form-control-sm my-1 days_slot_num">
+                                                    <input type="number" name="tus_slot_number" min="1" max="20"
+                                                        id="weekday-tue"
+                                                        class="form-control inputs form-control-sm my-1 days_slot_num">
+                                                    <input type="number" name="wed_slot_number" min="1" max="20"
+                                                        id="weekday-wed"
+                                                        class="form-control inputs form-control-sm my-1 days_slot_num">
+                                                    <input type="number" name="thu_slot_number" min="1" max="20"
+                                                        id="weekday-thu"
+                                                        class="form-control inputs form-control-sm my-1 days_slot_num">
+                                                    <input type="number" name="fri_slot_number" min="1" max="20"
+                                                        id="weekday-fri"
+                                                        class="form-control inputs form-control-sm my-1 days_slot_num">
+                                                    <input type="number" name="sat_slot_number" min="1" max="20"
+                                                        id="weekday-sat"
+                                                        class="form-control inputs form-control-sm my-1 days_slot_num">
+                                                    <input type="number" name="sun_slot_number" min="1" max="20"
+                                                        id="weekday-sun"
+                                                        class="form-control inputs form-control-sm my-1 days_slot_num">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row my-2 justify-content-end">
+                                            <div class="col-4"><button type="reset" class="btn btn-info text-white d-none"
+                                                    id="clear_btn" onclick="clearCalendar()">Clear</button>
+                                            </div>
+                                            <div class="col-4"><button type="button" class="btn btn-theme disabled"
+                                                    id="generate_btn" onclick="updateCalendar()">Generate Slot</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 ps-1">
+                                    <div class=" border bg-white rounded-4 border-danger overflow-y-auto overflow-x-hidden"
+                                        id="in_calendar">
+                                        <div id="calendar"></div>
+                                        <div id="save_btn" class="row m-0 p-0 g-0 m-2 d-none justify-content-end">
+                                            <button class="col-3 btn btn-theme">Save</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+
+    <script>
+        var currentDate = new Date().toISOString().split('T')[0];
+        document.getElementById("slot_start_date").min = currentDate;
+
+        function nextDate() {
+
+            var start_date = document.getElementById("slot_start_date").value
+            var nextDate = new Date(start_date);
+            nextDate.setDate(nextDate.getDate() + 1);
+            nextDate = nextDate.toISOString().split('T')[0];
+            document.getElementById("slot_end_date").min = nextDate;
+            document.getElementById("slot_end_date").readOnly = false;
+        }
+    </script>
+
+    <script>
+        var daysSlotInputs = document.querySelectorAll(".days_slot_num");
+        var days_start_time_inputs = document.querySelectorAll(".days_slot_time");
+        var weekDays = document.querySelectorAll(".weekdays");
+
+        weekDays.forEach((checkbox, index) => {
+            checkbox.addEventListener('change', function () {
+                if (!this.checked) {
+                    // If the checkbox is unchecked, set the corresponding inputs to empty
+                    days_start_time_inputs[index].value = '';
+                    daysSlotInputs[index].value = '';
+                    days_start_time_inputs[index].required = false;
+                    daysSlotInputs[index].required = false;
+                }
+                else if (this.checked) {
+                    document.getElementById("generate_btn").classList.remove("disabled");
+                    var numberSlotAllCheckbox = document.getElementById("number_slot_all");
+                    var numberSlotInput = document.getElementById("number_slot");
+                    var start_time_all_checkbox = document.getElementById("start_time_all");
+                    var start_time_input = document.getElementById("start_time");
+                    days_start_time_inputs[index].required = true;
+                    daysSlotInputs[index].required = true;
+                    if (numberSlotAllCheckbox.checked) {
+                        // If 'number_slot_all' is checked, fill checked day slot inputs and make them readonly
+                        var valueToFill = numberSlotInput.value;
+
+                        daysSlotInputs.forEach(function (input) {
+                            var checkboxId = input.id.replace('-number', '');
+                            var checkbox = document.getElementById(checkboxId);
+
+                            if (checkbox.checked) {
+                                input.value = valueToFill;
+                            }
+                        });
+                    }
+                    else {
+                        // If 'number_slot_all' is unchecked, set the value in day slot inputs to null and make them editable
+                        daysSlotInputs.forEach(function (input) {
+                            input.value = null;
+                        });
+                    }
+
+                    if (start_time_all_checkbox.checked) {
+                        // If 'start_time_all' is checked, fill all day start time inputs and make them readonly
+                        var valueToFill = start_time_input.value;
+
+                        days_start_time_inputs.forEach(function (input) {
+                            var checkboxId = input.id.replace('-start', ''); // Modify to match checkbox ID
+                            var checkbox = document.getElementById(checkboxId);
+
+                            if (checkbox.checked) {
+                                input.value = valueToFill;
+                            }
+                        });
+                    }
+                    else {
+                        // If 'start_time_all' is unchecked, set the value in day start time inputs to null and make them editable
+                        days_start_time_inputs.forEach(function (input) {
+                            input.value = null;
+                        });
+                    }
+
+                }
+            });
+        });
+
+        function select_all_days() {
+            var numberSlotAllCheckbox = document.getElementById("number_slot_all");
+            var numberSlotInput = document.getElementById("number_slot");
+            var start_time_all_checkbox = document.getElementById("start_time_all");
+            var start_time_input = document.getElementById("start_time");
+            var selectAllDaysCheckbox = document.getElementById("all_days");
+            var daysSlotInputs = document.querySelectorAll(".days_slot_num");
+            var days_start_time_inputs = document.querySelectorAll(".days_slot_time");
+            var weekDays = document.querySelectorAll(".weekdays");
+
+            if (selectAllDaysCheckbox.checked) {
+                document.getElementById("generate_btn").classList.remove("disabled");
+                weekDays.forEach(function (input, index) {
+                    input.checked = true;
+                    days_start_time_inputs[index].required = true;
+                    daysSlotInputs[index].required = true;
+                });
+
+                if (numberSlotAllCheckbox.checked) {
+                    // If 'number_slot_all' is checked, fill checked day slot inputs and make them readonly
+                    var valueToFill = numberSlotInput.value;
+
+                    daysSlotInputs.forEach(function (input) {
+                        var checkboxId = input.id.replace('-number', '');
+                        var checkbox = document.getElementById(checkboxId);
+
+                        if (checkbox.checked) {
+                            input.value = valueToFill;
+                        }
+                    });
+                }
+                else {
+                    // If 'number_slot_all' is unchecked, set the value in day slot inputs to null and make them editable
+                    daysSlotInputs.forEach(function (input) {
+                        input.value = null;
+                    });
+                }
+
+                if (start_time_all_checkbox.checked) {
+                    // If 'start_time_all' is checked, fill all day start time inputs and make them readonly
+                    var valueToFill = start_time_input.value;
+
+                    days_start_time_inputs.forEach(function (input) {
+                        var checkboxId = input.id.replace('-start', ''); // Modify to match checkbox ID
+                        var checkbox = document.getElementById(checkboxId);
+
+                        if (checkbox.checked) {
+                            input.value = valueToFill;
+                        }
+                    });
+                }
+                else {
+                    // If 'start_time_all' is unchecked, set the value in day start time inputs to null and make them editable
+                    days_start_time_inputs.forEach(function (input) {
+                        input.value = null;
+                    });
+                }
+            }
+            else {
+                document.getElementById("generate_btn").classList.add("disabled");
+                weekDays.forEach(function (input, index) {
+                    days_start_time_inputs[index].required = false;
+                    daysSlotInputs[index].required = false;
+                    input.checked = false;
+                });
+                daysSlotInputs.forEach(function (input) {
+                    input.value = null;
+                });
+                days_start_time_inputs.forEach(function (input) {
+                    input.value = null;
+                });
+
+            }
+        }
+
+        function fun_number_slot_all() {
+            var numberSlotAllCheckbox = document.getElementById("number_slot_all");
+            var numberSlotInput = document.getElementById("number_slot");
+            var daysSlotInputs = document.querySelectorAll(".days_slot_num");
+            var weekDays = document.querySelectorAll(".weekdays");
+            var count = 0;
+
+            weekDays.forEach(function (input) {
+                if (input.checked === true) {
+                    count++;
+                }
+            });
+
+            if (count >= 1) {
+                if (numberSlotAllCheckbox.checked) {
+                    // If 'number_slot_all' is checked, fill checked day slot inputs and make them readonly
+                    var valueToFill = numberSlotInput.value;
+
+                    daysSlotInputs.forEach(function (input) {
+                        var checkboxId = input.id.replace('-number', '');
+                        var checkbox = document.getElementById(checkboxId);
+
+                        if (checkbox.checked) {
+                            input.value = valueToFill;
+                        }
+                    });
+                }
+                else {
+                    // If 'number_slot_all' is unchecked, set the value in day slot inputs to null and make them editable
+                    daysSlotInputs.forEach(function (input) {
+                        input.value = null;
+                    });
+                }
+            }
+            else {
+                numberSlotInput.value = null;
+                numberSlotAllCheckbox.checked = false;
+                alert("Select at least 1 days !")
+            }
+        }
+
+        function fun_start_time_all() {
+            var start_time_all_checkbox = document.getElementById("start_time_all");
+            var start_time_input = document.getElementById("start_time");
+            var days_start_time_inputs = document.querySelectorAll(".days_slot_time");
+            var weekDays = document.querySelectorAll(".weekdays");
+            var count = 0;
+
+            weekDays.forEach(function (input) {
+                if (input.checked === true) {
+                    count++;
+                }
+            });
+
+            console.log(count)
+
+            if (count >= 1) {
+                if (start_time_all_checkbox.checked) {
+                    // If 'start_time_all' is checked, fill all day start time inputs and make them readonly
+                    var valueToFill = start_time_input.value;
+
+                    days_start_time_inputs.forEach(function (input) {
+                        var checkboxId = input.id.replace('-start', '-check'); // Modify to match checkbox ID
+                        var checkbox = document.getElementById(checkboxId);
+
+                        if (checkbox.checked) {
+                            input.value = valueToFill;
+                        }
+                    });
+                }
+                else {
+                    // If 'start_time_all' is unchecked, set the value in day start time inputs to null and make them editable
+                    days_start_time_inputs.forEach(function (input) {
+                        input.value = null;
+                    });
+                }
+            }
+            else {
+                start_time_input.value = null;
+                start_time_all_checkbox.checked = false;
+                alert("Select at least 1 days !")
+            }
+        }
+
+    </script>
+
+
+    <script>
+        function updateCalendar() {
+            var start_date = new Date(document.getElementById("slot_start_date").value);
+            var end_date = new Date(document.getElementById("slot_end_date").value);
+            var time_slot = parseInt(document.getElementById("time_slot").value);
+
+            var daysSlotInputs = document.querySelectorAll(".days_slot_num");
+            var days_start_time_inputs = document.querySelectorAll(".days_slot_time");
+            var weekDays = document.querySelectorAll(".weekdays");
+
+            // Calculate the number of days between start and end dates
+            var limit = Math.floor((end_date - start_date) / (1000 * 60 * 60 * 24)) + 1;
+
+            // Get the current date and time
+            var currentDate = new Date(start_date);
+            var currentTime = [];
+            days_start_time_inputs.forEach(function (input) {
+                var inputValue = input.value;
+                currentTime.push(inputValue);
+            });
+
+            var slot_val = [];
+            daysSlotInputs.forEach(function (input) {
+                var inputValue = input.value;
+                slot_val.push(inputValue);
+            })
+            var day_count = 0;
+            var checked_days = [];
+            weekDays.forEach(function (input) {
+                if (input.checked) {
+                    var inputValue = input.value;
+                    checked_days.push(inputValue);
+                }
+                else {
+                    checked_days.push("");
+                    day_count++;
+                }
+            })
+            if (day_count == 7 && start_date && end_date) {
+                alert("Check Start Date and End Date and Select at least 1 days !");
+                document.getElementById("generate_btn").classList.add("disabled");
+            }
+            else {
+                console.log(checked_days);
+                console.log(currentTime);
+                console.log(slot_val);
+                var dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+                // Create an array of time slots
+                var timeSlots = [];
+                var calendarMonth = '<div class="text-center fw-bold"></div>';
+                var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+                if (start_date.getMonth() === end_date.getMonth()) {
+                    calendarMonth = '<div class="row justify-content-around m-2 fw-bold"><div class="col-2 btn text-start p-0 fw-bold prev" style="font-size: 13px;"><i class="fa-solid fa-caret-left"></i>  PREV</div><div class="col-6 text-center">' + monthNames[start_date.getMonth()] + '  ' + start_date.getFullYear() + '</div><div class="col-2 btn p-0 fw-bold text-end next" style="font-size: 13px;">NEXT  <i class="fa-solid fa-caret-right"></i></div></div>';
+                }
+                else {
+                    calendarMonth = '<div class="row justify-content-around m-2 fw-bold"><div class="col-2 btn text-start p-0 fw-bold prev" style="font-size: 13px;"><i class="fa-solid fa-caret-left"></i>  PREV</div><div class="col-6 text-center">' + monthNames[start_date.getMonth()] + ' ' + start_date.getFullYear() + '-' + monthNames[end_date.getMonth()] + ' ' + end_date.getFullYear() + '</div><div class="col-2 btn p-0 fw-bold text-end next" style="font-size: 13px;">NEXT  <i class="fa-solid fa-caret-right"></i></div></div>';
+                }
+
+
+                var calendarHTML = '<div class="horizontal-calendar scroll-items m-2 " id="hr_cal">';
+
+                for (var i = 0; i < limit; i++) {
+                    var dayName = dayNames[currentDate.getDay()];
+                    var date = currentDate.getDate();
+
+                    if (checked_days.includes(dayName)) {
+                        calendarHTML += '<div class="text-center">'
+                        calendarHTML += '<table class="table table-bordered align-top scroll-item" >';
+                        calendarHTML += '<thead><tr><th style="background-color: #6ecbc9; min-width:75px">' + dayName + '<br> ' + date + '</th></tr></thead>';
+                        calendarHTML += '<tbody>';
+
+                        // Check if the slot_val for the current day is not an empty string
+                        var slotIndex = checked_days.indexOf(dayName);
+                        if (slotIndex !== -1 && slot_val[slotIndex] !== '') {
+                            // Calculate the start time and number of slots for the current day
+                            var startHour = parseInt(currentTime[slotIndex].split(":")[0]);
+                            var startMinute = parseInt(currentTime[slotIndex].split(":")[1]);
+                            var slots = parseInt(slot_val[slotIndex]);
+                            var max = Math.max(...slot_val);
+                            var ampm;
+                            var count = 0;
+
+                            for (var j = 0; j < max; j++) {
+                                if (count < slots) {
+                                    // Calculate the time for each slot in 12-hour format
+                                    var slotHour = startHour + Math.floor((startMinute + (j * time_slot)) / 60);
+                                    var slotMinute = (startMinute + (j * time_slot)) % 60;
+
+                                    if (slotHour >= 12) {
+                                        ampm = 'PM';
+                                        if (slotHour > 12) {
+                                            slotHour -= 12;
+                                        }
+                                    } else {
+                                        ampm = 'AM';
+                                        if (slotHour === 0) {
+                                            slotHour = 12;
+                                        }
+                                    }
+
+                                    var slotTime = slotHour + ':' + (slotMinute < 10 ? '0' : '') + slotMinute + ' ' + ampm;
+
+                                    // Calculate the end time for the slot
+                                    var endHour = slotHour + Math.floor((slotMinute + time_slot) / 60);
+                                    var endMinute = (slotMinute + time_slot) % 60;
+
+                                    if (endHour >= 12) {
+                                        ampm = 'PM';
+                                        if (endHour > 12) {
+                                            endHour -= 12;
+                                        }
+                                    } else {
+                                        ampm = 'AM';
+                                        if (endHour === 0) {
+                                            endHour = 12;
+                                        }
+                                    }
+
+                                    var endTime = endHour + ':' + (endMinute < 10 ? '0' : '') + endMinute + ' ' + ampm;
+
+                                    var slotTimeFormatted = slotTime + ' ' + endTime;
+
+                                    count++;
+                                    calendarHTML += '<tr><td class="text-primary">' + slotTimeFormatted + '</td></tr>';
+                                }
+                                else {
+                                    calendarHTML += '<tr><td>&nbsp;<br>&nbsp;</td></tr>';
+                                }
+                            }
+
+                        }
+                        calendarHTML += '</tbody>'
+                        calendarHTML += '</table>';
+                        calendarHTML += '</div>';
+                    }
+
+
+                    // Increment the date by one day
+                    currentDate.setDate(currentDate.getDate() + 1);
+                }
+
+                document.getElementById('calendar').innerHTML = calendarMonth + calendarHTML;
+                const column1Height = document.getElementById("col_in").offsetHeight;
+                document.getElementById("in_calendar").style.height = column1Height + "px";
+                no_cal();
+                next_prev();
+                document.getElementById("generate_btn").classList.add("disabled");
+                document.getElementById("clear_btn").classList.remove('d-none');
+                //var inputs = document.querySelectorAll(".inputs");
+                //inputs.forEach(function (input) {
+                //    input.disabled = true;
+                //});
+            }
+        }
+        function clearCalendar() {
+            document.getElementById("clear_btn").classList.add('d-none');
+            var inputs = document.querySelectorAll(".inputs");
+            inputs.forEach(function (input) {
+                input.disabled = false;
+            });
+            document.getElementById('calendar').innerHTML = "";
+            document.getElementById("generate_btn").classList.remove("disabled");
+            document.getElementById("save_btn").classList.add('d-none');
+
+        }
+        function no_cal() {
+            var cal_element = document.getElementById('hr_cal');
+            if (cal_element.innerHTML === "") {
+                cal_element.style.display = "block";
+                cal_element.innerHTML = '<div class="align-items-center text-center justify-content-center alert alert-info p-5" role="alert">No Slot data generated please check <b>Dates</b> and <b>Days</b>. <i class="bi bi-exclamation-octagon-fill"></i></div>';
+                console.log("No Slot data generated");
+            } else {
+                // Assuming you want to log the HTML content of the first element in the collection
+                document.getElementById("save_btn").classList.remove('d-none');
+            }
+        }
+
+    </script>
+
+
+    <script>
+        function next_prev() {
+            const scrollItems = document.querySelector('.scroll-items');
+            const prevButton = document.querySelector('.prev');
+            const nextButton = document.querySelector('.next');
+            const itemWidth = document.querySelector('.scroll-item').offsetWidth;
+            let scrollPosition = 0;
+
+            prevButton.addEventListener('click', () => {
+                if (scrollPosition < 0) {
+                    scrollPosition += itemWidth + 15; // 20 is the gap between items
+                    scrollItems.style.transform = `translateX(${scrollPosition}px)`;
+                }
+            });
+
+            nextButton.addEventListener('click', () => {
+                const maxScroll = scrollItems.scrollWidth - scrollItems.clientWidth;
+                if (scrollPosition > -maxScroll) {
+                    scrollPosition -= itemWidth + 15;
+                    scrollItems.style.transform = `translateX(${scrollPosition}px)`;
+                }
+            });
+        }
+
+
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+
+
+    <script>
+        function openSlot() {
+            const slotsContent = document.getElementById("slots");
+            slotsContent.innerHTML = '<div class="btn btn-secondary m-2 btn-sm">10:00 AM - 10:30 AM</div><div class="btn btn-secondary m-2 btn-sm">10:30 AM - 11:00 AM</div><div class="btn btn-secondary m-2 btn-sm">11:00 AM - 11:30 AM</div><div class="btn btn-secondary m-2 btn-sm">11:30 AM - 12:00 PM</div><div class="btn btn-secondary m-2 btn-sm">12:00 PM - 12:30 PM</div><div class="btn btn-secondary m-2 btn-sm">12:30 PM - 01:00 PM</div>'
+        }
+        function doctorDetails() {
+            // get the selected doctor's name from the dropdown
+            const selectedDoctor = document.getElementById("selectDoctor").innerText;
+
+            // display the doctor's name in the modal
+            const doctorDetailsContent = document.getElementById("doctorDetailsContent");
+            doctorDetailsContent.innerHTML = `<p>Doctor Name: ${selectedDoctor}</p>`;
+
+            // Show the modal
+            const doctorModal = new bootstrap.Modal(document.getElementById('doctorModal'));
+            doctorModal.show();
+        }
+        function slotDetails() {
+            // get the selected doctor's name from the dropdown
+            const selectedDoctor = document.getElementById("selectDoctor").innerText;
+
+            // display the doctor's name in the modal
+            const doctorDetailsContent = document.getElementById("nameDetailsContent");
+            // const slotDetailsContent = document.getElementById("slotDetailsContent");
+            // slotDetailsContent.innerHTML = `slots data with date`;
+            doctorDetailsContent.innerHTML = `<p>Doctor Name: ${selectedDoctor}</p>`;
+
+            // Show the modal
+            const doctorModal = new bootstrap.Modal(document.getElementById('slotModal'));
+            doctorModal.show();
+        }
+    </script>
+{% endblock %}

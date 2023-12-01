@@ -1,0 +1,31 @@
+{% load static %}
+<div class="container-fluid mt-1">
+    <div class="row" style="background-color: #6ecbc9">
+        <div class="col-6">
+            <span class="fs-5 fw-bold text-primary">Hello</span>
+            {% if request.user.is_authenticated %} {{request.user}}!&nbsp;<span class="text-light">{% else %}Welcome Here{% endif %}</span><i
+                class="fa-regular fa-hand fa-shake" style="font-size: 1.5rem; color:#003a70"></i>
+        </div>
+        <div class="col-6 d-flex flex-column pt-1">
+            <div id="nav-buttons " class="text-end py-1">
+                <a href="{% url 'profile' %}" class="btn btn-outline btn-sm border border-light border-2"
+                   style="background: linear-gradient(45deg, #003a70, #ec0909);" data-bs-toggle="tooltip"
+                   data-bs-placement="bottom" title="Home">
+                    <i class="fas fa-house-user fa-lg text-white"></i>
+                </a>
+                <button class="btn btn-outline btn-sm  border border-light border-2  btn-gradient"
+                        data-bs-toggle="tooltip" data-bs-placement="bottom" title="Profile">
+                    <i class="fas fa-user-alt fa-lg text-white"></i>
+                </button>
+                <button class="btn btn-outline btn-sm  border border-light border-2 bg-danger" data-bs-toggle="tooltip"
+                        title="Notification">
+                    <i class="fas fa-bell fa-lg text-white"></i>
+                </button>
+                <a href="{% url 'account_logout' %}" class="btn btn-outline btn-sm border border-light border-2 theme"
+                   data-bs-toggle="tooltip" title="Notification" onclick="localStorage.clear();">
+                    <i class="fas fa-sign-out-alt fa-lg text-white"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,33 @@
+{% load i18n %}
+<!DOCTYPE html>
+<!--WASI KHAN-->
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block head_title %}{% endblock head_title %}</title>
+    {% block extra_head %}
+    {% endblock extra_head %}
+  {% include 'source_css.html' %}
+</head>
+<body style="background-color: #eee;">
+{% include 'base_menu.html' %}
+{% block body %}
+
+{% if messages %}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <i class="fa-solid text-warning fa-circle-info"></i>
+    <strong>{% trans "Messages: " %}</strong> {% for message in messages %} {{message}} {% endfor %} !
+    <button type="button" class="btn-close btn btn-gradient" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endif %}
+
+{% block content %}
+{% endblock content %}
+{% endblock body %}
+{% block extra_body %}
+{% endblock extra_body %}
+<div class="d-flex w-100"></div>
+{% include 'source_js.html' %}
+</body>
+</html>

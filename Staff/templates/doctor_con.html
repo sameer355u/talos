@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %}Doctor Consultation{% endblock %}
+{% block Style %}
+
+{% endblock %}
+{% block body %}
+
+{% load static %}
+{% include 'base_menu_2.html' %}
+
+<div class="w-50">
+    <ul class="list-group">
+        {% for i in doc_con_list %}
+        <li><a href="/Doctor/consultation/{{ i.AppointmentIDPK }}/" class="list-group-item list-group-item-action" target="_blank">{{ i.PatientIDFK.FirstName }} | {{ i.SlotIDFK.SlotDate }} | {{ i.SlotIDFK.StartTime }} | {{ i.SlotIDFK.Status }} </a></li>
+        {% endfor %}
+</ul>
+</div>
+
+{% endblock %}

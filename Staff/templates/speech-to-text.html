@@ -1,0 +1,165 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speech to text in js</title>
+    <!-- https://developer.mozilla.org/en-US/docs/Web/API/SpeechRecognition -->
+    <!-- new webkitSpeechRecognition() || new SpeechRecognition()-->
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        form * {
+            width: 50%;
+        }
+
+        textarea {
+            height: 250px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <button onclick='toggleRecording()'>Toggle recorder</button>
+ <div id='results'></div>
+ <script>
+    window.SpeechRecognition = window.SpeechRecognition ||
+    window.webkitSpeechRecognition;
+
+    let recognition = new window.SpeechRecognition()
+    let recording = false;
+    let results = null;
+
+    recognition.continuous = true;
+
+    function toggleRecording() {
+        if(recording) {
+            recognition.onend = null;
+            recognition.stop();
+            recording = false;
+
+            // Printing all results we got so far.
+            if(results) {
+                let resultsDiv = document.getElementById('results')
+                for(let i=0; i<results.length; ++i)
+                    resultsDiv.innerHTML = resultsDiv.innerHTML + results.item(i)[0].transcript
+            }
+        } else {
+            recognition.onend = onEnd;
+            recognition.start();
+            recording = true;
+        }
+    }
+
+    function onEnd() {
+        console.log('Speech recognition has stopped. Starting again ...');
+        recognition.start();
+    }
+
+
+    function onSpeak(e) {
+        results = e.results;
+        console.log(e.results[e.results.length-1][0].transcript);
+    }
+
+    recognition.addEventListener('result', onSpeak);
+
+</script>
+</body>
+</html>
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta http-equiv="X-UA-Compatible" content="IE=edge">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>Speech to text in js</title>-->
+<!--    &lt;!&ndash; https://developer.mozilla.org/en-US/docs/Web/API/SpeechRecognition &ndash;&gt;-->
+<!--    &lt;!&ndash; new webkitSpeechRecognition() || new SpeechRecognition()&ndash;&gt;-->
+<!--    <style>-->
+<!--        body {-->
+<!--            display: flex;-->
+<!--            flex-direction: column;-->
+<!--            align-items: center;-->
+<!--            justify-content: center;-->
+<!--            height: 100vh;-->
+<!--        }-->
+
+<!--        form {-->
+<!--            display: flex;-->
+<!--            flex-direction: column;-->
+<!--            align-items: center;-->
+<!--            justify-content: center;-->
+<!--            width: 100%;-->
+<!--        }-->
+
+<!--        form * {-->
+<!--            width: 50%;-->
+<!--        }-->
+
+<!--        textarea {-->
+<!--            height: 250px;-->
+<!--        }-->
+
+<!--        h1 {-->
+<!--            text-align: center;-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <form>-->
+<!--        <h1>Speech To Text App</h1>-->
+<!--        <textarea></textarea>-->
+<!--        <button type="submit">Speak!</button>-->
+<!--        <button type="button">Stop</button>-->
+<!--    </form>-->
+<!--    <script>-->
+<!--        let form = document.querySelector("form");-->
+<!--        let sr = window.webkitSpeechRecognition || window.SpeechRecognition;-->
+<!--        let spRec = new sr();-->
+<!--        spRec.lang = "hi";-->
+<!--        spRec.continuous = true;-->
+<!--        spRec.interimResults = true;-->
+<!--        // console.log(spRec);-->
+<!--        form.addEventListener("submit", e => {-->
+<!--            e.preventDefault();-->
+<!--            spRec.start();-->
+<!--        })-->
+<!--        spRec.onresult = res => {-->
+<!--            let text = Array.from(res.results)-->
+<!--                .map(r => r[0])-->
+<!--                .map(txt => txt.transcript)-->
+<!--                .join("");-->
+<!--            form[0].value = text;-->
+<!--            // console.log(text);-->
+<!--        }-->
+<!--        form[2].addEventListener("click", () => {-->
+<!--            spRec.stop()-->
+<!--        })-->
+<!--    </script>-->
+<!--</body>-->
+<!--</html>-->
+
+
+

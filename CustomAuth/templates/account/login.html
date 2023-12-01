@@ -1,0 +1,89 @@
+{% extends "account/base.html" %}
+{% load widget_tweaks %}
+{% load i18n %}
+{% load account socialaccount %}
+{% block head_title %}{% trans "Sign In" %}{% endblock head_title %}
+{% block content %}
+{% load static %}
+<div class="container-fluid h-custom mt-4">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1 pt-4 pb-4 border rounded-2 bg-white border border-2 border-danger">
+            <form class="login" method="POST" action="{% url 'account_login' %}">
+                {% csrf_token %}
+                <div class="d-flex flex-row align-items-center">
+                    <div class="float-start col">
+                        <p class="lead fw-normal mb-0 me-3">Sign in<strong></strong></p></div>
+                    <div class="col">
+                        <div class=" float-end">
+                            <a href="{% provider_login_url 'google' %}" type="button" class="btn border btn-light btn-floating mx-1">
+                                <svg xmlns="" x="0px" y="0px" width="25" height="25" viewBox="0 0 48 48">
+                                    <path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"></path><path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"></path><path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"></path><path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"></path>
+                                </svg>
+                            </a>
+                            <a href="provider_login_url 'facebook'" type="button" class="btn btn-primary btn-floating mx-1">
+                                <i class="fab fa-facebook-f text-white"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="divider d-flex align-items-center my-4">
+                    <p class="text-center fw-bold mx-3 mb-0">e-Swasthalya</p>
+                </div>
+                 {% if form.errors %}
+                    <div class="alert alert-danger">
+                        {{ form.errors }}
+                    </div>
+                {% endif %}
+
+                <div class="form-floating mb-4">{% render_field form.login class="form-control" type="text" %}
+                <label for="id_email">Email</label></div>
+                <div class="form-floating mb-2">{% render_field form.password class="form-control"%}
+                <label for="id_password">Password</label></div>
+
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="form-check mb-0">
+                        <input class="form-check-input me-2" type="checkbox" onclick="showPassword()"
+                               id="checkbox"/>
+                        <label class="form-check-label" for="checkbox">Show Password</label>
+                    </div>
+                    <a href="{% url 'account_reset_password' %}" >Forgot password?</a>
+                </div>
+
+                {% if redirect_field_value %}
+                <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+                {% endif %}
+                <div class="text-center text-lg-start mt-4 pt-2">
+                    <button type="submit" class="btn btn-gradient primaryAction" style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
+                    <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="{{ signup_url }}" class="link-danger">Register</a>
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="w-100" style="height: 50px;"></div>
+<div class="d-flex flex-column flex-md-row text-center text-md-start justify-content-between py-3 px-4 px-xl-5" style="background-color: #003a70">
+    <!-- Copyright -->
+    <div class="text-white mb-3 mb-md-0">Copyright © 2023 Datanutts Pvt Ltd. All rights reserved.</div>
+    <!-- Copyright -->
+
+    <!-- Right -->
+    <div>
+        <a href="#!" class="text-white me-4"><i class="text-white fab fa-facebook-f"></i></a>
+        <a href="#!" class="text-white me-4"><i class="text-white fab fa-twitter"></i></a>
+        <a href="#!" class="text-white me-4"><i class="text-white fab fa-google"></i></a>
+        <a href="#!" class="text-white"><i class="text-white fab fa-linkedin-in"></i></a>
+    </div>
+    <!-- Right -->
+</div>
+<script>
+    function showPassword() {
+      var x = document.getElementById("id_password");
+      if (x.type === "password") {
+        x.type = "text";
+      } else {
+        x.type = "password";
+      }
+    }
+</script>
+{% endblock content %}

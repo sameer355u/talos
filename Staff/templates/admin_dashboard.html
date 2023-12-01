@@ -1,0 +1,728 @@
+{% extends 'base.html' %}
+{% block title %}SuperAdmin{% endblock %}
+{% block body %}
+
+<div class="row g-2 mt-1">
+    <div class="col-lg col-md-4 col-sm-6">
+        <div class="card" style="background: linear-gradient(to bottom, #f1bff3, #e3e4f1); ">
+            <div class="card-body d-flex align-items-center">
+                <div class="avatar rounded-circle no-thumbnail ">
+                    <i class="fa-solid fa-user-doctor fa-beat" style="font-size: 1.5rem; color:#080942"></i>
+                </div>
+                <div class="flex-fill ms-3 text-truncate ">
+                    <div class="small  fw-bold "> Onboarded Doctor</div>
+                    170
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg col-md-4 col-sm-6">
+        <div class="card" style="background: linear-gradient(to bottom, #f8ccc8, #fdf2ed); " >
+            <div class="card-body d-flex align-items-center">
+                <div class="avatar rounded-circle no-thumbnail">
+                    <i class="fa-regular fa-hospital fa-beat" style="font-size: 1.5rem; color:#080942"></i>
+                </div>
+                <div class="flex-fill ms-3 text-truncate">
+                    <div class="small  fw-semibold ">Onboarded Clinic</div>
+                    18
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg col-md-4 col-sm-6">
+        <div class="card" style="background: linear-gradient(to bottom, #b8b9f1, #eff5f4); ">
+            <div class="card-body d-flex align-items-center">
+                <div class="avatar rounded-circle no-thumbnail">
+                    <i class="fa-regular fa-face-smile fa-beat" style="font-size: 1.5rem; color:#080942"></i>
+                </div>
+                <div class="flex-fill ms-3 text-truncate">
+                <div class="small  fw-semibold ">Total Happy Patients</div>
+                1,8420
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg col-md-6 col-sm-6">
+        <div class="card" style="background: linear-gradient(to bottom, #b8f5d7, #eefff6); ">
+            <div class="card-body d-flex align-items-center">
+                <div class="avatar rounded-circle no-thumbnail ">
+                    <i class="fa-solid fa-indian-rupee-sign fa-beat" style="font-size: 1.5rem; color:#080942"></i>
+                </div>
+                <div class="flex-fill ms-3 text-truncate">
+                    <div class="small  fw-semibold ">Revenue</div>
+                    <i class="bi bi-currency-rupee">4,564,589,624,485</i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg col-md-6 col-sm">
+        <div class="card" style="background: linear-gradient(to bottom, #fcecb6, rgb(245, 231, 245)); ">
+            <div class="card-body d-flex align-items-center">
+                <div class="avatar rounded-circle no-thumbnail">
+                    <i class="fa-solid fa-money-bill-transfer fa-beat" style="font-size: 1.5rem; color:#080942"></i>
+                </div>
+                <div class="flex-fill ms-3 text-truncate">
+                    <div class="small  fw-semibold ">Expense</div>
+                    <i class="bi bi-currency-rupee">9,874,225</i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="row g-2 mt-1">
+    <div class="col-lg-6 col-md-6">
+        <div class="card">
+            <div class="card-body d-flex align-items-center" style="height: 50vh;">
+                <canvas id="combinedChart"></canvas>
+                
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 col-md-6">
+        <div class="card">
+            <div class="card-body d-flex align-items-center" style="height: 50vh;">
+                <canvas id="barChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-2 mt-1">
+    <div class="col-lg-3 col-md-6">
+        <div class="card" >
+            <div class="card-body d-flex align-items-center" style="height: 50vh;">
+                <canvas id="pieChart"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+        <div class="card" >
+            <div class="card-body d-flex align-items-center" style="height: 50vh;">
+                <canvas id="radarChart"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 col-md-6">
+        <div class="card" >
+            <div class="card-body d-flex align-items-center"style="height: 50vh;">
+                <canvas id="expenseIncomeAreaChart" ></canvas>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="row g-2 mt-1">
+    <div class="col-lg-3 col-md-6">
+        <div class="card">
+            <div class="card-body d-flex align-items-center" style="height: 50vh;">
+                   <canvas id="doughnutChart"></canvas>
+                
+            </div>
+        </div>
+    </div>
+  
+    <div class="col-lg-3 col-md-6">
+        <div class="card" >
+            <div class="card-body d-flex align-items-center"style="height: 50vh;">
+                <canvas id="polarAreaChart"></canvas>
+                
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+        <div class="card shadow">
+            <div class="card-body overflow-auto" style="height: 50vh;">
+
+                <div class="list-group list-group-flush   my-1">
+                    <div class="row justify-content-start">
+                        <div class="col-2 ">
+                            <b class="mb-1" >Rank</b>
+                        </div>
+                        <div class="col">
+                            <b class="mb-1" >Profile Photo</b>
+
+                        </div>
+                        <div class="col">
+                            <b class="mb-1" >Details</b>
+                        
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <div class="list-group list-group-flush   my-1">
+                    <div class="row justify-content-start">
+                        <div class="col-2">
+                            <b class="mb-1" >1).</b>
+                        </div>
+                        <div class="col-3">
+                            <img src="https://media.istockphoto.com/id/1311511363/photo/headshot-portrait-of-smiling-male-doctor-with-tablet.jpg?s=1024x1024&w=is&k=20&c=t7CHvTXxgmxbr0I6jdEsCgcyWcjBu9MKKI7tMctBTUE="
+                                alt="Doctor 1" width="50" height="50" class="rounded-circle">
+                        </div>
+                        <div class="col">
+                            <b class="mb-1" id="selectDoctor">Doctor Name</b>
+                            <p class="mb-1">Specialization</p>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="list-group list-group-flush  p-1 my-1">
+                    <div class="row justify-content-start">
+                        <div class="col-2">
+                            <b class="mb-1" >2).</b>
+                        </div>
+                        <div class="col-3">
+                            <img src="https://media.istockphoto.com/id/1311511363/photo/headshot-portrait-of-smiling-male-doctor-with-tablet.jpg?s=1024x1024&w=is&k=20&c=t7CHvTXxgmxbr0I6jdEsCgcyWcjBu9MKKI7tMctBTUE="
+                                alt="Doctor 1" width="50" height="50" class="rounded-circle">
+                        </div>
+                        <div class="col">
+                            <b class="mb-1" id="selectDoctor">Doctor Name</b>
+                            <p class="mb-1">Specialization</p>
+                            
+
+                        </div>
+                    </div>
+                  
+                </div>
+                <div class="list-group list-group-flush  p-1 my-1">
+                    <div class="row justify-content-center">
+                        <div class="col-2">
+                            <b class="mb-1" >3).</b>
+                        </div>
+                        <div class="col-3">
+                            <img src="https://media.istockphoto.com/id/1311511363/photo/headshot-portrait-of-smiling-male-doctor-with-tablet.jpg?s=1024x1024&w=is&k=20&c=t7CHvTXxgmxbr0I6jdEsCgcyWcjBu9MKKI7tMctBTUE="
+                                alt="Doctor 1" width="50" height="50" class="rounded-circle">
+                        </div>
+                        <div class="col">
+                            <b class="mb-1" id="selectDoctor">Doctor Name</b>
+                            <p class="mb-1">Specialization</p>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="list-group list-group-flush  p-1 my-1">
+                    <div class="row justify-content-start">
+                        <div class="col-2">
+                            <b class="mb-1" >4).</b>
+                        </div>
+                        <div class="col-3">
+                            <img src="https://media.istockphoto.com/id/1311511363/photo/headshot-portrait-of-smiling-male-doctor-with-tablet.jpg?s=1024x1024&w=is&k=20&c=t7CHvTXxgmxbr0I6jdEsCgcyWcjBu9MKKI7tMctBTUE="
+                                alt="Doctor 1" width="50" height="50" class="rounded-circle">
+                        </div>
+                        <div class="col">
+                            <b class="mb-1" id="selectDoctor">Doctor Name</b>
+                            <p class="mb-1">Specialization</p>
+                            
+                        </div>
+                    </div>
+        
+                </div>
+                <div class="list-group list-group-flush p-1 my-1">
+                    <div class="row justify-content-start">
+                        <div class="col-2">
+                            <b class="mb-1" >5).</b>
+                        </div>
+                        <div class="col-3">
+                            <img src="https://media.istockphoto.com/id/1311511363/photo/headshot-portrait-of-smiling-male-doctor-with-tablet.jpg?s=1024x1024&w=is&k=20&c=t7CHvTXxgmxbr0I6jdEsCgcyWcjBu9MKKI7tMctBTUE="
+                                alt="Doctor 1" width="50" height="50" class="rounded-circle">
+                        </div>
+                        <div class="col">
+                            <b class="mb-1">Doctor Name</b>
+                            <p class="mb-1">Specialization</p>
+
+                            
+                        </div>
+                    </div>
+                </div>
+        
+            </div>
+
+        </div>
+    </div>
+    <div class="col-lg-3  col-md-6">
+        <div class="card shadow">
+            <div class="card-body overflow-auto" style="height: 50vh;">
+
+                <div class="list-group list-group-flush   my-1">
+                    <div class="row justify-content-start">
+                        <div class="col-2">
+                            <b class="mb-1" >1).</b>
+                        </div>
+                        <div class="col-3">
+                            <img src="https://th.bing.com/th/id/OIP.0G26yalWsZLcjR4Uk9ierAHaH_?pid=ImgDet&w=1000&h=1080&rs=1"
+                                alt="Doctor 1" width="50" height="50" class="rounded-circle">
+                        </div>
+                        <div class="col">
+                            <b class="mb-1" id="selectDoctor">Clinic Name</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="list-group list-group-flush  p-1 my-1">
+                    <div class="row justify-content-start">
+                        <div class="col-2">
+                            <b class="mb-1" >2).</b>
+                        </div>
+                        <div class="col-3">
+                            <img src="https://th.bing.com/th/id/OIP.ESJB5j9zKw3Ffq-RAWrrAgHaFO?pid=ImgDet&rs=1"
+                                alt="Doctor 1" width="50" height="50" class="rounded-circle">
+                        </div>
+                        <div class="col">
+                            <b class="mb-1" id="selectDoctor">Clinic Name</b>
+
+                        </div>
+                    </div>
+                  
+                </div>
+                <div class="list-group list-group-flush  p-1 my-1">
+                    <div class="row justify-content-center">
+                        <div class="col-2">
+                            <b class="mb-1" >3).</b>
+                        </div>
+                        <div class="col-3">
+                            <img src="https://th.bing.com/th/id/OIP.4ydJETbaRCncszIhXdto1gHaHa?pid=ImgDet&rs=1"
+                                alt="Doctor 1" width="50" height="50" class="rounded-circle">
+                        </div>
+                        <div class="col">
+                            <b class="mb-1" id="selectDoctor">Clinic Name</b>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="list-group list-group-flush  p-1 my-1">
+                    <div class="row justify-content-start">
+                        <div class="col-2">
+                            <b class="mb-1" >4).</b>
+                        </div>
+                        <div class="col-3">
+                            <img src="https://thumbs.dreamstime.com/b/medical-clinic-neon-signboard-vector-medical-neon-glowing-symbol-light-banner-neon-icon-design-element-vector-medical-clinic-neon-122808598.jpg"
+                                alt="Doctor 1" width="50" height="50" class="rounded-circle">
+                        </div>
+                        <div class="col">
+                            <b class="mb-1" id="selectDoctor">Clinic Name</b>
+
+                        </div>
+                    </div>
+        
+                </div>
+                <div class="list-group list-group-flush p-1 my-1">
+                    <div class="row justify-content-start">
+                        <div class="col-2">
+                            <b class="mb-1" >5).</b>
+                        </div>
+                        <div class="col-3">
+                            <img src="https://th.bing.com/th/id/OIP.S7OuZCpJuiTblzsVeDfVYgHaHa?pid=ImgDet&w=626&h=626&rs=1"
+                                alt="Doctor 1" width="50" height="50" class="rounded-circle">
+                        </div>
+                        <div class="col">
+                            <b class="mb-1" id="selectDoctor">Clinic Name</b>
+
+                        </div>
+                    </div>
+                </div>
+        
+            </div>
+
+        </div>
+    </div>
+    
+</div>
+
+
+{% endblock %}
+
+{% block jsblock %}
+
+
+
+
+const radardata = {
+    labels: [
+      'Eating',
+      'Drinking',
+      'Sleeping',
+      'Designing',
+      'Coding',
+      'Cycling',
+      'Running'
+    ],
+    datasets: [{
+      label: 'My First Dataset',
+      data: [65, 59, 90, 81, 56, 55, 40],
+      fill: true,
+      backgroundColor: 'rgba(255, 99, 132, 0.2)',
+      borderColor: 'rgb(255, 99, 132)',
+      pointBackgroundColor: 'rgb(255, 99, 132)',
+      pointBorderColor: '#fff',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: 'rgb(255, 99, 132)'
+    }, {
+      label: 'My Second Dataset',
+      data: [28, 48, 40, 19, 96, 27, 100],
+      fill: true,
+      backgroundColor: 'rgba(54, 162, 235, 0.2)',
+      borderColor: 'rgb(54, 162, 235)',
+      pointBackgroundColor: 'rgb(54, 162, 235)',
+      pointBorderColor: '#fff',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: 'rgb(54, 162, 235)'
+    }]
+  };
+
+  // Radar chart configuration
+  const radarconfig = {
+    type: 'radar',
+    data: radardata,
+    options: {
+        plugins: {
+            title: {
+                display: true, // Hide the title
+                text:'Clinic',
+                align: 'start',
+                font: {                     
+                    weight: 'bold',   
+                    size:16,    
+                 }
+            },
+            legend: {
+                display: true, // Hide the legend
+            },
+        },
+      elements: {
+        line: {
+          borderWidth: 3
+        }
+      }
+    },
+  };
+
+  // Get the canvas element and create the chart
+  const radarChartCtx = document.getElementById('radarChart').getContext('2d');
+  new Chart(radarChartCtx, radarconfig);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const doughnutdata = {
+    labels: [
+        'Good',
+        'Average',
+        'Bad'
+    ],
+    datasets: [{
+        label: 'My First Dataset',
+        data: [60, 25, 15],
+        hoverOffset: 4,
+        borderWidth: 1,
+    }]
+};
+
+// Define the chart configuration
+const doughnutconfig = {
+    type: 'doughnut',
+            data: doughnutdata,
+            options: {
+                plugins: {
+                    title: {
+                        display: true, // Hide the title
+                        text:'Clinic Feedback',
+                        align: 'start',
+                        font: {                     
+                            weight: 'bold',   
+                            size:16,    
+                         }
+                    },
+                    legend: {
+                        display: true, // Hide the legend
+                    },
+                },
+            },
+};
+
+// Get the canvas element and create the chart
+const doughnutctx = document.getElementById('doughnutChart').getContext('2d');
+new Chart(doughnutctx, doughnutconfig);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Sample labels and data for three charts
+const labels = [
+  ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+  ['August', 'September', 'October', 'November', 'December']
+];
+
+const datasets = [
+  {
+    label: 'Lab ',
+    data: [65000, 59000, 80000, 81000, 56000, 50005, 40000, 59000, 80000],
+    borderColor: 'rgb(75, 192, 192)',
+    tension: 0.1
+  },
+  {
+    label: 'Pharmacy ',
+    data: [75000, 70000, 91000, 46000, 59000, 81000, 56000, 50005, 40000],
+    borderColor: 'rgb(255, 99, 132)',
+    tension: 0.1
+  },
+  {
+    label: 'Doctor Consultation ',
+    data: [85000, 79000, 90000, 70001, 81000, 74001, 78001, 59000, 90900],
+    borderColor: 'rgb(54, 162, 235)',
+    tension: 0.1
+  }
+];
+
+// Create a new Chart instance for the combined chart
+new Chart(document.getElementById('combinedChart').getContext('2d'), {
+  type: 'line',
+  data: {
+    labels: labels.flat(), // Combine all labels into one array
+    datasets: datasets
+  },
+  options: {
+    scales: {
+      x: {
+        display: false,
+      },
+      y: {
+        display: false,
+      },
+    },
+    plugins: {
+      legend: {
+        display: true,
+      },
+      title: {
+        display: true, // Hide the title
+        text:'Monthly income',
+        align: 'start',
+        font: {                     
+               weight: 'bold',   
+               size:16,    
+            }
+    },
+    },
+  },
+});
+
+const labels1 = ['January', 'February', 'March', 'April', 'May', 'June', 'July','August', 'September', 'October', 'November', 'December'];;
+
+
+const barChartData = {
+  labels: labels1, // Default to labels1
+  datasets: [
+    {
+      label: 'Doctor',
+      data: [65, 59, 80, 81, 56, 55, 40],
+      backgroundColor: 'rgba(255, 99, 132, 0.2)',
+      borderColor: 'rgb(255, 99, 132)',
+      borderWidth: 1
+    },
+    {
+      label: 'Paitent',
+      data: [75, 69, 70, 91, 46],
+      backgroundColor: 'rgba(255, 159, 64, 0.2)',
+      borderColor: 'rgb(255, 159, 64)',
+      borderWidth: 1
+    },
+    {
+      label: 'Lab',
+      data: [85, 79, 90, 71],
+      backgroundColor: 'rgba(255, 205, 86, 0.2)',
+      borderColor: 'rgb(255, 205, 86)',
+      borderWidth: 1
+    }
+  ]
+};
+
+const barChartConfig = {
+  type: 'bar',
+  data: barChartData,
+  options: {
+    plugins: {
+        title: {
+            display: true, // Hide the title
+            text:'Clinic',
+            align: 'start',
+            font: {                     
+                weight: 'bold',   
+                size:16,    
+             }
+        },
+    },
+    
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  },
+};
+
+const ctx = document.getElementById('barChart').getContext('2d');
+const chart = new Chart(ctx, barChartConfig);
+
+// Additional code for the polar area chart (you can keep your existing polar area chart code here)
+const polarAreaLabels = [
+  'Red',
+  'Green',
+  'Yellow',
+  'Grey',
+  'Blue'
+];
+
+const polarAreaData = {
+  labels: polarAreaLabels,
+  datasets: [{
+    label: 'Custom Dataset Label',
+    data: [11, 16, 7, 3, 14],
+    backgroundColor: [
+      'rgb(255, 99, 132)',
+      'rgb(75, 192, 192)',
+      'rgb(255, 205, 86)',
+      'rgb(201, 203, 207)',
+      'rgb(54, 162, 235)'
+    ]
+  }]
+};
+
+const polarAreaConfig = {
+  type: 'polarArea',
+  data: polarAreaData,
+  options: {
+    plugins: {
+        title: {
+            display: true, // Hide the title
+            text:'Clinic',
+            align: 'start',
+            font: {                     
+                weight: 'bold',   
+                size:16,    
+             }
+        },
+    },
+  },
+};
+
+const polarAreaCtx = document.getElementById('polarAreaChart').getContext('2d');
+new Chart(polarAreaCtx, polarAreaConfig);
+
+
+
+
+const pieChartData = {
+    labels: ['Pharmacy', 'Consultation', 'Others'],
+    datasets: [{
+        label: 'Total Share',
+        data: [60, 20, 20],
+        backgroundColor: [
+            'rgb(255, 99, 132)',
+            'rgb(54, 162, 235)',
+            'rgb(255, 205, 86)'
+        ],
+        hoverOffset: 4
+    }]
+};
+
+const pieChartConfig = {
+    type: 'pie',
+    data: pieChartData,
+    options: {
+        plugins: {
+            title: {
+                display: true, // Hide the title
+                text:'Service share',
+                align: 'start',
+                font: {                     
+                    weight: 'bold',   
+                    size:16,    
+                 }
+            },
+        }
+    }
+};
+
+const pieChartCtx = document.getElementById('pieChart').getContext('2d');
+new Chart(pieChartCtx, pieChartConfig);
+
+
+
+const expenseIncomeChartData = {
+    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July','August'],
+    datasets: [
+        {
+            label: 'Income',
+            data: [1500000,1200000,1500000, 250000, 3450000, 3750000, 4680000, 9990000],
+            fill: true,
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgb(75, 192, 192)',
+            tension: 0.2
+        },
+        {
+            label: 'Expenses',
+            data: [1050000,520000,2500000, 200000, 350000, 500000, 2800000, 8900000],
+            fill: true,
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            borderColor: 'rgb(255, 99, 132)',
+            tension: 0.2
+        }
+    ]
+};
+
+const expenseIncomeChartConfig = {
+    type: 'line',
+    data: expenseIncomeChartData,
+    options: {
+        plugins: {
+            title: {
+                display: true, // Hide the title
+                text:'Income and Expense',
+                align: 'start',
+                font: {                     
+                    weight: 'bold',   
+                    size:16,    
+                 }
+            },
+        }
+    }
+    
+};
+
+const expenseIncomeChartCtx = document.getElementById('expenseIncomeAreaChart').getContext('2d');
+new Chart(expenseIncomeChartCtx, expenseIncomeChartConfig);
+
+{% endblock %}

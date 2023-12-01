@@ -1,0 +1,18 @@
+{% extends "account/base.html" %}
+{% load widget_tweaks %}
+{% block content %}
+<div class="w-25">
+    <h3 class="" id="">Menu</h3>
+    <ul class="list-group">
+        {% if user.is_authenticated %}
+        <li><a href="{% url 'account_email' %}" class="list-group-item list-group-item-action">Change Email</a></li>
+        <li><a href="{% url 'socialaccount_signup' %}" class="list-group-item list-group-item-action">Social accounts Signup</a></li>
+        <li><a href="{% url 'socialaccount_connections' %}" class="list-group-item list-group-item-action">Social accounts</a></li>
+        <li><a href="{% url 'account_logout' %}" class="list-group-item list-group-item-action">Sign Out</a></li>
+        {% else %}
+        <li><a href="{% url 'account_login' %}" class="list-group-item list-group-item-action">Sign In</a></li>
+        <li><a href="{% url 'account_signup' %}" class="list-group-item list-group-item-action">Sign Up</a></li>
+        {% endif %}
+    </ul>
+</div>
+{% endblock content %}

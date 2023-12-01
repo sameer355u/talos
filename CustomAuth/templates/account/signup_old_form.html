@@ -1,0 +1,157 @@
+{% extends "account/base.html" %}
+{% load widget_tweaks %}
+{% load i18n %}
+
+{% block head_title %}{% trans "Signup" %}{% endblock head_title %}
+
+{% block content %}
+
+<script>
+    $(document).ready(function(){
+        $("#myTab li:eq(0) a").tab("show");
+    });
+</script>
+<section class="vh-auto">
+    <div class="container-fluid h-custom m-2">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1 pt-4 pb-4 rounded-2 bg-white border border-2 border-danger">
+                {% if form.errors %}
+                {% for field in form %}
+                {% for error in field.errors %}
+                <div class="alert alert-danger">
+                    <strong>{{ error|escape }}</strong>
+                </div>
+                {% endfor %}
+                {% endfor %}
+                {% elif errors %}
+                <div class="alert alert-danger">
+                    <strong>{{ error|escape }}</strong>
+                </div>
+                {% endif %}
+                <div class="d-flex flex-row align-items-center">
+                    <div class="float-start col">
+                        <p class="lead fw-normal mb-0 me-3">{% trans "Signup" %}</p></div>
+                    <div class="col">
+                        <div class=" float-end">
+                            <a href="/accounts/google/login/" type="button" class="btn btn-gradient btn-floating mx-1 ">
+                                <i class="fab fa-google text-white"></i></a>
+                            <a href="provider_login_url 'facebook'" type="button" class="btn btn-gradient btn-floating mx-1">
+                                <i class="fab fa-facebook-f text-white"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="divider d-flex align-items-center my-4">
+                    <p class="text-center fw-bold mx-3 mb-0">Talos e-Clinic</p>
+                </div>
+                <div class="mb-2">
+                    <ul class="nav nav-tabs w-100" id="myTab">
+                        <li class="nav-item w-50 pe-1">
+                            <a href="#patient" class="nav-link w-100" data-bs-toggle="tab">Patient</a>
+                        </li>
+                        <li class="nav-item w-50">
+                            <a href="#staff" class="nav-link w-100" data-bs-toggle="tab">Others</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tab-content">
+                    <div class="tab-pane fade" id="patient">
+                        <form id="signup_patient" action="{% url 'account_signup' %}" method="POST" autocomplete="off">
+                            {% csrf_token %}
+                            <input type="hidden" name="professional_type" value="{{3}}">
+                            <div class="form-floating mb-2">{% render_field form.email class="form-control" type="email" %}
+                                <label for="id_email">Email</label></div>
+                            <div class="form-floating mb-2">{% render_field form.phone class="form-control" id="id_phone1" %}
+                                <label for="id_phone1">Phone</label></div>
+                            <div class="form-floating mb-2">{% render_field form.password1 class="form-control" %}
+                                <label for="id_password1">Password</label></div>
+                            <div class="mb-2 form-floating">{% render_field form.password2 class="form-control" %}
+                                <label for="id_password2">Password (again)</label></div>
+                            <div class="d-flex justify-content-between align-items-center mt-2">
+                                <!-- Checkbox -->
+                                <div class="form-check mb-0">
+                                    <input class="form-check-input me-2" type="checkbox" onclick="showPassword()"
+                                           id="checkbox1"/>
+                                    <label style="visibility: visible;" class="form-check-label" for="checkbox1">Show
+                                        Password</label>
+                                </div>
+                            </div>
+                            {% if redirect_field_value %}
+                            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+                            {% endif %}
+                            <button class="btn btn-gradient float-end" type="submit" name="Patient">{% trans "Sign Up" %}
+                                &raquo;
+                            </button>
+                        </form>
+                    </div>
+                    <div class="tab-pane fade" id="staff">
+                        <form id="signup_staff" method="post" action="{% url 'account_signup' %}">
+                            {% csrf_token %}
+                            <div class="form-floating mb-2">{% render_field form.professional_type class="form-select" type="text" %}
+                                <label for="id_professional_type">Select Profession</label></div>
+                            <div class="form-floating mb-2">{% render_field form.email class="form-control" type="email" %}
+                                <label for="id_email">Email</label></div>
+                            <div class="form-floating mb-2">{% render_field form.phone class="form-control" %}
+                                <label for="id_phone">Phone</label></div>
+                            <div class="form-floating mb-2">{% render_field form.password1 class="form-control" %}
+                                <label for="id_password1">Password</label></div>
+                            <div class="mb-2 form-floating">{% render_field form.password2 class="form-control" %}
+                                <label for="id_password2">Password (again)</label></div>
+                            <div class="d-flex justify-content-between align-items-center mt-2">
+                                <!-- Checkbox -->
+                                <div class="form-check mb-0">
+                                    <input class="form-check-input me-2" type="checkbox" onclick="showPassword()"
+                                           id="checkbox2"/>
+                                    <label style="visibility: visible;" class="form-check-label" for="checkbox2">Show
+                                        Password</label>
+                                </div>
+                            </div>
+                            {% if redirect_field_value %}
+                            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+                            {% endif %}
+                            <button class="btn btn-gradient float-end" type="submit" name="Others">{% trans "Sign Up" %}&raquo;</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <div class="theme-color d-flex flex-column flex-md-row text-center text-md-start justify-content-between py-4 px-4 px-xl-5">
+        <!-- Copyright -->
+        <div class="text-white mb-3 mb-md-0">
+            Copyright © 2023 Datanutts Pvt Ltd. All rights reserved.
+        </div>
+        <!-- Copyright -->
+
+        <!-- Right -->
+        <div>
+            <a href="#!" class="text-white me-4">
+                <i class="text-white fab fa-facebook-f"></i>
+            </a>
+            <a href="#!" class="text-white me-4">
+                <i class="text-white fab fa-twitter"></i>
+            </a>
+            <a href="#!" class="text-white me-4">
+                <i class="text-white fab fa-google"></i>
+            </a>
+            <a href="#!" class="text-white">
+                <i class="text-white fab fa-linkedin-in"></i>
+            </a>
+        </div>
+        <!-- Right -->
+    </div>
+</section>
+
+<script>
+    function showPassword() {
+      var x = document.getElementById("id_password1");
+      if (x.type === "password") {
+        x.type = "text";
+      } else {
+        x.type = "password";
+      }
+    }
+</script>
+
+{% endblock content %}
