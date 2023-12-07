@@ -3,20 +3,13 @@ from django.db import models
 
 
 class HealthProfessionalPersonalDetails(models.Model):
-    HealthProfessionalIDPK = models.AutoField(primary_key=True)
-    FullName = models.CharField(max_length=35)
-    # ProfessionalTypeID = models.ForeignKey(ProfessionalType, on_delete=models.RESTRICT)
-    ProfessionalProfilePic = models.ImageField(upload_to='staff/profile_picture')
-    ContactNumber = models.BigIntegerField()
-    DateOfBirth = models.DateField()
-    UserIDFK = models.ForeignKey(User, on_delete=models.RESTRICT)
-    GenderType = [('M', 'Male'), ('F', 'female'), ('O', 'Others')]
-    Gender = models.CharField(max_length=9, choices=GenderType)
-    BloodGroup = models.CharField(max_length=4, default=None)
-    Nationality = models.CharField(max_length=15, default=None)
-    AadharNo = models.BigIntegerField(default=78, unique=True)
-    MaritalStatustype = [('U', 'Unmarried'), ('Mrd', 'Married'), ('D', 'Divorcee'), ('W', 'Widow')]
-    MaritalStatus = models.CharField(max_length=15, choices=MaritalStatustype)
+    HealthProfessionalPersonalDetailsIDPK = models.AutoField(primary_key=True)
+    UserIdFK = models.ForeignKey(User, on_delete=models.RESTRICT)
+    EmpID = models.CharField(max_length=10, default='EMP')
+    EmailId = models.CharField(max_length=50, default=None)
+    ProfileImage = models.ImageField(upload_to='healthprofessional/Image')
+    AlternateContactNumber = models.BigIntegerField()
+    MaritalStatus = models.CharField(max_length=20)
     Address = models.CharField(max_length=75, default=None)
     City = models.CharField(max_length=25, default=None)
     State = models.CharField(max_length=30, default=None)
@@ -24,15 +17,14 @@ class HealthProfessionalPersonalDetails(models.Model):
     Pin = models.IntegerField()
     SpouseName = models.CharField(max_length=20, default=None)
     ActiveFlag = models.CharField(max_length=3, default=True)
-    Status = models.CharField(max_length=10)
     CreatedBy = models.CharField(max_length=15)
     UpdatedBy = models.CharField(max_length=15)
     CreationDate = models.DateTimeField(auto_now_add=True)
     UpdationDate = models.DateTimeField(auto_now=True)
 
     @staticmethod
-    def get_doctor(HealthProfessionalIDPK):
-        return HealthProfessionalPersonalDetails.objects.get(HealthProfessionalIDPK=HealthProfessionalIDPK)
+    def get_doctor(HealthProfessionalPersonalDetailsIDPK):
+        return HealthProfessionalPersonalDetails.objects.get(HealthProfessionalPersonalDetailsIDPK=HealthProfessionalPersonalDetailsIDPK)
 
     @staticmethod
     def get_doctor_id(UserIDFK):
@@ -45,13 +37,13 @@ class HealthProfessionalPersonalDetails(models.Model):
 
 class HealthProfessionalEducationDetails(models.Model):
     HealthProfessionalEducationIDPK = models.AutoField(primary_key=True)
-    HealthProfessionalIDFK = models.ForeignKey(HealthProfessionalPersonalDetails, on_delete=models.RESTRICT)
-    UserIDFK = models.ForeignKey(User, on_delete=models.RESTRICT)
-    QualificationName = models.CharField(max_length=30)
-    CurrentStatus = models.CharField(max_length=20)
+    EmpID = models.CharField(max_length=10, default='EMP')
+    QualificationType = models.CharField(max_length=20)
+    QualificationName = models.CharField(max_length=50)
+    CurrentStatus = models.CharField(max_length=30)
     PassingYear = models.IntegerField()
-    InstituteName = models.CharField(max_length=75, blank=True)
-    UniversityName = models.CharField(max_length=75, blank=True)
+    CollegeIDFK = models.IntegerField()
+    UniversityIDFK = models.IntegerField()
     ActiveFlag = models.CharField(max_length=3, default=True)
     CreatedBy = models.CharField(max_length=15)
     UpdatedBy = models.CharField(max_length=15)
@@ -59,29 +51,13 @@ class HealthProfessionalEducationDetails(models.Model):
     UpdationDate = models.DateTimeField(auto_now=True)
 
     @staticmethod
-    def get_educational_detail_by_staff_id(HealthProfessionalIDFK):
-        return HealthProfessionalEducationDetails.objects.get(HealthProfessionalIDFK=HealthProfessionalIDFK)
-
-
-class HealthProfessionalSpecializationDetails(models.Model):
-    HealthProfessionalSpecializationIDPK = models.AutoField(primary_key=True)
-    HealthProfessionalIDFK = models.ForeignKey(HealthProfessionalPersonalDetails, on_delete=models.RESTRICT)
-    SpecializationType = models.CharField(max_length=30)
-    # Fellowship=models.CharField(max_length=50,blank=True)
-    ActiveFlag = models.CharField(max_length=3, default=True)
-    CreatedBy = models.CharField(max_length=15)
-    UpdatedBy = models.CharField(max_length=15)
-    CreationDate = models.DateTimeField(auto_now_add=True)
-    UpdationDate = models.DateTimeField(auto_now=True)
-
-    @staticmethod
-    def get_specialization_detail_by_staff_id(HealthProfessionalIDFK):
-        return HealthProfessionalEducationDetails.objects.get(HealthProfessionalIDFK=HealthProfessionalIDFK)
+    def get_educational_detail_by_EmpID(EmpID):
+        return HealthProfessionalEducationDetails.objects.get(EmpID=EmpID)
 
 
 class HealthProfessionalExperienceDetails(models.Model):
     HealthProfessionalExperienceIDPK = models.AutoField(primary_key=True)
-    HealthProfessionalIDFK = models.ForeignKey(HealthProfessionalPersonalDetails, on_delete=models.RESTRICT)
+    EmpID = models.CharField(max_length=10, default='EMP')
     MedicalInstituteName = models.CharField(max_length=50)
     RoleName = models.CharField(max_length=20)
     ExperienceYears = models.IntegerField()
@@ -89,43 +65,45 @@ class HealthProfessionalExperienceDetails(models.Model):
     StartDate = models.DateField()
     EndDate = models.DateField()
     ActiveFlag = models.CharField(max_length=3, default=True)
+    Status = models.CharField(max_length=10, default='Pending')
     CreatedBy = models.CharField(max_length=15)
     UpdatedBy = models.CharField(max_length=15)
     CreationDate = models.DateTimeField(auto_now_add=True)
     UpdationDate = models.DateTimeField(auto_now=True)
 
     @staticmethod
-    def get_experience_detail_by_staff_id(HealthProfessionalIDFK):
-        return HealthProfessionalEducationDetails.objects.get(HealthProfessionalIDFK=HealthProfessionalIDFK)
+    def get_experience_detail_by_EmpID(EmpID):
+        return HealthProfessionalEducationDetails.objects.get(EmpID=EmpID)
 
 
 class HealthProfessionalCertificationDetails(models.Model):
     HealthProfessionalCertificateIDPK = models.AutoField(primary_key=True)
-    HealthProfessionalIDFK = models.ForeignKey(HealthProfessionalPersonalDetails, on_delete=models.RESTRICT)
-    CertificateName = models.CharField(max_length=25)
-    UploadCertificateLink = models.FileField(upload_to='staff/Health_Professional_Documents')
+    EmpID = models.CharField(max_length=10, default='EMP')
+    CertificateName = models.CharField(max_length=50)
+    UploadCertificateLink = models.FileField(upload_to='healthprofessional')
     IssueDate = models.DateField()
     ExpiryDate = models.DateField()
     ActiveFlag = models.CharField(max_length=3, default=True)
+    Status = models.CharField(max_length=10, default='Pending')
     CreatedBy = models.CharField(max_length=15)
     UpdatedBy = models.CharField(max_length=15)
     CreationDate = models.DateTimeField(auto_now_add=True)
     UpdationDate = models.DateTimeField(auto_now=True)
 
     @staticmethod
-    def get_certification_detail_by_staff_id(HealthProfessionalIDFK):
-        return HealthProfessionalEducationDetails.objects.get(HealthProfessionalIDFK=HealthProfessionalIDFK)
+    def get_certification_detail_by_EmpID(EmpID):
+        return HealthProfessionalEducationDetails.objects.get(EmpID=EmpID)
 
 
 class HealthProfessionalDocumentLinks(models.Model):
     HealthProfessionalDocumentLinksIDPK = models.AutoField(primary_key=True)
-    HealthProfessionalIDFK = models.ForeignKey(HealthProfessionalPersonalDetails, on_delete=models.RESTRICT)
-
-    DocumentType = models.CharField(max_length=15)
-    DocumentName = models.CharField(max_length=20)
-    DocumentLink = models.FileField(upload_to='staff/Health_Professional_Documents')
-    Remarks = models.CharField(max_length=30)
+    EmpID = models.CharField(max_length=10, default='EMP')
+    DocumentType = models.CharField(max_length=50)
+    DocumentName = models.CharField(max_length=50)
+    DocumentLink = models.FileField(upload_to='healthprofessional')
+    Remarks = models.CharField(max_length=50)
     ActiveFlag = models.CharField(max_length=3, default=True)
+    Status = models.CharField(max_length=10, default='Pending')
     CreatedBy = models.CharField(max_length=15)
     UpdatedBy = models.CharField(max_length=15)
     CreationDate = models.DateTimeField(auto_now_add=True)
@@ -134,8 +112,7 @@ class HealthProfessionalDocumentLinks(models.Model):
 
 class HealthProfessionalBankDetails(models.Model):
     HealthProfessionalBankDetailsIDPK = models.AutoField(primary_key=True)
-    HealthProfessionalIDFK = models.ForeignKey(HealthProfessionalPersonalDetails, on_delete=models.RESTRICT)
-
+    EmpID = models.CharField(max_length=10, default='EMP')
     AccountType = models.CharField(max_length=20)
     AccountHolderName = models.CharField(max_length=35)
     AccountNumber = models.BigIntegerField()
@@ -170,6 +147,31 @@ class MstCollege(models.Model):
     CreationDate = models.DateTimeField(auto_now_add=True)
     UpdationDate = models.DateTimeField(auto_now=True)
 
+class MstHealthProfessional(models.Model):
+    MstHealthProfessionalIDPK= models.AutoField(primary_key=True)
+    EmpID=models.CharField(max_length=10,default='EMP')
+    EmpEmail=models.CharField(max_length=50,default=None)
+    EmpPhoneNumber	=models.BigIntegerField()
+    DateOfBirth=models.DateField()
+    UserIDFK = models.ForeignKey(User, on_delete=models.RESTRICT, default=User)
+    FirstName=models.CharField(max_length=20)
+    MiddleName=models.CharField(max_length=20)
+    LastName=models.CharField(max_length=20)
+    Nationality=models.CharField(max_length=15,default=None)
+    AadharNo=models.BigIntegerField(default=78)
+    Gender=models.CharField(max_length=9)
+    BloodGroup=models.CharField(max_length=4,default=None)
+    EmployeeStatus=models.CharField(max_length=20,default='Applicant')
+    ApprovalStatus=models.CharField(max_length=20,default='Pending')
+    ProfessionalTypeIdFK=models.ForeignKey(ProfessionalType,on_delete=models.RESTRICT,default=ProfessionalType)
+    Designation	=models.CharField(max_length=30,default='Applicant')
+    EmpStartDate=models.DateField(auto_now_add=True)
+    EmpEndDate	=models.DateField(blank=True,null=True)
+    ActiveFlag =models.CharField(max_length=2,default='A')
+    CreatedBy = models.CharField(max_length=15)
+    UpdatedBy = models.CharField(max_length=15)
+    CreationDate = models.DateTimeField(auto_now_add=True)
+    UpdationDate = models.DateTimeField(auto_now=True)
 
 class MstFlag(models.Model):
     FlagID = models.AutoField(primary_key=True)

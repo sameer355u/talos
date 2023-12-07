@@ -17,7 +17,6 @@ class UserList(viewsets.ModelViewSet):
 def flutter_login(request, userid, password):
     print("userid", userid)
     print("password", password)
-    password = password
     get_user = User.objects.filter(email=userid, password=password)
     if get_user:
         return True

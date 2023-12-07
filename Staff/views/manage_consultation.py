@@ -1,5 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
+
+from CustomAuth.utility import get_user_menu
 from Patient.views.manage_patient import calculate_age
 from Staff.models.consultation import Vitals, Symptoms, PreExisting, Document, Diagnosis, Prescription
 from Patient.models.appointment import Appointment
@@ -9,14 +11,16 @@ import json
 @login_required(login_url="/accounts/login/")
 def doctor_cons_list(request):
     doc_con_list = Appointment.objects.all()
-    return render(request, 'doctor_con.html', {'doc_con_list': doc_con_list})
+    data = get_user_menu(request)
+    return render(request, 'doctor_con.html', {'doc_con_list': doc_con_list, 'data': data})
 
 
 @login_required(login_url="/accounts/login/")
 def doctor_consultation(request, appointment_id):
     try:
         # Retrieve the appointment details or raise a 404 if not found
-        appointment_detail = get_object_or_404(Appointment, appointment_id=appointment_id)
+        appointment_detail = get_object_or_404(Appointment, AppointmentIDPK=appointment_id)
+        print("appointment_detail", appointment_detail)
 
         try:
             vitals = Vitals.objects.get(appointment_id=appointment_id)
@@ -55,20 +59,20 @@ def doctor_consultation(request, appointment_id):
         # Adjust the serializer class based on your actual model structure
 
         # Calculate age based on date of birth and appointment date
-        dob = appointment_detail.patient.dob
-        age = calculate_age(dob, appointment_detail.date)
+        dob = appointment_detail.PatientIDFK.DOB
+        age = calculate_age(dob, appointment_detail.Date)
 
         serializer_data = {
-            'patient_name': appointment_detail.patient.name,
-            'contact_number': appointment_detail.patient.phone,
-            'gender': appointment_detail.patient.gender,
+            'patient_name': appointment_detail.PatientIDFK.FirstName+' '+ appointment_detail.PatientIDFK.LastName,
+            'contact_number': request.user.phone,
+            'gender': appointment_detail.PatientIDFK.Gender,
             'age': age,
-            'appointment_date': appointment_detail.date,
-            'patient_image': appointment_detail.patient.patient_image,
+            'appointment_date': appointment_detail.Date,
+            'patient_image': appointment_detail.PatientIDFK.PatientProfileImage,
             'dob': dob,
-            'patient_id': appointment_detail.patient.patient_id,
+            'patient_id': appointment_detail.PatientIDFK.PatientID,
             'appointment_id': appointment_id,
-            'appointment_by': appointment_detail.created_by,
+            'appointment_by': appointment_detail.CreatedBy,
             # 'appointment_type': appointment_detail.professional_Type  # Adjust this based on your model
         }
         # print(preexistings.preexisting_id)

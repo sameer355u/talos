@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 import datetime
 
+from CustomAuth.utility import get_user_menu
 from Staff.decorators import allowed_role_users
 from Staff.models.clinic import Clinic
 from Staff.models.doctor import TblDoctorSchedule, TblDoctorSlot
@@ -463,4 +464,5 @@ def manage_slot(request):
 
         return render(request, 'slot_management.html', {'msg': 'Slot created...'})
     else:
-        return render(request, 'slot_management.html')
+        data = get_user_menu(request)
+        return render(request, 'slot_management.html', {'data': data})

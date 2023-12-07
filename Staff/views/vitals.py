@@ -71,6 +71,7 @@ def vitals_modal_insert(request):
             #print(f"Error saving vitals: {e}")
 
     return JsonResponse(response_data)
+
 @require_POST
 def symptoms_modal_insert(request):
     response_data = {'success': False, 'message': 'Symptoms recording failed.'}
@@ -79,7 +80,7 @@ def symptoms_modal_insert(request):
         symptoms_id = request.POST.get('symptoms_id')
         symptoms_text = request.POST.get('symptoms')
         appointment_id = request.POST.get('appointment_id')
-        
+
         if symptoms_text and appointment_id:
             try:
                 # Try to get the Symptoms object for the given symptoms_id and appointment_id
@@ -179,7 +180,6 @@ def diagnosis_modal_insert(request):
             #print(f"Error saving diagnosis information: {e}")
 
     return JsonResponse(response_data)
-
 
 
 @require_POST

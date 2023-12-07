@@ -8,7 +8,7 @@ from django.core.files.storage import FileSystemStorage
 class MstPatient(models.Model):
     RecordIDPK = models.AutoField(primary_key=True)
     PatientID = models.CharField(max_length=11)
-    UserIDFK = models.ForeignKey(User, on_delete=models.RESTRICT, default=User)
+    UserIDFK = models.ForeignKey(User, on_delete=models.RESTRICT)
     PatientProfileImage = models.ImageField(max_length=400)
     FirstName = models.CharField(max_length=30, default=None)
     MiddleName = models.CharField(max_length=30, default=None)
@@ -36,7 +36,7 @@ class MstPatient(models.Model):
 
     @staticmethod
     def get_all_patients():
-        return MstPatient.objects.filter(ActiveFlag='A')
+            return MstPatient.objects.filter(ActiveFlag='A')
 
     @staticmethod
     def get_patient_by_id(record_id):
@@ -48,9 +48,10 @@ class MstPatient(models.Model):
 
 
 class MstPatientContact(models.Model):
+    id = models.AutoField(primary_key=True)
     RecordIDFK = models.ForeignKey(MstPatient, on_delete=models.RESTRICT)
     PatientID = models.CharField(max_length=11)
-    UserIDFK = models.ForeignKey(User, on_delete=models.RESTRICT, default=User)
+    UserIDFK = models.ForeignKey(User, on_delete=models.RESTRICT)
     PatientContactNumber = models.BigIntegerField(default=None)
     AlternatNumber = models.BigIntegerField(default=91)
     PatientEmailId = models.EmailField(max_length=50, default=None)
@@ -65,9 +66,10 @@ class MstPatientContact(models.Model):
 
 
 class MstPatientMedicalHistory(models.Model):
+    id = models.AutoField(primary_key=True)
     RecordIDFK = models.ForeignKey(MstPatient, on_delete=models.RESTRICT)
     PatientID = models.CharField(max_length=11)
-    UserIDFK = models.ForeignKey(User, on_delete=models.RESTRICT, default=User)
+    UserIDFK = models.ForeignKey(User, on_delete=models.RESTRICT)
     PreExistingCondition = models.CharField(max_length=50, default=None)
     Description = models.TextField()
     MedicalRecordFile = models.URLField(max_length=400)
@@ -80,9 +82,10 @@ class MstPatientMedicalHistory(models.Model):
 
 
 class MstPatientPaymentDetails(models.Model):
+    id = models.AutoField(primary_key=True)
     RecordIDFK = models.ForeignKey(MstPatient, on_delete=models.RESTRICT)
     PatientID = models.CharField(max_length=11)
-    UserIDFK = models.ForeignKey(User, on_delete=models.RESTRICT, default=User)
+    UserIDFK = models.ForeignKey(User, on_delete=models.RESTRICT)
     PaymentType = models.CharField(max_length=15, default=None)
     PaymentMode = models.CharField(max_length=15, default='No mode', blank=True)
     InsuranceNo = models.CharField(max_length=20, default=None)

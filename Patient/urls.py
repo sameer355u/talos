@@ -1,6 +1,5 @@
 from django.urls import path
 from Patient.views import manage_patient, manage_appointments
-from Staff.views import manage_doctor
 
 urlpatterns = [
     path('', manage_patient.index, name='Patient'),

@@ -8,7 +8,7 @@ from Staff.models.professional_Onboarding import HealthProfessionalPersonalDetai
 
 class Appointment(models.Model):
     AppointmentIDPK = models.AutoField(primary_key=True)
-    UserIDFK = models.ForeignKey(User, on_delete=models.RESTRICT, default=User)
+    UserIDFK = models.ForeignKey(User, on_delete=models.RESTRICT)
     PatientIDFK = models.ForeignKey(MstPatient, on_delete=models.RESTRICT)
     Date = models.DateField()
     Time = models.TimeField()
