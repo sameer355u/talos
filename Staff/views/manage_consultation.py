@@ -60,11 +60,7 @@ def doctor_consultation(request, appointment_id):
 
         # Calculate age based on date of birth and appointment date
         dob = appointment_detail.PatientIDFK.DOB
-<<<<<<< HEAD
         age = calculate_age(dob)
-=======
-        age = calculate_age(dob, appointment_detail.Date)
->>>>>>> 8bd2625677363acd3021b60a4b29a30efde36d78
 
         serializer_data = {
             'patient_name': appointment_detail.PatientIDFK.FirstName+' '+ appointment_detail.PatientIDFK.LastName,

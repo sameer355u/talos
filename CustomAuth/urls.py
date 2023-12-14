@@ -18,15 +18,9 @@ urlpatterns = [
     path("signup/patient/", user_registration.signup_patient, name="signup_patient"),
     path("signup/staff/", user_registration.signup_staff, name="signup_staff"),
 
-<<<<<<< HEAD
     # path("check_login/<str:userid>/<str:password>/", api_manager.flutter_login, name="check_login"),
     # path('userList/', api_manager.UserList.as_view({'get': 'list', 'post': 'create'}), name='userList'),
     # path('userList/<int:pk>/', api_manager.UserList.as_view({'get': 'retrieve', 'put': 'update', 'delete': 'destroy'}), name='userDetail'),
-=======
-    path("check_login/<str:userid>/<str:password>/", api_manager.flutter_login, name="check_login"),
-    path('userList/', api_manager.UserList.as_view({'get': 'list', 'post': 'create'}), name='userList'),
-    path('userList/<int:pk>/', api_manager.UserList.as_view({'get': 'retrieve', 'put': 'update', 'delete': 'destroy'}), name='userDetail'),
->>>>>>> 8bd2625677363acd3021b60a4b29a30efde36d78
 
     path("profile/", TemplateView.as_view(template_name="dashboard.html"), name='profile'),
     path("user_profile/", TemplateView.as_view(template_name="account/profile.html"), name='user_profile'),

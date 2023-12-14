@@ -188,19 +188,6 @@
   {%endblock%}
   {% include 'base_menu_2.html' %}
 
-<<<<<<< HEAD
-=======
-
-
-  {% if messages %}
-  <ul class="messages">
-      {% for message in messages %}
-      <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-      {% endfor %}
-  </ul>
-  {% endif %}
-
->>>>>>> 8bd2625677363acd3021b60a4b29a30efde36d78
   <form method="POST"   enctype="multipart/form-data" id="pform" onsubmit="return validateForm()" >
     {% csrf_token %}
     <div class="row g-2 m-1 align-items-stretch">

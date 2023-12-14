@@ -8,28 +8,10 @@
         </button>
         <div class="collapse navbar-collapse justify-content-end text-end " id="navbarSupportedContent">
             <ul class="navbar-nav   mb-2 mb-lg-0">
-<<<<<<< HEAD
-                {% if request.user.profession.name == 'Doctor' %}
-=======
->>>>>>> 8bd2625677363acd3021b60a4b29a30efde36d78
-                <li class="nav-item mx-2">
-                    <a class="nav-link  text-white  fw-bold" aria-current="page" href="{% url 'Medical-Professional-Onboarding' %}">Profile</a>
-                </li>
                 {% if request.user.profession.name == 'Doctor' %}
                 <li class="nav-item mx-2">
                     <a class="nav-link  text-white  fw-bold" aria-current="page" href="{% url 'Medical-Professional-Onboarding' %}">Profile</a>
                 </li>
-                <li class="nav-item mx-2">
-                    <a class="nav-link  text-white  fw-bold" aria-current="page" href="{% url 'Slot' %}">Slot</a>
-                </li>
-                {% endif %}
-                {% if request.user.is_authenticated %}
-                {% for i in data %}
-                <li class="nav-item mx-2">
-                    <a class="nav-link  text-white fw-bold" aria-current="page" {% if i == 'Consultation' %} href="/Doctor/consultation/" {% endif %}  {% if i == 'Appointments' %} href="/Patient/book-appointment/" {% endif %}   {% if i == 'Registration' %} href="/Patient/patient-registration/" {% endif %} >{{ i }}</a>
-                </li>
-                {% endfor %}
-                {% endif %}
                 <li class="nav-item mx-2">
                     <a class="nav-link  text-white  fw-bold" aria-current="page" href="{% url 'Slot' %}">Slot</a>
                 </li>
