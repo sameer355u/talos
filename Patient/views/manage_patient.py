@@ -4,6 +4,8 @@ from django.contrib.auth import authenticate, login as loginUser, logout
 from django.contrib.auth.decorators import login_required
 from django.utils.http import url_has_allowed_host_and_scheme
 from django.contrib import messages
+
+from CustomAuth.utility import get_user_menu
 from Patient.models.patient import MstPatient, MstPatientMedicalHistory, MstPatientContact, MstPatientPaymentDetails
 from django.db import transaction
 from datetime import date, datetime
@@ -14,7 +16,6 @@ from django.core.files.storage import FileSystemStorage
 # @allowed_group_users(allowed_group=['Admin'])
 def index(request):
     if request.user.is_authenticated:
-        user = request.user
         return render(request, 'p_index.html')
     else:
         return redirect('account_login')
@@ -32,10 +33,11 @@ def calculate_age(birthdate):
 @login_required(login_url='account_login')
 def patient_registration(request):
     if request.method == 'GET':
+        data = get_user_menu(request)
         # MstPatientdata=MstPatient.objects.all()
         obj = list(MstPatient.objects
                    .select_related('mstpatientcontact__PatientIDFK')
-                   .filter(ActiveFlag='A')
+                   .filter(ActiveFlag='A', UserIDFK=request.user)
                    .values('PatientID', 'FirstName', 'MiddleName', 'LastName', 'Gender', 'Age', 'BloodGroup',
                            'mstpatientcontact__PatientEmailId', 'AadharNo', 'MaritalStatus', 'SpouseName',
                            'mstpatientcontact__PatientContactNumber',
@@ -44,7 +46,7 @@ def patient_registration(request):
                            'mstpatientcontact__EmergencyContactName', 'mstpatientcontact__EmergencyContactNumber',
                            'mstpatientcontact__EmergencyContactRelation'))
 
-        return render(request, 'Patient_Registration.html', {'obj': obj})
+        return render(request, 'patient_registration.html', {'obj': obj, 'data': data})
     else:
         fs = FileSystemStorage()
         # profilepic = request.FILES.get('selectedImageText',None)
@@ -57,13 +59,15 @@ def patient_registration(request):
         preexistingcondition = request.POST.getlist('pretype'),
         description = request.POST.getlist('descrptn'),
         medicalrecordfile = request.FILES.getlist('medrec')
+        for row in medicalrecordfile:
+            print(row.name)
+            print(row.size)
         remarks = request.POST.getlist('remarks')
-
+        print(medicalrecordfile)
         try:
             with transaction.atomic():
 
                 patient = MstPatient(
-                    PatientProfileImage="WhatsApp Image 2023-11-11 at 12.33.04 PM.jpeg",
                     PatientID='P' + str(MstPatient.objects.all().count() + 1).zfill(9),
                     UserIDFK=request.user,
                     FirstName=request.POST.get('firstname', None),
@@ -83,8 +87,11 @@ def patient_registration(request):
                     DOB=DOB,
                     Age=age,
                     ActiveFlag='A',
+                    PatientProfileImage="WhatsApp Image 2023-11-11 at 12.33.04 PM.jpeg"
+
                 )
                 patient.save()
+                print(patient.PatientProfileImage)
                 PatientId = patient.PatientID
 
                 contactdetails = MstPatientContact(
@@ -101,20 +108,29 @@ def patient_registration(request):
 
                 )
                 contactdetails.save()
+                print(contactdetails)
+                print(description)
+                print(preexistingcondition)
+                print(remarks)
+                print(medicalrecordfile)
+
                 for i in range(len(medicalrecordfile)):
-                    medicalrecordsave = fs.save(medicalrecordfile[i].name, medicalrecordfile[i])
-                    medicalrecordurl = fs.url(medicalrecordsave[i])
-                    medicalhistory = MstPatientMedicalHistory(
-                        PreExistingCondition=preexistingcondition[i],
-                        Description=description[i],
-                        MedicalRecordFile=medicalrecordurl,
-                        Remarks=remarks,
-                        ActiveFlag='A',
-                        PatientID=PatientId,
-                        UserIDFK=request.user,
-                        RecordIDFK=patient
-                    )
-                    medicalhistory.save()
+                    if i < len(description[0]) and i < len(medicalrecordfile[0]) and i < len(remarks):
+                        medicalrecordsave = fs.save(medicalrecordfile[i].name, medicalrecordfile[i])
+                        medicalhistory = MstPatientMedicalHistory(
+                            ActiveFlag='A',
+                            PatientID=PatientId,
+                            UserIDFK=request.user,
+                            RecordIDFK=patient,
+                            PreExistingCondition=preexistingcondition[0][i],
+                            Description=description[0][i],
+                            MedicalRecordFile=medicalrecordsave,
+                            Remarks=remarks[i],
+                            # id=MstPatientMedicalHistory.objects.all().count() + 1,
+                        )
+                        print(i)
+                        medicalhistory.save()
+                        print(medicalhistory, 'mh')
 
                 paymentdetails = MstPatientPaymentDetails(
                     PatientID=PatientId,
@@ -128,14 +144,15 @@ def patient_registration(request):
 
                 )
                 paymentdetails.save()
+                print(patient.PatientProfileImage, patient.FirstName)
                 messages.info(request, 'Registration Successful!')
                 return redirect('patient_registration')
         except Exception as e:
             messages.warning(request, "Not Submitted", e)
-            # print('error occur', e)
-            return redirect('patient_registration')
+            print('error occur', e)
 
 
+@login_required(login_url='account_login')
 def edit_patient_details(request):
     if request.method == 'POST':
         fullname = request.POST.get('mfullname').split()
@@ -193,8 +210,5 @@ def edit_patient_details(request):
 
         except Exception as e:
             messages.warning(request, "Not Submitted edited ", e)
-            #print(f"An error occurred: {e}")
+            print(f"An error occurred: {e}")
             return (request, {'error_message': str(e)})
-
-
-

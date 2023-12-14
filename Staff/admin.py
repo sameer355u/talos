@@ -2,8 +2,9 @@ from django.contrib import admin
 # from CustomAuth.models import ProfessionalType
 from Staff.models.doctor import TblDoctorSlot, TblDoctorSchedule
 from Staff.models.clinic import Clinic, Lab, LabTest, LabReportParameter
-from Staff.models.menu_items import Menu, SubMenu
-from Staff.models.professional_Onboarding import HealthProfessionalPersonalDetails, HealthProfessionalEducationDetails, HealthProfessionalSpecializationDetails, HealthProfessionalExperienceDetails, HealthProfessionalBankDetails, HealthProfessionalCertificationDetails, HealthProfessionalDocumentLinks, MstUniversity, MstCollege, MstFlag
+from Staff.models import consultation
+# from Staff.models.menu_items import Menu, SubMenu
+from Staff.models.professional_Onboarding import HealthProfessionalPersonalDetails, HealthProfessionalEducationDetails, HealthProfessionalExperienceDetails, HealthProfessionalBankDetails, HealthProfessionalCertificationDetails, HealthProfessionalDocumentLinks, MstUniversity, MstCollege, MstFlag, MstHealthProfessional
 
 
 class AdminUser(admin.ModelAdmin):
@@ -43,11 +44,11 @@ class AdminLabReportParameter(admin.ModelAdmin):
 
 
 class AdminMenu(admin.ModelAdmin):
-    list_display = []
+    list_display = ['name']
 
 
 class AdminSubMenu(admin.ModelAdmin):
-    list_display = []
+    list_display = ['name']
 
 
 class AdminTblDoctorSchedule(admin.ModelAdmin):
@@ -67,10 +68,8 @@ admin.site.register(Clinic, AdminClinic)
 admin.site.register(Lab, AdminLab)
 admin.site.register(LabTest, AdminLabTest)
 admin.site.register(LabReportParameter, AdminLabReportParameter)
-admin.site.register(Menu, AdminMenu)
 admin.site.register(HealthProfessionalPersonalDetails)
 admin.site.register(HealthProfessionalEducationDetails)
-admin.site.register(HealthProfessionalSpecializationDetails)
 admin.site.register(HealthProfessionalExperienceDetails)
 admin.site.register(HealthProfessionalCertificationDetails)
 admin.site.register(HealthProfessionalDocumentLinks)
@@ -78,5 +77,15 @@ admin.site.register(HealthProfessionalBankDetails)
 admin.site.register(MstUniversity)
 admin.site.register(MstCollege)
 admin.site.register(MstFlag)
+admin.site.register(MstHealthProfessional)
+admin.site.register(consultation.Vitals)
+admin.site.register(consultation.Symptoms)
+admin.site.register(consultation.PreExisting)
+admin.site.register(consultation.Diagnosis)
+admin.site.register(consultation.Document)
+admin.site.register(consultation.Prescription)
+# admin.site.register(Menu, AdminMenu)
+# admin.site.register(SubMenu, AdminSubMenu)
+
 admin.site.site_header = "eSwasthalya e-Clinic"
 admin.site.site_title = "e-Clinic"

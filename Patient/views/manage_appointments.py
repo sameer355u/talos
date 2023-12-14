@@ -3,18 +3,22 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+
+from CustomAuth.utility import get_user_menu
 from Patient.models.appointment import Appointment
 from Patient.models.patient import MstPatient
 from Staff.decorators import allowed_group_users, unauthenticated_user
 from Staff.models.doctor import TblDoctorSlot
-from Staff.models.professional_Onboarding import HealthProfessionalPersonalDetails
+from Staff.models.professional_Onboarding import HealthProfessionalPersonalDetails, MstHealthProfessional
 
 
 @login_required(login_url='account_login')
 def book_appointment(request):
+    data = get_user_menu(request)
     if request.user.is_authenticated:
         patient = MstPatient.get_all_patients()
-        doctor_list = HealthProfessionalPersonalDetails.get_doctors_list()
+        print("patient", patient)
+        doctor_list = MstHealthProfessional.get_doctors_list()
         if request.method == 'POST':
             patientId = request.POST.get("patientId")
             slotId = request.POST.get("slotId")
@@ -34,8 +38,8 @@ def book_appointment(request):
                 AppointmentType=AppointmentType,
                 AppointmentBy=AppointmentBy,
                 CenterType=CenterType,
-                CreatedBy=request.user.id,
-                UpdatedBy=request.user.id)
+                CreatedBy=1,
+                UpdatedBy=1)
             appointment.save()
 
             get_slot.AppointmentIdFK = appointment.AppointmentIDPK
@@ -44,7 +48,7 @@ def book_appointment(request):
             messages.success(request, f'Appointment booked successfully for Date {get_slot.SlotDate}')
             return redirect("book-appointment")
         else:
-            return render(request, 'book_appointment.html', {'patient': patient, 'doctor_list': doctor_list})
+            return render(request, 'book_appointment.html', {'patient': patient, 'doctor_list': doctor_list, 'data': data})
     else:
         return redirect('account_login')
 
@@ -54,7 +58,7 @@ def book_appointment_for(request, record_id):
     if request.user.is_authenticated:
         patient = MstPatient.get_all_patients()
         selected_patient = MstPatient.get_patient_by_id(record_id)
-        doctor_list = HealthProfessionalPersonalDetails.get_doctors_list()
+        doctor_list = MstHealthProfessional.get_doctors_list()
         return render(request, 'book_appointment.html',
                       {'patient': patient, 'selected_patient': selected_patient, 'doctor_list': doctor_list})
     else:
@@ -63,7 +67,7 @@ def book_appointment_for(request, record_id):
 
 def select_doctor(request, doctor_id):
     if request.user.is_authenticated:
-        selected_doctor = HealthProfessionalPersonalDetails.get_doctor(doctor_id)
+        selected_doctor = MstHealthProfessional.get_doctor(doctor_id)
         #print("selected_doctor: ", selected_doctor)
     else:
         return redirect('account_login')
@@ -73,7 +77,7 @@ def select_doctor(request, doctor_id):
 def book_appointment_date_slot(request, doc_id, slot_date):
     if request.user.is_authenticated:
         if request.method == 'POST':
-            #print(slot_date, "---", doc_id)
+            print(slot_date, "---", doc_id)
             date = datetime.datetime.strptime(slot_date, "%Y-%d-%m").date()
             #print(date)
             data = TblDoctorSlot.getSlot(doc_id, date)

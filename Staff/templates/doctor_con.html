@@ -10,9 +10,19 @@
 
 <div class="w-50">
     <ul class="list-group">
+        {% if doc_con_list %}
         {% for i in doc_con_list %}
         <li><a href="/Doctor/consultation/{{ i.AppointmentIDPK }}/" class="list-group-item list-group-item-action" target="_blank">{{ i.PatientIDFK.FirstName }} | {{ i.SlotIDFK.SlotDate }} | {{ i.SlotIDFK.StartTime }} | {{ i.SlotIDFK.Status }} </a></li>
         {% endfor %}
+        {% else %}
+        <br>
+        <br>
+        <br>
+        No any appointment booked by Patient.!
+        <br>
+        <br>
+        <br>
+        {% endif %}
 </ul>
 </div>
 

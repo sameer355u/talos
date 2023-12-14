@@ -29,7 +29,7 @@ def vitals_modal_insert(request):
             # Try to get the Vitals object for the given appointment_id
             vitals, created = Vitals.objects.get_or_create(
                 vitals_id=vitals_id,
-                appointment=Appointment.objects.get(appointment_id=appointment_id),
+                appointment=Appointment.objects.get(AppointmentIDPK=appointment_id),
                 defaults={
                     'height': height,
                     'weight': weight,
@@ -71,6 +71,7 @@ def vitals_modal_insert(request):
             #print(f"Error saving vitals: {e}")
 
     return JsonResponse(response_data)
+
 @require_POST
 def symptoms_modal_insert(request):
     response_data = {'success': False, 'message': 'Symptoms recording failed.'}
@@ -79,13 +80,14 @@ def symptoms_modal_insert(request):
         symptoms_id = request.POST.get('symptoms_id')
         symptoms_text = request.POST.get('symptoms')
         appointment_id = request.POST.get('appointment_id')
-        
+
         if symptoms_text and appointment_id:
             try:
+                print("Entered")
                 # Try to get the Symptoms object for the given symptoms_id and appointment_id
                 symptoms, created = Symptoms.objects.get_or_create(
                     symptoms_id=symptoms_id,
-                    appointment=Appointment.objects.get(appointment_id=appointment_id),
+                    appointment=Appointment.objects.get(AppointmentIDPK=appointment_id),
                     defaults={'symptoms': symptoms_text}
                 )
 
@@ -123,7 +125,7 @@ def preexisting_modal_insert(request):
             # Try to get the PreExisting object for the given preexisting_id and appointment_id
             preexisting, created = PreExisting.objects.get_or_create(
                 preexisting_id=preexisting_id,
-                appointment=Appointment.objects.get(appointment_id=appointment_id),
+                appointment=Appointment.objects.get(AppointmentIDPK=appointment_id),
                 defaults={'preexisting_info': preexisting_info}
             )
 
@@ -159,7 +161,7 @@ def diagnosis_modal_insert(request):
             # Try to get the Diagnosis object for the given diagnosis_id and appointment_id
             diagnosis, created = Diagnosis.objects.get_or_create(
                 diagnosis_id=diagnosis_id,
-                appointment=Appointment.objects.get(appointment_id=appointment_id),
+                appointment=Appointment.objects.get(AppointmentIDPK=appointment_id),
                 defaults={'clinical_notes': clinical_notes, 'diagnosis': diagnosis_text}
             )
 
@@ -181,7 +183,6 @@ def diagnosis_modal_insert(request):
     return JsonResponse(response_data)
 
 
-
 @require_POST
 def upload_documents(request):
     response_data = {'success': False, 'message': 'An error occurred.'}
@@ -197,7 +198,7 @@ def upload_documents(request):
             remarks = request.POST.getlist('Upload_Remark')
             document_files = request.FILES.getlist('Upload_File')
 
-            aid = Appointment.objects.get(appointment_id=appointment_id)
+            aid = Appointment.objects.get(AppointmentIDPK=appointment_id)
 
             fss = FileSystemStorage()
             #print(len(document_files))
@@ -273,7 +274,7 @@ def save_prescription(request):
 
             # Try to get the Prescription object for the given appointment_id
             prescription, created = Prescription.objects.get_or_create(
-                appointment=Appointment.objects.get(appointment_id=appointment_id),
+                appointment=Appointment.objects.get(AppointmentIDPK=appointment_id),
                 defaults={'advice': advice, 'lab_investigation': lab_investigation,
                           'follow_up_date': follow_up_date, 'remark': remark, 'rx_data': rxdata_json}
             )

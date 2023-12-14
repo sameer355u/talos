@@ -1,0 +1,2294 @@
+{% extends 'base.html' %}
+{% block title %} Group Role Menuitems{% endblock %}
+{% block Style %}
+<style>
+.tooltip-container {
+    position: relative;
+}
+.custom-tooltip {
+    display: none;
+    position: absolute;
+    background: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    z-index: 1;
+    left: 30px; /* Adjust this value to control the distance to the right of the button */
+    width: 290px; /* Set the desired fixed width of the tooltip */
+}
+.tooltip-container:hover .custom-tooltip {
+    display: block;
+}
+</style>
+
+<style>
+    .submenu-list {
+        list-style-type: none;
+    }
+
+    .submenu-list li {
+        list-style-type: none;
+    }
+
+    .hrcs {
+        list-style-type: none;
+    }
+
+    .hrcs li {
+        list-style-type: none;
+    }
+    #Groups li{
+        list-style-type: none;
+    }
+
+</style>
+
+
+
+
+
+{% endblock %}
+{% block body %}
+
+{% load static %}
+<div class="row g-2 my-1 align-items-stretch ">
+    <div class="col-lg-2  col-md-4 col-sm-6" id="column1">
+      <div class="col mb-2">
+        <div class="card shadow border border-danger rounded rounded-2 " > 
+            <div class="card-body">
+                <div class="d-flex flex-column align-items-center text-center">
+                    <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle"
+                    width="70" />
+                    <div class="mt-3">
+                        <h4 class="p-0 m-0 textlightwalacolor" > Atul Sharma</h4>
+                        <h6 class="  p-0 m-0  mb-1 textbluecolor" >Super Admin</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <div class="col">
+            <div class="card shadow border border-danger rounded rounded-2 " > 
+                <div class="card-body">
+                    <div class="d-flex flex-column align-items-center text-center">
+                        <div class="mt-3 table-responsive ">
+                            <table class="table table-bordered rounded rounded-3" style="font-size: 12px;"> 
+                                <thead>
+                                    <tr>
+                                        <td></td>
+                                        <td class="">Active</td> 
+                                        <td>Inactive</td> 
+                                        <td>Total</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            Group
+                                        </td>
+                                        <Td>
+                                            5
+                                        </Td>
+                                        <Td>
+                                            3
+                                        </Td>
+                                        <Td>
+                                            8
+                                        </Td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Role
+                                        </td>
+                                        <Td>
+                                            5
+                                        </Td>
+                                        <Td>
+                                            3
+                                        </Td>
+                                        <Td>
+                                            8
+                                        </Td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Menu Items
+                                        </td>
+                                        <Td>
+                                            5
+                                        </Td>
+                                        <Td>
+                                            3
+                                        </Td>
+                                        <Td>
+                                            8
+                                        </Td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-lg-10  col-md-8 col-sm-12">
+        <div class="card shadow" id="column2">
+            <div class="card-header bg-white">
+                Group
+            </div>
+            <div class="card-body w-100 ">
+                <div class="row mb-1 align-items-stretch ">
+                    <div class="col-lg-12  col-md-12">             
+                            <div class="card-body shadow" style="background-color: #F9F9F9;">
+                                <ul class="nav nav-tabs">
+                                    <li class="nav-item  text-center" id="btn0">
+                                        <a class="nav-link  fw-bold navlink active" data-bs-toggle="tab" href="#User">
+                                            <span></span> User
+                                        </a>
+                                    </li>
+                                    <li class="nav-item ps-1 text-center" id="btn1">
+                                        <a class="nav-link  fw-bold navlink " data-bs-toggle="tab" href="#Group">
+                                            <span></span> Group
+                                        </a>
+                                    </li>
+                                                                     
+                                    <li class="nav-item ps-1 text-center" id="btn2">
+                                        <a class="nav-link fw-bold navlink" data-bs-toggle="tab" href="#Role">
+                                            <span></span> Role
+                                        </a>
+                                    </li>
+                                    <li class="nav-item ps-1  text-center" id="btn3">
+                                        <a class="nav-link fw-bold navlink " data-bs-toggle="tab" href="#Menu_Item">
+                                            <span></span> Menu Items
+                                        </a>
+                                    </li> 
+                                    <li class="nav-item ps-1 text-end ms-auto">
+                                        <div id="New-User-button">
+                                            <button class="btn btn-sm backgroundgradient" id="addNewButton_User">Add New User</button>
+                                        </div>
+                                        <div id="New-Group-button"  style="display: none;">
+                                            <button class="btn btn-sm backgroundgradient" id="addNewButton_Group">Add New Group</button>
+                                        </div>
+                                        <div id="New-Role-button" style="display: none;">
+                                            <button class="btn btn-sm backgroundgradient" id="addNewButton_Role">Add New Role</button>
+                                        </div>
+                                        <div id="New-Menu-button" style="display: none;">
+                                            <button class="btn btn-sm backgroundgradient" id="addNewButton_Menu">Add New Menu Item</button>
+                                        </div>
+                                        <div id="New-SubMenu-button" style="display: none;">
+                                            <button class="btn btn-sm backgroundgradient" id="addNewButton_SubMenu">Add New SubMenu</button>
+                                        </div>
+                                    </li>
+                                </ul>                                                                                           
+                                <div class="tab-content border border-danger border-top-0 p-1 rounded rounded-top-0 rounded-bottom-3 bg-white" >
+                                    <div id="User" class="tab-pane my-1 mx-2 active rounded">                                    
+                                        <div id="User-table" class="table table-responsive" style="display: block;">
+                                            <table id="Userss" class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>SNo.</th>
+                                                        <th>User Email </th>
+                                                        <th>Profession Type</th> 
+                                                        <th>Group</th> 
+                                                        <th>Status</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for User in User_group %}
+                                                    <tr>
+                                                        <td>{{ forloop.counter }}</td>
+                                                        <td>{{ User.UserIdFK.email }}</td>
+                                                        <td>{{ User.UserIdFK.profession.name }}</td>
+                                                        <td>
+                                                            <div class="tooltip-container">
+                                                                <div id="tooltipButtonUser{{ forloop.counter }}">{{ User.GroupIdFK|length }}</div>
+                                                                <div class="custom-tooltip" id="tooltipUser{{ forloop.counter }}">
+                                                                    {% for all_user in All_user_group %}
+                                                                        {% if User.UserIdFK == all_user.UserIdFK %}
+                                                                            {% if all_user.GroupIdFK.ActiveFlag == 'A' %}
+                                                                                <div class="col">
+                                                                                    <label for="checkboxUser {{ all_user.GroupIdFK }}">
+                                                                                        {{ all_user.GroupIdFK.GroupName }}
+                                                                                    </label>
+                                                                                </div>
+                                                                            {% endif %}
+                                                                        {% endif %}
+                                                                    {% endfor %}
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td>{% if User.ActiveFlag == 'A' %}Active{% else %}Inactive{% endif %}</td>
+                                                        <td>
+                                                            <button type="button" class="btn btn-sm  backgroundneela" 
+                                                                    data-activeflag="{{ User.GroupIdFK.ActiveFlag }}"
+                                                                    data-userid="{{ User.UserIdFK.UserId }}"
+                                                                    data-phno="{{ User.UserIdFK.phone }}"
+                                                                    data-ptid="{{ User.UserIdFK.ProfessionalTypeIdFK.ProfessionalTypeId }}"
+                                                                    data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                                <i class="fa-solid fa-pen-to-square fa-lg"></i>
+                                                            </button>      
+                                                            <button type="submit" class="btn btn-sm btn-danger delete-btn" data-userid="{{ User.UserIdFK.UserId }}">
+                                                                <i class="fa-regular fa-trash-can fa-lg"></i>
+                                                            </button>
+                                                            <!-- Add this script to your template -->
+                                                            
+                                                            
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+                                                
+                                                <script>
+                                                    document.addEventListener('DOMContentLoaded', function () {
+                                                        // Iterate over each tooltip container
+                                                        document.querySelectorAll('.tooltip-container').forEach(function (tooltipContainer, index) {
+                                                            // Get the tooltip button and tooltip content
+                                                            var tooltipButton = document.getElementById('tooltipButtonUser' + (index + 1));
+                                                            var tooltipContent = document.getElementById('tooltipUser' + (index + 1));
+                                                
+                                                            // Update the tooltip button with the count
+                                                            tooltipButton.innerText = tooltipContent.children.length;
+                                                        });
+                                                    });
+                                                </script>
+                                                
+                                                    
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div id="New_User" style="display: none;">
+                                            <div class="p-2 my-1 mx-2">
+                                                <form action="{% url 'create_user' %}" class="hrcs" method="post">
+                                                    {% csrf_token %}
+                                                    <div class="row justify-content-end g-2 mx-2">
+                                                        <div class="col-md-1">
+                                                            <button class="btn btn-sm text-white" type="submit" style="background-color: #0e223d;">Save</button>
+                                                        </div>
+                                                        <div class="col-md-1">
+                                                            <button class="btn btn-sm text-white" type="reset" style="background-color: #0e223d;" onclick="clr_all()">Clear</button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row my-2">
+                                                        <div class="col-lg-5 col-sm-6">
+                                                            <h6 class="card-title"> User Id(E-mail)</h6>
+                                                            <input type="text" name="User_Id" class="form-control" placeholder="xyz@example.com">
+                                                        </div>
+                                                        <div class="col-lg-5 col-sm-6">
+                                                            <h6 class="card-title ">Contact Number <span class="fw-normal textlightwalacolor">(with country code)</span></h6>
+                                                            <input type="text" name="User_number" class="form-control" placeholder="+91xxxxxxxxxx" oninput="validatePhoneNumber(this)" minlength="13" maxlength="13">
+                                                            <script>
+                                                                function validatePhoneNumber(input) {
+                                                                    // Remove any non-digit characters (except +)
+                                                                    var sanitizedValue = input.value.replace(/[^\d+]/g, '');
+                                                                    // Update the input value with the sanitized version
+                                                                    input.value = sanitizedValue;
+                                                                }
+                                                            </script>
+                                                        </div>
+                                                        <div class="col-lg-2 col-sm-2">
+                                                            <h6 class="card-title"> User</h6>
+                                                            <div class="form-check form-switch">
+                                                                <input type="hidden" name="is_active" value="A" />
+                                                                <input class="form-check-input" type="checkbox">
+                                                                <label for="" class="inactive-label">Inactive</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-3 col-sm-3">
+                                                            <h6 class="card-title"> Professional Type</h6>
+                                                            <select class="form-control" id="CreateUserptid" name="CreateUserptid">
+                                                                {% for Pro_Types in Pro_Type %}
+                                                                <option value="{{Pro_Types.id}}">{{Pro_Types.name}}</option>
+                                                                {% endfor %}
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-lg-9 col-sm-6">
+                                                            <h6 class="card-title">Description </h6>
+                                                            <textarea name="User_desc" class="form-control" rows="1" placeholder="Type Something"></textarea>
+                                                        </div>
+                                                    </div>
+                                                        <ul id="groupListforcreate" class="w-100">
+                                                            <!-- Group will be populated here -->
+                                                        </ul>
+                                                        <div class="text-center">
+                                                            <button type="button" class="btn btn-sm text-white" style="background-color: #0e223d;" id="addGroupButtonforcreate">Add Group</button>
+                                                        </div>
+                                                        <script>
+                                                            document.addEventListener('DOMContentLoaded', function () {
+                                                                // Add a new group row when the "Add Group" button is clicked
+                                                                const addGroupButtons = document.getElementById('addGroupButtonforcreate');
+                                                                addGroupButtons.addEventListener('click', function () {
+                                                                    const groupLists = document.getElementById('groupListforcreate');
+                                                        
+                                                                    const newGroupRows = document.createElement('li');
+                                                                    newGroupRows.innerHTML = `
+                                                                        <div class="row">
+                                                                            <div class="col-md-5">
+                                                                                <label for="newGroupName" class="fw-normal">Group Name</label>
+                                                                                <select class="form-control form-control-sm" name="User_groups" required>
+                                                                                    {% for group_info in all_groups %}
+                                                                                        <option data-usergroupdesc="{{ group_info.GroupDesc }}" value="{{ group_info.GroupId }}">{{ group_info.GroupName }}</option> 
+                                                                                    {% endfor %}
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="col-md-5">
+                                                                                <label for="newGroupDesc" class="fw-normal">Description</label>
+                                                                                <input type="text" class="form-control form-control-sm" name="newGroupDesc[]" readOnly>
+                                                                            </div>
+                                                                            <div class="col-md-1 align-self-center">
+                                                                                <label for="newGroupDesc" class="fw-normal">Delete</label>
+                                                                                <button type="button" class="btn btn-danger btn-sm" onclick="removeGroupRows(this)"><i class="bi bi-trash"></i></button>
+                                                                            </div>
+                                                                        </div>
+                                                                    `;
+                                                        
+                                                                    groupLists.appendChild(newGroupRows);
+                                                        
+                                                                    // Attach event listener to the new dropdown for description update
+                                                                    const newGroupSelects = newGroupRows.querySelector('select[name="User_groups"]');
+                                                                    updateDescriptionOnSelectChange(newGroupSelects);
+                                                                });
+                                                        
+                                                                // Function to remove a dynamically added group row
+                                                                window.removeGroupRows = function (button) {
+                                                                    const groupLists = document.getElementById('groupListforcreate');
+                                                                    const rowToRemove = button.closest('li');
+                                                                    groupLists.removeChild(rowToRemove);
+                                                                };
+                                                        
+                                                                // Attach event listener to existing dropdowns for description update
+                                                                const groupSelects = document.querySelectorAll('select[name="User_groups"]');
+                                                                groupSelects.forEach(updateDescriptionOnSelectChange);
+                                                        
+                                                                function updateDescriptionOnSelectChange(select) {
+                                                                    // Initial update
+                                                                    updateDescription(select);
+                                                        
+                                                                    // Event listener for subsequent changes
+                                                                    select.addEventListener('change', function () {
+                                                                        updateDescription(this);
+                                                                    });
+                                                                }
+                                                        
+                                                                function updateDescription(select) {
+                                                                    // Traverse up to the parent .row
+                                                                    const row = select.parentNode.parentNode;
+                                                        
+                                                                    // Then find the .col-md-5 with the description input
+                                                                    const descColumn = row.querySelector('.col-md-5:nth-child(2)');
+                                                        
+                                                                    // Get the input element
+                                                                    const descInput = descColumn.querySelector('input');
+                                                        
+                                                                    const selectedOption = select.options[select.selectedIndex];
+                                                                    const desc = selectedOption.getAttribute('data-usergroupdesc');
+                                                        
+                                                                    descInput.value = desc;
+                                                                }
+                                                            });
+                                                        </script>
+                                                   
+                                                        
+                                                   
+                                                </form>
+                                                  
+                                            </div>  
+                                        </div>
+                                    </div>
+                                    <div id="Menu_Item" class="tab-pane my-1 mx-2  rounded">
+                                        <div id="Menu-table" class="table" style="display: block;">                         
+                                            <div class="table table-responsive">
+                                                <table id="Menus" class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>SNo.</th>
+                                                            <th>Menu Item</th> 
+                                                            <th>Sub-Menu</th> 
+                                                            <th>Status</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {% for main_menu in menu_items %}
+                                                        {% if main_menu.MainMenuId == main_menu.MenuItemId %}
+                                                            <tr>
+                                                                <td>{{ forloop.counter }}</td>
+                                                                <td>{{ main_menu.MenuItemName }}</td>
+                                                                <td></td>
+                                                                <td>{% if main_menu.ActiveFlag == 'A' %}Active{% else %}Inactive{% endif %}</td>
+                                                                <td><button type="button" class="btn btn-sm edit-row backgroundneela" data-submenuname="0"  data-ismain="True" data-idforedit="{{ main_menu.MenuItemId}}" data-menuname="{{ main_menu.MenuItemName }}" data-menudescription="{{ main_menu.MenuItemDesc }}" data-menustatus="{{ main_menu.ActiveFlag }}">
+                                                                    <i class="fa-solid fa-pen-to-square fa-lg"></i>
+                                                                </button>
+                                                                
+                        
+                                                                    <form class="d-inline" id="delete-menu-item-form-{{ main_menu.MenuItemId }}" method="POST" action="{% url 'delete_menu_item' %}">
+                                                                        {% csrf_token %}
+                                                                        <input type="hidden" name="menu_item_id" value="{{ main_menu.MenuItemId }}">
+                                                                        <button type="submit" class="btn btn-sm btn-danger remove-rows">
+                                                                            <i class="fa-regular fa-trash-can fa-lg"></i>
+                                                                        </button>
+                                                                    </form>
+                                                            </tr>
+                                                            {% for sub_menu in menu_items %}
+                                                            {% if sub_menu.MainMenuId == main_menu.MenuItemId and sub_menu.MenuItemId != main_menu.MenuItemId %}
+                                                            <tr>
+                                                                <td>{{ forloop.parentloop.counter }}</td>
+                                                                <td> <div class="d-none"> {{ main_menu.MenuItemName }}</div></td>
+                                                                <td>{{ sub_menu.MenuItemName }}</td>
+                                                                <td>{% if sub_menu.ActiveFlag == 'A' %}Active{% else %}Inactive{% endif %}</td>
+                                                                <td><button type="button" class="btn btn-sm edit-row backgroundneela" data-ismain="False" data-idforedit="{{ sub_menu.MenuItemId}}" data-menuname="{{ main_menu.MenuItemName }}" data-submenuname="{{ sub_menu.MenuItemName }}" data-menudescription="{{ sub_menu.MenuItemDesc }}" data-menustatus="{{ sub_menu.ActiveFlag }}">
+                                                                    <i class="fa-solid fa-pen-to-square fa-lg"></i>
+                                                                </button>
+                                                                
+                        
+                                                                    <form class="d-inline" id="delete-menu-item-form-{{ sub_menu.MenuItemId }}" method="POST" action="{% url 'delete_menu_item' %}">
+                                                                        {% csrf_token %}
+                                                                        <input type="hidden" name="menu_item_id" value="{{ sub_menu.MenuItemId }}">
+                                                                        <button type="submit" class="btn btn-sm btn-danger remove-rows">
+                                                                            <i class="fa-regular fa-trash-can fa-lg"></i>
+                                                                        </button>
+                                                                    </form>
+                                                                    
+                                                            
+                                                                    </td>
+                                                            </tr>
+                                                            {% endif %}
+                                                            {% endfor %}
+                                                        {% endif %}
+                                                        {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div id="New_Menu" style="display: none;">
+                                            <form action="{% url 'submit_form' %}" class="needs-validation" method="post"> 
+                                                {% csrf_token %}
+                                                <div class="card py-2 my-2">
+                                                    <div class="row justify-content-end g-2 mx-2">
+                                                        <div class="col-md-1">
+                                                            <button class="btn btn-sm text-white" type="submit"
+                                                                style="background-color: #0e223d;">Save</button>
+                                                        </div>
+                                                        <div class="col-md-1">
+                                                            <button class="btn btn-sm text-white" type="reset" style="background-color: #0e223d;"
+                                                                onclick="clr_all()">Clear</button>
+                                                        </div>
+                                                    </div>
+                                                 
+                                                    <div class="row p-2 g-2">
+                                                        <div class="row my-1">
+                                                            <div class="col-md-3">
+                                                                <label for="" class="form-label fw-semibold">Main Menu Name<span
+                                                                        class="text-danger">*</span></label>
+                                                            </div>
+                                                            <div class="col-md-4 col-lg-6">
+                                                                <input type="text" class="form-control form-control-sm" name="main_menu_name" required>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        <div class="row my-1">
+                                                            <div class="col-md-3">
+                                                                <label for="" class="form-label fw-semibold">Main Menu Description<span
+                                                                        class="text-danger">*</span></label>
+                                                            </div>
+                                                            <div class="col-md-4 col-lg-6">
+                                                                <input type="text" class="form-control form-control-sm" name="main_menu_desc" required>
+                                                            </div>
+                                                        </div>
+                                    
+                                                        <div class="row my-1">
+                                                            <div class="col-md-3">
+                                                                <label for="" class="form-label fw-semibold">Main Menu Status<span
+                                                                        class="text-danger">*</span></label>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <div class="form-check form-switch">
+                                                                    <input type="hidden" id="main_menu_flg" name="main_menu_flg"  value="I">
+                                                                    <input class="form-check-input" type="checkbox" role="switch" id="smySwitch">
+                                                                    <label for="mySwitch" id="smyLabel" class="inactive-label">Inactive</label>
+                                                                    
+                                                                    <script>
+                                                                        const sswitchElement = document.getElementById("smySwitch");
+                                                                        const slabelElement = document.getElementById("smyLabel");
+                                                                        const statusInput = document.getElementById("main_menu_flg");
+                                                                    
+                                                                        sswitchElement.addEventListener("change", function() {
+                                                                            if (this.checked) {
+                                                                                slabelElement.innerText = "Active";
+                                                                                slabelElement.classList.remove("inactive-label");
+                                                                                slabelElement.classList.add("active-label");
+                                                                                statusInput.value = "A"; // Set the value to 'A' for active
+                                                                            } else {
+                                                                                slabelElement.innerText = "Inactive";
+                                                                                slabelElement.classList.remove("active-label");
+                                                                                slabelElement.classList.add("inactive-label");
+                                                                                statusInput.value = "I"; // Set the value to 'I' for inactive
+                                                                            }
+                                                                        });
+                                                                    </script>
+                                                                    
+                                                                </div>
+                                                            </div>
+                                                            <div class="row my-2 justify-content-center">
+                                                                <div class="col-md-3">
+                                                                    <button type="button" class="btn btn-sm text-white" style="background-color: #0e223d;"
+                                                                        id="addsubmenu">Add Sub Menu</button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="my-1 row" id="addsubmenu_col">
+                                                                <!-- Sub Menu form will be added here dynamically -->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                 
+                                        <div class="row justify-content-between">
+                                            <div class="col ">
+                                                <button type="button" class="btn btn-outline fw-bold  mt-2" onclick="Backtoprevioustab()"
+                                                style="background-color: #ced4da;"><i class="fas fa-chevron-left text-dark"></i> Back
+                                                </button>
+                                                <button type="button" class="btn btn-primary fw-bold float-end mt-2 theme"
+                                                onclick="proceedToNextTab()">Next <i class="fas fa-chevron-right text-white"></i></button>
+                                            </div>
+                                        </div>
+                                   
+                                    </div> 
+                                    <div id="Group" class="tab-pane my-1 mx-2 rounded">                                    
+                                        <div id="Group-table" class="table table-responsive" style="display: block;">
+                                            <table id="Groupss" class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>SNo.</th>
+                                                        <th>Group name</th>
+                                                        <th>Roles</th>
+                                                        <th>Menus</th>
+                                                        <th>Status</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for group in group_data %}
+                                                        <tr>
+                                                            <td>{{ forloop.counter }}</td>
+                                                            <td>{{ group.GroupName }}</td>
+                                                            <td>
+                                                                <div class="tooltip-container">
+                                                                    <div id="tooltipButtonRoles{{ forloop.counter }}">{{ group.Roles|length }}</div>
+                                                                    <div class="custom-tooltip" id="tooltipRoles{{ forloop.counter }}">
+                                                                        {% for role_info in group.Roles %}
+                                                                            <div class="col">
+                                                                                <label for="checkboxRole{{ role_info.RoleId }}">
+                                                                                {{ role_info.RoleName }}
+                                                                                </label>
+                                                                            </div>
+                                                                        {% endfor %}
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="tooltip-container" data-row="{{ forloop.counter }}">
+                                                                    {% for role_info in group.Roles %}
+                                                                    <div id="tooltipButtonMenus{{ forloop.counter }}">
+                                                                        <div class="showplusvalue"></div>
+                                                                        <div class="valueforplus d-none">{{ role_info.MenuItems|length }}</div>
+                                                                    </div>
+                                                                    {% endfor %}
+                                                            
+                                                                    <script>
+                                                                        document.addEventListener('DOMContentLoaded', function () {
+                                                                            const rowNumber = {{forloop.counter}};
+                                                                            const valueElements = document.querySelectorAll(`[data-row="${rowNumber}"] .valueforplus`);
+                                                                            const total = Array.from(valueElements).reduce((acc, el) => acc + parseInt(el.textContent || 0), 0);
+                                                                            document.querySelector(`[data-row="${rowNumber}"] .showplusvalue`).textContent = `${total}`;
+                                                                        });
+                                                                    </script>
+                                                            
+                                                                    <div class="custom-tooltip" id="tooltipMenus{{ forloop.counter }}">
+                                                                        {% for role_info in group.Roles %}
+                                                                            <div class="col">
+                                                                                {% for menu_item in role_info.MenuItems %}
+                                                                                    <div class="submenu-container">
+                                                                                        {{ menu_item.MenuItemName }}
+                                                                                        {% for sub_menu in menu_items %}
+                                                                                            {% if sub_menu.MainMenuId == menu_item.MenuItemId and sub_menu.MenuItemId != menu_item.MenuItemId %}
+                                                                                            <div class="col">
+                                                                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ sub_menu.MenuItemName }}
+                                                                                            </div>
+                                                                                            {% endif %}
+                                                                                        {% endfor %}
+                                                                                    </div>
+                                                                                {% endfor %}
+                                                                            </div>
+                                                                        {% endfor %}
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            
+                                                            <td>{% if group.GroupFlag == 'A' %}Active{% else %}Inactive{% endif %}</td>
+                                                            <td>
+                                                                <button type="button" class="btn btn-sm backgroundlightwala text-white open-modal-btn" data-bs-toggle="modal" data-bs-target="#viewgroup" data-groupid="{{ group.GroupId }}">
+                                                                    <i class="fa-solid fa-circle-info fa-lg"></i>
+                                                                </button>
+                                                                
+                                                                <button type="button" class="btn btn-sm edit-group-row backgroundneela" data-groupid="{{ group.GroupId }}">
+                                                                    <i class="fa-solid fa-pen-to-square fa-lg"></i>
+                                                                </button>
+                                                                <button type="button" class="btn btn-sm btn-danger remove-group" data-groupid="{{ group.GroupId }}">
+                                                                    <i class="fa-regular fa-trash-can fa-lg"></i>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>                                                                         
+                                        <div id="New_group" style="display: none;">
+                                            <form action="{% url 'create_group' %}" method="post">
+                                                {% csrf_token %}
+                                                <div class="row justify-content-end g-2 mx-2">
+                                                    <div class="col-md-1">
+                                                        <button class="btn btn-sm text-white" type="submit"
+                                                            style="background-color: #0e223d;">Save</button>
+                                                    </div>
+                                                    <div class="col-md-1">
+                                                        <button class="btn btn-sm text-white" type="reset" style="background-color: #0e223d;"
+                                                            onclick="clr_all()">Clear</button>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-6 col-sm-6">
+                                                        <h6 class="card-title "> Group Name</h6>
+                                                        <input type="text" name="group_name" class="form-control" placeholder="Group Name">
+                                                    </div>
+                                                    
+                                                    <div class="col-lg-6 col-sm-6">
+                                                        <h6 class="card-title "> Group</h6>
+                                                        <div class="form-check form-switch">
+                                                            <input type="hidden" name="is_active" id="activeFlagInput" value="A" />
+                                                            <input class="form-check-input" type="checkbox" role="switch" id="mySwitchs" onclick="updateActiveFlag()">
+                                                            <label for="mySwitch" id="myLabels" class="inactive-label">Inactive</label>
+                                                        
+                                                            <script>
+                                                            function updateActiveFlag() {
+                                                                    const switchElement = document.getElementById("mySwitchs");
+                                                                    const hiddenInput = document.getElementById("activeFlagInput");
+
+                                                                    if (switchElement.checked) {
+                                                                        hiddenInput.value = "A"; // Set value to 'A' for active
+                                                                    } else {
+                                                                        hiddenInput.value = "I"; // Set value to 'I' for inactive
+                                                                    }
+                                                                }
+                                                                const switchElements = document.getElementById("mySwitchs");
+                                                                const labelElements = document.getElementById("myLabels");
+                                                                switchElements.addEventListener("change", function() {
+                                                                    if (this.checked) {
+                                                                        labelElements.innerText = "Active";
+                                                                        labelElements.classList.remove("inactive-label");
+                                                                        labelElements.classList.add("active-label");
+                                                                    } else {
+                                                                        labelElements.innerText = "Inactive";
+                                                                        labelElements.classList.remove("active-label");
+                                                                        labelElements.classList.add("inactive-label");
+                                                                    }
+                                                                });
+                                                            </script>
+                                                            
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-9 col-sm-6">
+                                                        <h6 class="card-title ">Description </h6>
+                                                        <textarea name="group_desc" class="form-control" rows="1" placeholder="Type Something"></textarea>
+
+                                                    </div>                                            
+                                                </div>    
+                                                <div class="row">
+                                                    {% for role_menu_item in role_menu_items %}
+                                                        <div class="col">
+                                                            <input type="checkbox" name="selected_roles" class="role-checkbox" value="{{ role_menu_item.RoleId }}" data-roleid="{{ role_menu_item.RoleId }}" id="role_checkbox_{{ role_menu_item.RoleId }}" {% if role_menu_item.IsChecked %}checked{% endif %}>
+                                                            <label for="role_checkbox_{{ role_menu_item.RoleId }}">
+                                                                {{ role_menu_item.RoleName }}
+                                                            </label>
+                                                            {% for menu_item in role_menu_item.MenuItems %}
+                                                                <div class="col role-menu" data-roleid="{{ role_menu_item.RoleId }}">
+                                                                    <label>{{ menu_item.MenuItemName }}</label>
+                                                                </div>
+                                                                <div class="submenu-div ps-3">
+                                                                    {% for submenu in role_menu_item.Submenus %}
+                                                                        {% if submenu.MainMenuId == menu_item.MenuItemId %}
+                                                                            <div class="col role-submenu" data-roleid="{{ role_menu_item.RoleId }}">
+                                                                                <label>{{ submenu.MenuItemName }}</label>
+                                                                            </div>
+                                                                        {% endif %}
+                                                                    {% endfor %}
+                                                                </div>
+                                                            {% endfor %}
+                                                        </div>
+                                                    {% endfor %}
+                                                </div>
+                                                <script>
+                                                    document.addEventListener('DOMContentLoaded', function () {
+                                                        const roleCheckboxes = document.querySelectorAll('.role-checkbox');
+                                                
+                                                        roleCheckboxes.forEach(function (checkbox) {
+                                                            checkbox.addEventListener('change', function () {
+                                                                const roleId = this.dataset.roleid;
+                                                                const roleMenuItems = document.querySelectorAll(`.role-menu[data-roleid="${roleId}"], .role-submenu[data-roleid="${roleId}"]`);
+                                                
+                                                                roleMenuItems.forEach(function (item) {
+                                                                    item.style.display = checkbox.checked ? 'block' : 'none';
+                                                                });
+                                                
+                                                                // Store checkbox state in local storage
+                                                                localStorage.setItem(`role_checkbox_${roleId}`, checkbox.checked);
+                                                            });
+                                                
+                                                            // Always set the checkbox to be unchecked by default
+                                                            checkbox.checked = false;
+                                                            checkbox.dispatchEvent(new Event('change'));
+                                                        });
+                                                    });
+                                                </script>
+                                                
+                                                
+                                                
+                                            </form>                          
+                                        </div>         
+                                        <div class="row justify-content-between">
+                                            <div class="col">
+                                                <button type="button" class="btn btn-primary fw-bold float-end mt-2 theme"
+                                                onclick="proceedToNextTab()">Next <i class="fas fa-chevron-right text-white"></i></button>
+                                            </div>
+                                        </div>                                            
+                                    </div>
+                                    
+                                    <div id="Role" class="tab-pane my-1 mx-2 rounded">
+                                        <div id="Role-table" class="table table-responsive" style="display: block;">
+                                            <table id="Roles" class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>SNo.</th>
+                                                        <th>Role name</th>
+                                                        <th>Menus</th>
+                                                        <th>Status</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for role_menu_item in role_menu_items %}
+                                                    <tr>
+                                                        <td>{{ forloop.counter }}</td>
+                                                        <td>{{ role_menu_item.RoleName }}</td>
+                                                        <td>
+                                                            <div class="tooltip-container">
+                                                                <div id="tooltipButton{{ forloop.counter }}">{{ role_menu_item.MenuItems|length }}</div>
+                                                                <div class="custom-tooltip" id="tooltip{{ forloop.counter }}">
+                                                                    {% for menu_item in role_menu_item.MenuItems %}
+                                                                    <div class="col">
+                                                                        <label>{{ menu_item.MenuItemName }}</label>
+                                                                    </div>
+                                                                    <div class="submenu-div ps-3">
+                                                                        {% for submenu in menu_items %}
+                                                                        {% if submenu.MainMenuId == menu_item.MenuItemId and submenu.MenuItemId != menu_item.MenuItemId %}
+                                                                        <div class="col">
+                                                                            <label>{{ submenu.MenuItemName }}</label>
+                                                                        </div>
+                                                                        {% endif %}
+                                                                        {% endfor %}
+                                                                    </div>
+                                                                    {% endfor %}
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td>{% if role_menu_item.ActiveFlag == 'A' %}Active{% else %}Inactive{% endif %}</td>
+                                                        <td>
+                                                            <button type="button" class="btn btn-sm edit_role backgroundneela" data-toggle="modal" data-target="#roleModal" data-rolename="{{ role_menu_item.RoleName }}" data-roleid="{{ role_menu_item.RoleId }}" data-roledesc="{{ role_menu_item.RoleDesc }}" data-ac="{{ role_menu_item.ActiveFlag }}">
+                                                                <i class="fa-solid fa-pen-to-square fa-lg"></i>
+                                                            </button>
+                                                            <button type="button" class="btn btn-sm btn-danger" onclick="deleteRole('{{ role_menu_item.RoleId }}')">
+                                                                <i class="fa-regular fa-trash-can fa-lg"></i>
+                                                            </button>
+
+                                                        </td>
+                                                    </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div id="New_Role" class="p-3" style="display: none;">
+                                            <form action="{% url 'create_role' %}" class="needs-validation" method="post"> 
+                                                {% csrf_token %}
+                                                <div class="row justify-content-end g-2 mx-2">
+                                                    <div class="col-md-1">
+                                                        <button class="btn btn-sm text-white" type="submit"
+                                                            style="background-color: #0e223d;">Save</button>
+                                                    </div>
+                                                    <div class="col-md-1">
+                                                        <button class="btn btn-sm text-white" type="reset" style="background-color: #0e223d;"
+                                                            onclick="clr_all()">Clear</button>
+                                                    </div>
+                                                </div>
+                                                <div class="row ">
+                                                    <div class="col-lg-6 col-sm-6 pt-1">
+                                                        <h6 class="card-title "> Role Name</h6>
+                                                        <input type="text" name="RoleName" class="form-control" placeholder="Role Name">
+                                                    </div>
+                                                    <div class="col-lg-6 col-sm-6 pt-1">
+                                                        <h6 class="card-title "> Status</h6>
+                                                        <div class="form-check form-switch">
+                                                            
+                                                            <input type="hidden" id="Role_status" name="Role_status"  value="I">
+                                                            <input class="form-check-input" type="checkbox" role="switch"  id="mySwitch">
+                                                            <label for="mySwitch" id="myLabel" class="inactive-label">Inactive</label>
+                                                        
+                                                            <script>
+                                                                const switchElement = document.getElementById("mySwitch");
+                                                                const labelElement = document.getElementById("myLabel");
+                                                                const Role_status = document.getElementById("Role_status");
+                                                        
+                                                                switchElement.addEventListener("change", function() {
+                                                                    if (this.checked) {
+                                                                        labelElement.innerText = "Active";
+                                                                        labelElement.classList.remove("inactive-label");
+                                                                        labelElement.classList.add("active-label");
+                                                                        Role_status.value = "A";
+                                                                    } else {
+                                                                        labelElement.innerText = "Inactive";
+                                                                        labelElement.classList.remove("active-label");
+                                                                        labelElement.classList.add("inactive-label");
+                                                                        Role_status.value = "I";
+                                                                    }
+                                                                });
+                                                            </script>
+                                                            
+                                                        
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-9 col-sm-6 pt-lg-2 pt-sm-1 pt-md-1">
+                                                        <h6 class="card-title ">Description </h6>
+                                                        <textarea name="Role_Description" id="" class=" form-control" rows="2" placeholder="Type Something"></textarea>
+                                                    </div>
+                                                
+                                                </div>
+                                                <div class="row pt-2">
+                                                    {% for main_menu in menu_items %}
+                                                        {% if main_menu.MainMenuId ==  main_menu.MenuItemId  %}
+                                                            <div class="col">
+                                                    
+                                                                <div class="menu">
+                                                                    <label>
+                                                                        <input type="checkbox" class="menu-checkbox" name="selected_menu_items" value="{{ main_menu.MenuItemId }}"  onclick="toggleSubmenus(this)">
+                                                                        {{ main_menu.MenuItemName }} 
+                                                                    </label>
+                                                                
+                                                                    <ul class="submenu-list" style="display: block;">
+                                                                        {% for sub_menus in menu_items %}
+                                                                        {% if sub_menus.MainMenuId ==  main_menu.MenuItemId and sub_menus.MainMenuId !=  sub_menus.MenuItemId  %}
+            
+                                                                        <li>
+                                                                            <label>
+                                                                                {{ sub_menus.MenuItemName }}
+                                                                            </label>
+                                                                        </li>
+                                                                        {% endif %}
+                                                                        {% endfor %}
+                                                                    
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        {% endif %}
+                                                    {% endfor %}                                            
+                                                </div>
+                                            </form>
+                                        </div>
+
+                                    
+                                        <div class="row justify-content-between">
+                                            <div class="col ">
+                                                <button type="button" class="btn btn-outline fw-bold  mt-2" onclick="Backtoprevioustab()"
+                                                style="background-color: #ced4da;"><i class="fas fa-chevron-left text-dark"></i> Back
+                                                </button>
+                                                <button type="button" class="btn btn-primary fw-bold float-end mt-2 theme"
+                                                onclick="proceedToNextTab()">Next <i class="fas fa-chevron-right text-white"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>              
+                                </div>     
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+
+
+<!-- Edit Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body hrcs">
+            <form action="{% url 'edit_user' %}" method="POST">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="UserId" class="form-label">User Id </label>
+                <input type="email" class="form-control"  id="UserId" name="UserId" readonly>
+            </div>
+            <div class="mb-3">
+                <label for="UserPhNumber" class="form-label">User Contact Number</label>
+                <input type="text" class="form-control"  id="UserPhNumber" name="UserPhNumber" oninput="validatePhoneNumber(this)" maxlength="13">
+                <script>
+                    function validatePhoneNumber(input) {
+                        // Remove any non-digit characters (except +)
+                        var sanitizedValue = input.value.replace(/[^\d+]/g, '');
+
+                        // Update the input value with the sanitized version
+                        input.value = sanitizedValue;
+                    }
+
+                </script>
+            </div>
+            <div class="mb-3">
+                <label for="EditUserptid" class="form-label">Professional_Type</label>
+                <select class="form-control" id="EditUserptid" name="EditUserptid">
+                    {% for Pro_Types in Pro_Type %}
+                    <option value="{{Pro_Types.id}}">{{Pro_Types.name}}</option>
+                    {% endfor %}
+                   
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="EditUserstatus" class="form-label">Status</label>
+                <select class="form-control" id="EditUserstatus" name="EditUserstatus">
+                    <option value="A">Active</option>
+                    <option value="I">Inactive</option>
+                </select>
+            </div>
+            <ul id="groupList" class="w-100">
+                <!-- Group will be populated here -->
+            </ul>
+            <div class=" text-center">
+                <button type="button" class="btn btn-sm text-white" style="background-color: #0e223d;" id="addGroupButton">Add Group</button>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+<!--view group Modal -->
+<div class="modal fade" id="viewgroup" tabindex="-1" aria-labelledby="viewgroupLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="viewgroupLabel">Group</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body ">
+            <div class="row mt-1">
+                <div class="col mb-2">
+                    <h6 class="card-title p-0 m-0"><span class="textbluecolor fw-bold"> Group Id</span></h6>
+                    <p6 class="p-0 m-0 text-secondary mb-1" id="group-id"></p6>
+                </div>
+                <div class="col mb-2">
+                    <h6 class="card-title p-0 m-0"><span class="textbluecolor fw-bold"> Group Name</span></h6>
+                    <p6 class="p-0 m-0 text-secondary mb-1" id="group-name"></p6>
+                </div>
+                <div class="col mb-2">
+                    <h6 class="card-title p-0 m-0"><span class="textbluecolor fw-bold"> Status</span></h6>
+                    <p6 class="p-0 m-0 text-secondary mb-1" id="group-status"></p6>
+                </div>
+                <div class="col-12 mb-2">
+                    <h6 class="card-title p-0 m-0"><span class="textbluecolor fw-bold"> Group Description</span></h6>
+                    <p6 class="p-0 m-0 text-secondary mb-1" id="group-desc"></p6>
+                </div>
+            </div>
+            <div class="row text-center">
+                <div class="col-1">
+                    <h6 class="card-title p-0 m-0"><span class="textbluecolor fw-bold"> S.no</span></h6>
+                </div>
+                <div class="col">
+                    <h6 class="card-title p-0 m-0"><span class="textbluecolor fw-bold"> Role</span></h6>
+                </div>
+                <div class="col">
+                    <h6 class="card-title p-0 m-0"><span class="textbluecolor fw-bold"> Menu</span></h6>
+                </div>
+            </div>
+            <div class="row text-center border border-black border-bottom-0" id="roles-container">
+                <!-- Role details will be dynamically added here -->
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- Edit menu/submenu Modal -->
+<div class="modal fade" id="editMenuModal" tabindex="-1" aria-labelledby="editMenuModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form id="edit-menu-item-form-{{ main_menu.MenuItemId }}" method="POST" action="{% url 'update_menu_item' %}">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editMenuModalLabel">Edit Menu</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Form for editing menu item details -->
+                    
+                        {% csrf_token %}
+                        <input type="hidden" id="menuId" name="menuId">
+                        <div class="mb-3">
+                            <label for="menuName" class="form-label">Menu Name</label>
+                            <input type="text" class="form-control" id="menuName" name="menuName">
+                        </div>
+                        <div class="mb-3" id="submenudiv">
+                            <label for="SubmenuName" class="form-label">SubMenu Name</label>
+                            <input type="text" class="form-control" id="SubmenuName" name="SubmenuName">
+                        </div>
+                        <div class="mb-3">
+                            <label for="menuDescription" class="form-label">Menu Description</label>
+                            <textarea class="form-control" id="menuDescription" name="menuDescription"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="menuStatus" class="form-label">Status</label>
+                            <select class="form-control" id="menuStatus" name="menuStatus">
+                                <option value="A">Active</option>
+                                <option value="I">Inactive</option>
+                            </select>
+                        </div>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" id="saveEditButton">Save Changes</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<!-- Edit Roles Modal -->
+<div class="modal fade" id="roleModal" tabindex="-1" aria-labelledby="roleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Role</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{% url 'edit_role' %}" class="needs-validation" method="post">
+                {% csrf_token %}
+                <div class="modal-body hrcs">
+                    <div class="mb-3">
+                        <input type="hidden" name="roleid" id="roleid" >
+                        <label for="RoleName" class="form-label">Role Name</label>
+                        <input type="text" class="form-control"  id="roleName" name="roleName">
+                    </div>
+                    <div class="mb-3">
+                        <label for="roleesc" class="form-label">Role Description</label>
+                        <input type="text" class="form-control"  id="roleesc" name="roleesc">
+                
+                    </div>
+                    <div class="mb-3">
+                        <label for="Editrolestatus" class="form-label">Status</label>
+                        <select class="form-control" id="Editrolestatus" name="Editrolestatus">
+                            <option value="A">Active</option>
+                            <option value="I">Inactive</option>
+                        </select>
+                    </div>
+                    <h5>Menu and Submenu:</h5>
+                
+                        <ul id="menuList" class="w-100">
+                            <!-- Menu items and submenus will be populated here -->
+                        </ul>
+                        <div class=" text-center">
+                        <button type="button" class="btn btn-sm text-white" style="background-color: #0e223d;" id="addMenuButton">Add Menu</button>
+                    </div>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" id="saveEditButton">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- Edit Group Modal -->
+<div class="modal fade" id="groupModal" tabindex="-1" aria-labelledby="groupModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Group</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{% url 'edit_group' %}" class="needs-validation" method="post">
+                {% csrf_token %}
+                <div class="modal-body hrcs">
+                    <div class="mb-3">
+                        <input type="hidden" name="groupid" id="groupid" >
+                        <label for="GroupName" class="form-label">Group Name </label>
+                        <input type="text" class="form-control"  id="GroupName" name="GroupName">
+                    </div>
+                    <div class="mb-3">
+                        <label for="GroupDesc" class="form-label">Role Description</label>
+                        <input type="text" class="form-control"  id="GroupDesc" name="GroupDesc">
+                
+                    </div>
+                    <div class="mb-3">
+                        <label for="EditGroupstatus" class="form-label">Status</label>
+                        <select class="form-control" id="EditGroupstatus" name="EditGroupstatus">
+                            <option value="A">Active</option>
+                            <option value="I">Inactive</option>
+                        </select>
+                    </div>
+                    <h5>Roles:</h5>
+                   <div class="row">
+                         <div id="checkbox-container"></div>
+                    </div>
+
+                    <div id="role-container"></div>
+                    <div class=" text-center mt-2">
+                        <button type="button" class="btn btn-sm text-white" style="background-color: #0e223d;" id="addRoleButton">Add Role</button>
+                    </div>
+
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" id="saveEditButton">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Add a new group row when the "Add Group" button is clicked
+        const addGroupButton = document.getElementById('addGroupButton');
+        addGroupButton.addEventListener('click', function () {
+            const groupList = document.getElementById('groupList');
+
+            const newGroupRow = document.createElement('li');
+            newGroupRow.innerHTML = `
+                <div class="row">
+                    <div class="col-md-5">
+                        <label for="newGroupName" class="fw-normal">Group Name</label>
+                        <select class="form-control form-control-sm" name="User_group" required>
+                            {% for group_info in all_groups %}
+                                <option data-usergroupdesc="{{ group_info.GroupDesc }}" value="{{ group_info.GroupId }}">{{ group_info.GroupName }}</option> 
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-5">
+                        <label for="newGroupDesc" class="fw-normal">Description</label>
+                        <input type="text" class="form-control form-control-sm" name="newGroupDesc[]">
+                    </div>
+                    <div class="col-md-1">
+                        <label for="userDesc" class="fw-normal"></label>
+                        <button type="button" class="btn btn-danger btn-sm" onclick="removeGroupRow(this)"><i class="bi bi-trash"></i></button>
+                    </div>
+                </div>
+            `;
+
+            groupList.appendChild(newGroupRow);
+
+            // Attach event listener to the new dropdown for description update
+            const newGroupSelect = newGroupRow.querySelector('select[name="User_group"]');
+            updateDescriptionOnSelectChange(newGroupSelect);
+        });
+
+        // Function to remove a dynamically added group row
+        window.removeGroupRow = function (button) {
+            const groupList = document.getElementById('groupList');
+            const rowToRemove = button.closest('li');
+            groupList.removeChild(rowToRemove);
+        };
+
+        // Attach event listener to existing dropdowns for description update
+        const groupSelects = document.querySelectorAll('select[name="User_group"]');
+        groupSelects.forEach(updateDescriptionOnSelectChange);
+
+        function updateDescriptionOnSelectChange(select) {
+            // Initial update
+            updateDescription(select);
+
+            // Event listener for subsequent changes
+            select.addEventListener('change', function () {
+                updateDescription(this);
+            });
+        }
+
+        function updateDescription(select) {
+            // Traverse up to the parent .row
+            const row = select.parentNode.parentNode;
+
+            // Then find the .col-md-5 with the description input
+            const descColumn = row.querySelector('.col-md-5:nth-child(2)');
+
+            // Get the input element
+            const descInput = descColumn.querySelector('input');
+
+            const selectedOption = select.options[select.selectedIndex];
+            const desc = selectedOption.getAttribute('data-usergroupdesc');
+
+            descInput.value = desc;
+        }
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        // Function to handle delete button click
+        $('.delete-btn').on('click', function () {
+            var userId = $(this).data('userid');
+
+            // Show a confirmation dialog
+            if (confirm('Are you sure you want to delete this user?')) {
+                // Unbind the click event to prevent multiple triggers
+                $(this).off('click');
+
+                // Store the reference to the current row
+                var currentRow = $(this).closest('tr');
+
+                // Make an AJAX request to delete the user
+                $.ajax({
+                    url: '{% url "delete_user" %}',  // Replace with your actual URL
+                    method: 'POST',
+                    data: {
+                        'user_id': userId,
+                        'csrfmiddlewaretoken': '{{ csrf_token }}'
+                    },
+                    success: function (data) {
+                        alert('User deleted successfully');
+                        currentRow.remove();
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        // Handle errors
+                        alert('Error deleting user:', errorThrown);
+                    }
+                });
+            }
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Add a new role row when the "Add Role" button is clicked
+        const addRoleButton = document.getElementById('addRoleButton');
+        addRoleButton.addEventListener('click', function () {
+            const roleContainer = document.getElementById('role-container');
+
+            const newRoleRow = document.createElement('div');
+            newRoleRow.classList.add('col-md-12'); // Adjust the class based on your layout needs
+            newRoleRow.innerHTML = `
+                <div class="row">
+                    <div class="col-md-5">
+                        <label for="newRoleName" class="fw-normal">Menu Name</label>
+                        <select class="form-control form-control-sm" name="roles" required onchange="populateRoleDescription(this)">
+                            {% for role_menu_item in role_menu_items %}
+                                <option data-role-desc="{{ role_menu_item.RoleDesc }}" value="{{ role_menu_item.RoleId }}">{{ role_menu_item.RoleName }}</option> 
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-5">
+                        <label for="newRoleDesc" class="fw-normal">Description</label>
+                        <input type="text" class="form-control form-control-sm" name="newRoleDesc[]" readonly>
+                    </div>
+                    <div class="col-md-1">
+                        <label for="newRoledelte" class="fw-normal"> </label>
+                        <button type="button" class="btn btn-danger btn-sm" onclick="removeRoleRow(this)"> <i class="bi bi-trash"></i></button>
+                    </div>
+                </div>
+            `;
+
+            roleContainer.appendChild(newRoleRow);
+
+            // Manually trigger the onchange event for the newly added role item
+            const newSelect = newRoleRow.querySelector('[name="Role_item"]');
+            populateRoleDescription(newSelect);
+        });
+
+        // Function to remove a dynamically added role row
+        window.removeRoleRow = function(button) {
+            const roleContainer = document.getElementById('role-container');
+            const rowToRemove = button.closest('.col-md-12'); // Adjust the class based on your layout needs
+            roleContainer.removeChild(rowToRemove);
+        };
+
+        // Function to populate description based on the selected role item
+        window.populateRoleDescription = function(selectElement) {
+            const selectedOption = selectElement.options[selectElement.selectedIndex];
+            const descriptionInput = selectElement.closest('.row').querySelector('input[name^="newRoleDesc"]');
+            const descriptionValue = selectedOption.getAttribute('data-role-desc') || '';
+            descriptionInput.value = descriptionValue;
+        };
+
+        // Manually trigger the onchange event for the initial selection
+        const initialSelect = document.querySelector('[name="Role_item"]');
+        if (initialSelect) {
+            populateRoleDescription(initialSelect);
+        }
+    });
+</script>
+
+
+
+<script>
+    $(document).ready(function () {
+        // Function to handle button click and update modal content
+        function updateModalContent(button) {
+            // Extract data from the button
+            var userId = $(button).data('userid');
+            var phno = $(button).data('phno');
+            var ptid = $(button).data('ptid');
+            var activeFlag = $(button).data('activeflag');
+
+            // Update modal content with extracted data
+            $('#UserId').val(userId);
+            $('#UserPhNumber').val(phno);
+            $('#EditUserptid').val(ptid);
+            $('#EditUserstatus').val(activeFlag);
+ // Get CSRF token
+         var csrfToken = $('input[name=csrfmiddlewaretoken]').val();
+            // Get user groups via AJAX (POST request)
+            $.ajax({
+                type: 'POST',
+                url: '{% url "get_user_info" %}',
+                data: { user_id: userId,
+                    csrfmiddlewaretoken: csrfToken },
+                dataType: 'json',
+                success: function (data) {
+                    // Assuming data is an array of group details
+                    var groupList = $('#groupList');
+                    groupList.empty();  // Clear existing groups
+
+                    // Add new groups to the modal
+                    data.forEach(function (group) {
+                        var groupId = group.GroupIdFK;
+                        var groupName = group.GroupName;
+
+                        groupList.append('<li>' + groupId + ': ' + groupName + '</li>');
+                    });
+                },
+                error: function (error) {
+                    console.error('Error getting user details:', error);
+                }
+            });
+        }
+
+        // Attach the function to the button click event
+        $('.backgroundneela').on('click', function () {
+            updateModalContent(this);
+        });
+
+        // Reset modal fields when the modal is closed
+        $('#exampleModal').on('hidden.bs.modal', function () {
+            $('#UserId').val('');
+            $('#EditUserptid').val('');
+            $('#EditUserstatus').val('');
+            $('#UserPhNumber').val('');
+            $('#groupList').empty();  // Clear groups when modal is closed
+        });
+    });
+</script>
+
+
+
+
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Add a new menu row when the "Add Menu" button is clicked
+        const addMenuButton = document.getElementById('addMenuButton');
+        addMenuButton.addEventListener('click', function () {
+            const menuList = document.getElementById('menuList');
+
+            const newMenuRow = document.createElement('li');
+            newMenuRow.innerHTML = `
+                <div class="row">
+                    <div class="col-md-5 ">
+                        <label for="newMenuItemName" class="fw-normal">Menu Name</label>
+                        <select class="form-control form-control-sm" name="roles" required onchange="populateDescription(this)">
+                            {% for main_menu in menu_items %}
+                                {% if main_menu.MainMenuId == main_menu.MenuItemId %}
+                                    <option data-Desc="{{ main_menu.MenuItemDesc }}" value="{{ main_menu.MenuItemId }}">{{ main_menu.MenuItemName }}</option> 
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-5 ">
+                        <label for="newMenuItemDesc" class="fw-normal">Description</label>
+                        <input type="text" class="form-control form-control-sm" name="newMenuItemDesc[]">
+                    </div>
+                    <div class="col-md-1 ">
+                        <label for="newMenuItemDesc" class="fw-normal"> </label>
+                        <button type="button" class="btn btn-danger btn-sm" onclick="removeMenuRow(this)"> <i class="bi bi-trash"></i></button>
+                    </div>
+                </div>
+            `;
+
+            menuList.appendChild(newMenuRow);
+            // Manually trigger the onchange event for the newly added menu item
+            const newSelect = newMenuRow.querySelector('[name="menu_item"]');
+            populateDescription(newSelect);
+        });
+
+        // Function to remove a dynamically added menu row
+        window.removeMenuRow = function(button) {
+            const menuList = document.getElementById('menuList');
+            const rowToRemove = button.closest('li');
+            menuList.removeChild(rowToRemove);
+        };
+
+        // Function to populate description based on the selected menu item
+        window.populateDescription = function(selectElement) {
+            const selectedOption = selectElement.options[selectElement.selectedIndex];
+            const descriptionInput = selectElement.closest('.row').querySelector('[name="newMenuItemDesc[]"]');
+            const descriptionValue = selectedOption.getAttribute('data-Desc') || ''; // Use an empty string if data-Desc is not present
+            descriptionInput.value = descriptionValue;
+        };
+
+        // Manually trigger the onchange event for the initial selection
+        const initialSelect = document.querySelector('[name="menu_item"]');
+        if (initialSelect) {
+            populateDescription(initialSelect);
+        }
+    });
+</script>
+
+
+
+
+</div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const editButtons = document.querySelectorAll('.edit-group-row');
+
+        editButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const groupId = this.getAttribute('data-groupid');
+                const url = "{% url 'get_group_info' 0 %}".replace('0', groupId);
+
+                const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrfToken,
+                    },
+                    body: JSON.stringify({
+                        group_id: groupId,
+                    }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('groupid').value = groupId;
+                    document.getElementById('GroupName').value = data.group_data.GroupName;
+                    document.getElementById('GroupDesc').value = data.group_data.GroupDesc;
+                    document.getElementById('EditGroupstatus').value = data.group_data.GroupFlag;
+
+                    const rolesContainer = document.getElementById('roles-container');
+                    rolesContainer.innerHTML = ''; // Clear existing content
+
+                    const checkboxContainer = document.getElementById('checkbox-container');
+                    checkboxContainer.innerHTML = ''; // Clear existing content
+
+                    data.group_data.Roles.forEach(role => {
+                        const roleDiv = document.createElement('div');
+                        roleDiv.className = 'col ';
+
+                        roleDiv.innerHTML = `
+                            
+                                <input type="checkbox" name="roles" id="" value="${role.RoleId}" checked>
+                                <p6 class="p-0 m-0 text-secondary mb-1">${role.RoleName}</p6>
+        
+                        `;
+
+                        
+
+                        rolesContainer.appendChild(roleDiv);
+                        checkboxContainer.appendChild(roleDiv); // Append the checkboxes to the new container
+                    });
+
+                    const modal = new bootstrap.Modal(document.getElementById('groupModal'));
+                    modal.show();
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            });
+        });
+    });
+</script>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const removeButtons = document.querySelectorAll('.remove-group');
+
+        removeButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const groupId = this.getAttribute('data-groupid');
+
+                // Show a confirmation dialog
+                const isConfirmed = confirm('Are you sure you want to delete this group?');
+
+                if (isConfirmed) {
+                    const url = "{% url 'delete_group' 0 %}".replace('0', groupId);
+                    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+                    fetch(url, {
+                        method: 'POST',  // You can also use 'DELETE'
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': csrfToken,
+                        },
+                        
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data.message);
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+                }
+            });
+        });
+    });
+</script>
+
+<script type="text/javascript" charset="utf8"
+    src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+
+{% endblock %}
+
+{% block jsblock %}
+
+
+    function deleteRole(roleId) {
+        if (confirm('Are you sure you want to delete this role?')) {
+            const url = "{% url 'delete_role' 0 %}".replace('0', roleId);
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: {
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                },
+                success: function(response) {
+                    alert(response.message);
+                },
+                error: function(error) {
+                    console.error('Error deleting role:', error);
+                }
+            });
+        }
+    }
+
+
+$(document).ready(function() {
+    $('.edit_role').click(function() {
+        const roleId = $(this).data('roleid');
+        const roleName = $(this).data('rolename');
+        const roledesc = $(this).data('roledesc');
+        const acValue = $(this).data('ac');
+        $('#roleid').val(roleId);
+        const url = "{% url 'get_role_menu_items' 0 %}".replace('0', roleId);
+
+        // Send an AJAX request to your Django view
+        $.get(url, function(data) {
+            // Populate the modal with RoleName and menu/submenu items
+            $('#roleName').val(roleName);
+            $('#roleesc').val(roledesc);
+            // Set the selected option in the 'Editrolestatus' select element
+            $('#Editrolestatus').val(acValue);
+
+            const menuList = $('#menuList');
+            menuList.empty();
+
+            for (const mainMenuId in data) {
+                const mainMenuItem = data[mainMenuId];
+                const mainListItem = $('<li>');
+            
+                // Generate a checkbox for each main menu item
+                const mainCheckbox = $('<input>')
+                    .attr('type', 'checkbox')
+                    .attr('name', 'menu_item')
+                    .attr('value', mainMenuItem.MainMenuId)
+                    .attr('id', `menu_item_${mainMenuItem.MainMenuId}`)
+                    .prop('checked', true);
+            
+                const mainLabel = $('<label>')
+                    .attr('for', `menu_item_${mainMenuItem.MainMenuId}`)
+                    .text(mainMenuItem.MenuItemName);
+            
+                mainListItem.append(mainCheckbox,'&nbsp;', mainLabel);
+            
+                if (mainMenuItem.Submenus.length > 0) {
+                    const submenuList = $('<ul>');
+                    mainMenuItem.Submenus.forEach(submenu => {
+                        const listItem = $('<li>').text(submenu.MenuItemName);
+                        submenuList.append(listItem);
+                    });
+            
+                    mainListItem.append(submenuList);
+                }
+            
+                menuList.append(mainListItem);
+            }
+            
+
+            // Display the modal
+            $('#roleModal').modal('show');
+        });
+    });
+});
+
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.10.2/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const openModalButtons = document.querySelectorAll('.open-modal-btn');
+
+        openModalButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const groupId = this.getAttribute('data-groupid');
+                const url = "{% url 'get_group_info' 0 %}".replace('0', groupId);
+
+                const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrfToken,
+                    },
+                    body: JSON.stringify({
+                        group_id: groupId,
+                    }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Update the modal content with the details from the response
+                    document.getElementById('group-id').innerText = groupId;
+                    document.getElementById('group-name').innerText = data.group_data.GroupName;
+                    document.getElementById('group-status').innerText = data.group_data.GroupFlag;
+                    document.getElementById('group-desc').innerText = data.group_data.GroupDesc;
+
+                    // Update roles, menu items, and submenus
+                    const rolesContainer = document.getElementById('roles-container');
+                    rolesContainer.innerHTML = ''; // Clear existing content
+
+                    data.group_data.Roles.forEach(role => {
+                        const roleDiv = document.createElement('div');
+                        roleDiv.className = 'row text-center';
+
+                        roleDiv.innerHTML = `
+                            <div class="col-1 align-self-center">
+                                <p6 class="p-0 m-0 text-secondary mb-1">${role.RoleId}</p6>
+                            </div>
+                            <div class="col align-self-center">
+                                <p6 class="p-0 m-0 text-secondary mb-1">${role.RoleName}</p6>
+                            </div>
+                            <div class="col align-self-center">
+                                <p6 class="p-0 m-0 text-secondary mb-1">${role.MenuItems.map(menuItem => `${menuItem}<br>`).join('')}</p6>
+                            </div>
+                        `;
+
+
+
+                        rolesContainer.appendChild(roleDiv);
+                    });
+
+                    // Open the modal
+                    const modal = new bootstrap.Modal(document.getElementById('viewgroup'));
+                    modal.show();
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            });
+        });
+    });
+</script>
+
+<script>
+const column1Height = document.getElementById("column1").offsetHeight;
+const column2Height = document.getElementById("column2").offsetHeight;
+
+
+// Set the height of both columns to the maximum height
+const maxHeight = Math.max(column1Height, column2Height);
+document.getElementById("column1").style.height = maxHeight + "px";
+document.getElementById("column2").style.height = maxHeight + "px";
+
+
+// When the "Save Changes" button is clicked in the modal
+document.getElementById('saveEditButton').addEventListener('click', function () {
+    const menuId = document.getElementById('menuId').value;
+    const menuName = document.getElementById('menuName').value;
+    const SubmenuName = document.getElementById('SubmenuName').value;
+    const menuDescription = document.getElementById('menuDescription').value;
+    const menuStatus = document.getElementById('menuStatus').value;
+
+    // Make an AJAX request to update the menu item
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", '/Doctor/update-menu-item/', true);
+
+    xhr.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));
+
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                const response = JSON.parse(xhr.responseText);
+                if (response.message) {
+                    alert(response.message);
+                    location.reload();
+
+                
+                }
+            } else {
+                alert("Error updating the menu item.");
+            }
+        }
+    };
+
+    const formData = new FormData();
+    formData.append('menuId', menuId); // Include the menuId as a form field
+    formData.append('menuName', menuName);
+    formData.append('SubMenu', SubmenuName);
+    formData.append('menuDescription', menuDescription);
+    formData.append('menuStatus', menuStatus);
+
+
+    xhr.send(formData);
+});
+
+
+
+// When the "Edit" button is clicked
+document.querySelectorAll('.edit-row').forEach(button => {
+    button.addEventListener('click', function () {
+        const menuItemId = this.getAttribute('data-idforedit');
+        const menuName = this.getAttribute('data-menuname');
+        const submenuName= this.getAttribute('data-submenuname');
+        const menuDescription = this.getAttribute('data-menudescription');
+        const menuStatus = this.getAttribute('data-menustatus');
+
+        // Get the isMain attribute
+        const isMain = this.getAttribute('data-ismain') === 'True';
+
+        console.log('Menu Item ID:', menuItemId);
+        console.log('Menu Name:', menuName);
+        console.log('Menu Description:', menuDescription);
+        console.log('Menu Status:', menuStatus);
+        console.log('Is Main Menu:', isMain);
+
+        // Populate the modal with the menu item details
+        document.getElementById('menuId').value = menuItemId;
+        document.getElementById('menuName').value = menuName;
+        document.getElementById('SubmenuName').value = submenuName;
+
+        document.getElementById('menuDescription').value = menuDescription;
+        const submenuDiv = document.getElementById('submenudiv');
+
+        // If it's a submenu, make the menu name field readonly
+        if (!isMain) {
+            document.getElementById('menuName').readOnly = true;
+            submenuDiv.style.display = 'block';
+        } else {
+            document.getElementById('menuName').readOnly = false;
+            submenuDiv.style.display = 'none';
+        }
+        const statusDropdown = document.getElementById('menuStatus');
+        statusDropdown.value = menuStatus;
+
+        // Display the modal
+        $('#editMenuModal').modal('show');
+    });
+});
+
+
+
+
+
+
+
+
+
+
+    
+// this is for menu item's delete means edit deleteflag
+document.addEventListener("DOMContentLoaded", function() {
+    const forms = document.querySelectorAll("form[id^='delete-menu-item-form-']");
+
+    forms.forEach(form => {
+        form.addEventListener("submit", function(e) {
+            e.preventDefault();
+
+            const confirmation = confirm("Are you sure you want to delete this item?");
+
+            if (confirmation) {
+                const formData = new FormData(form);
+
+                const xhr = new XMLHttpRequest();
+                xhr.open("POST", form.action, true);
+                xhr.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));
+
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4) {
+                        if (xhr.status === 200) {
+                            const response = JSON.parse(xhr.responseText);
+                            if (response.message) {
+                                alert(response.message);
+                                location.reload();
+                            }
+                        } else {
+                            alert("Error deleting the item.");
+                        }
+                    }
+                };
+
+                xhr.send(formData);
+            }
+        });
+    });
+});
+
+function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(";").shift();
+}
+
+
+    function toggleSubmenus(menuCheckbox) {
+        const submenuCheckboxes = menuCheckbox.closest('.menu').querySelectorAll('.submenu-checkbox');
+
+        submenuCheckboxes.forEach(submenuCheckbox => {
+            submenuCheckbox.checked = menuCheckbox.checked;
+        });
+    }
+
+
+
+
+
+    var sub_menu_count = 0; // Initialize a counter
+ 
+
+
+    function createSubmenuRow() {
+        var subMenuForm = `<div class="sub-menu-row row">
+            <div class="col-md-4">
+                <label for="submenuname" class="fw-normal">Sub Menu Name<span class="text-danger">*</span></label>
+                <select class="form-control form-control-sm" name="sub_menu_name" onchange="updateSubMenuLink(this)" required>
+                    {% for sub_menu in submenu_items %}
+                            <option  data-weblink="{{  sub_menu.WebpageLink  }}" >{{ sub_menu.MenuItemName }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="sub_menu_flg" class="fw-normal">Status<span class="text-danger">*</span></label>
+                    <select class="form-control form-control-sm" name="sub_menu_flg"  required>
+                        <option  value="A">Active</option>
+                        <option value="I" >Inactive</option>                         
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <label for="sub_menu_link" class="fw-normal">Sub Menu Link<span class="text-danger">*</span></label>
+                <input type="text" class="form-control form-control-sm" name="sub_menu_link" readonly required>
+            </div>
+            <div class="col-md-1">
+                <button class="btn btn-sm btn-danger mt-4" onclick="deleteSubMenu(event)">
+                    <i class="bi bi-trash"></i>
+                </button>
+            </div>
+        </div>`;
+
+        var div = document.createElement('div');
+        div.className = 'row sub-menu-row'; // Add 'sub-menu-row' class
+        div.innerHTML = subMenuForm;
+        // Set the initial value of the Sub Menu Link input
+        var selectElement = div.querySelector('[name="sub_menu_name"]');
+        var webLinkInput = div.querySelector('[name="sub_menu_link"]');
+        var defaultOption = selectElement.querySelector('option');
+        var defaultWeblink = defaultOption.getAttribute('data-weblink');
+        webLinkInput.value = defaultWeblink;
+        return div;
+    }
+
+
+    function updateSubMenuLink(selectElement) {
+        // Find the corresponding Sub Menu Link input element in the same row
+        var webLinkInput = selectElement.closest('.sub-menu-row').querySelector('[name="sub_menu_link"]');
+        
+        // Find the selected option in the Sub Menu Name dropdown
+        var selectedOption = selectElement.options[selectElement.selectedIndex];
+        
+        // Get the weblink from the selected option's data-weblink attribute
+        var weblink = selectedOption.getAttribute('data-weblink');
+        
+        // Set the value of the Sub Menu Link input to the weblink
+        webLinkInput.value = weblink;
+    }
+    
+    
+
+
+
+    document.getElementById('addsubmenu').addEventListener('click', function () {
+        var container = document.getElementById('addsubmenu_col');
+        container.appendChild(createSubmenuRow());
+
+        sub_menu_count++;
+    });
+
+    // Function to delete a sub-menu form
+    function deleteSubMenu(event) {
+        var row = event.target.closest('.sub-menu-row');
+        if (row) {
+            row.remove();
+        }
+    }
+ 
+        function clr_all() {
+            var container = document.getElementById('addsubmenu_col');
+            while (container.firstChild) {
+                container.removeChild(container.firstChild);
+            }
+            sub_menu_count = 0; // Reset the counter to zero
+        }
+
+    
+
+const addNewButton_user = document.getElementById("addNewButton_User");
+const UserTable = document.getElementById("User-table");
+const newUser = document.getElementById("New_User");
+
+addNewButton_user.addEventListener("click", () => {
+    if (UserTable.style.display === "block") {
+        UserTable.style.display = "none";
+        newUser.style.display = "block";
+    } else {
+        UserTable.style.display = "block";
+        newUser.style.display = "none";
+    }
+});
+
+
+
+
+
+const addNewButton = document.getElementById("addNewButton_Group");
+const groupTable = document.getElementById("Group-table");
+const newGroup = document.getElementById("New_group");
+
+addNewButton.addEventListener("click", () => {
+    if (groupTable.style.display === "block") {
+        groupTable.style.display = "none";
+        newGroup.style.display = "block";
+    } else {
+        groupTable.style.display = "block";
+        newGroup.style.display = "none";
+    }
+});
+
+const addNewButton_role = document.getElementById("addNewButton_Role");
+const roleTable = document.getElementById("Role-table");
+const newrole = document.getElementById("New_Role");
+
+addNewButton_role.addEventListener("click", () => {
+    if (roleTable.style.display === "block") {
+        roleTable.style.display = "none";
+        newrole.style.display = "block";
+    } else {
+        roleTable.style.display = "block";
+        newrole.style.display = "none";
+    }
+});
+
+
+const addNewButton_Menu = document.getElementById("addNewButton_Menu");
+const menuTable = document.getElementById("Menu-table");
+const newmenu = document.getElementById("New_Menu");
+
+addNewButton_Menu.addEventListener("click", () => {
+    if (menuTable.style.display === "block") {
+        menuTable.style.display = "none";
+        newmenu.style.display = "block";
+    } else {
+        menuTable.style.display = "block";
+        newmenu.style.display = "none";
+    }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+new DataTable('#Roles', {
+    "paging": false,
+    "columnDefs": [
+        {
+            "targets": 4, // Column index of the "Action" column
+            "orderable": false
+        }
+    ],
+});
+
+new DataTable('#Menus', {
+    "paging": false,
+    "columnDefs": [
+        {
+            "targets": 4, // Column index of the "Action" column
+            "orderable": false
+        }
+    ],
+});
+
+new DataTable('#Userss', {
+    "paging": false,
+    "columnDefs": [
+        {
+            "targets": 5, // Column index of the "Action" column
+            "orderable": false
+        }
+    ],
+});
+
+
+
+
+
+
+
+
+
+
+new DataTable('#Groupss', {
+    "paging": false,
+    "columnDefs": [
+        {
+            "targets": 5, // Column index of the "Action" column
+            "orderable": false
+        }
+    ],
+
+
+
+});
+
+
+
+    // Get all the tab elements and button elements
+    const tabs = document.querySelectorAll('.nav-link');
+    const newUserButton = document.getElementById('New-User-button');
+    const newGroupButton = document.getElementById('New-Group-button');
+    const newRoleButton = document.getElementById('New-Role-button');
+    const newMenuButton = document.getElementById('New-Menu-button');
+    const newSubMenuButton = document.getElementById('New-SubMenu-button');
+
+
+    // Function to hide all buttons
+    function hideAllButtons() {
+        newUserButton.style.display = 'none';
+        newGroupButton.style.display = 'none';
+        newRoleButton.style.display = 'none';
+        newMenuButton.style.display = 'none';
+        newSubMenuButton.style.display='none'
+    }
+
+    // Function to show the button based on the active tab
+    function showButtonForActiveTab() {
+        tabs.forEach(tab => {
+            if (tab.classList.contains('active')) {
+                const tabHref = tab.getAttribute('href');
+                hideAllButtons();
+                if (tabHref === '#Group') {
+                    newGroupButton.style.display = 'block';
+                } else if (tabHref === '#Role') {
+                    newRoleButton.style.display = 'block';
+                } else if (tabHref === '#Menu_Item') {
+                    newMenuButton.style.display = 'block';
+                }
+                else if (tabHref === '#User') {
+                    newUserButton.style.display = 'block';
+                }
+                else{
+                    newSubMenuButton.style.display = 'block';
+                }
+            }
+        });
+    }
+
+    // Initial setup
+    showButtonForActiveTab();
+
+    // Add event listener for tab change
+    tabs.forEach(tab => {
+        tab.addEventListener('click', showButtonForActiveTab);
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Back Button -->
+function Backtoprevioustab(){
+let curtab = $('.tab-content .active').attr('id');
+let backtab;
+
+switch(curtab){
+case 'Role':
+  backtab = 'Group';
+  break;
+case 'Menu_Item':
+  backtab = 'Role';
+  break;
+case 'SubMenu_Item':
+  backtab = 'Menu_Item';
+  break;
+}
+console.log('Current Tab:', curtab);
+console.log('Previous Tab:', backtab);
+
+$(`[href="#${backtab}"]`).tab('show');
+}
+
+
+
+function proceedToNextTab() {
+  let currentTab = $('.tab-content .active').attr('id');
+  let nextTab;
+
+  switch(currentTab) {
+      case 'Group':
+          nextTab = 'Role';
+          break;
+      case 'Role':
+          nextTab = 'Menu_Item';
+          break;
+      case 'Menu_Item':
+          nextTab = 'SubMenu_Item';
+          break;
+      default:
+          return; // Exit if the current tab doesn't have a defined next tab
+  }
+  $(`[href="#${nextTab}"]`).tab('show');
+}
+
+
+
+// Initialize the tooltip with Popper.js
+var tooltip = new Popper(document.getElementById("tooltipButton1"), {
+    placement: "right",
+    content: function (tooltip) {
+        // Create a div to hold the tooltip content
+        var tooltipDiv = document.createElement("div");
+
+        // Create a checkbox element
+        var checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+
+        // Create a label for the checkbox
+        var label = document.createElement("label");
+        label.appendChild(checkbox);
+        label.appendChild(document.createTextNode("Include in Role"));
+
+        // Append the checkbox and label to the tooltip content div
+        tooltipDiv.appendChild(label);
+
+        return tooltipDiv;
+    },
+});
+
+
+</script>
+{% endblock %}

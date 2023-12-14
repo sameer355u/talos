@@ -3,10 +3,11 @@ from django.http import HttpResponse
 from django.shortcuts import render
 import datetime
 
+from CustomAuth.utility import get_user_menu
 from Staff.decorators import allowed_role_users
 from Staff.models.clinic import Clinic
 from Staff.models.doctor import TblDoctorSchedule, TblDoctorSlot
-from Staff.models.professional_Onboarding import HealthProfessionalPersonalDetails
+from Staff.models.professional_Onboarding import HealthProfessionalPersonalDetails, MstHealthProfessional
 from Staff.utility import generate_slots, generate_selected_dates
 
 
@@ -54,6 +55,11 @@ def manage_slot(request):
         sat_slot_number = request.POST.get('sat_slot_number')
         sun_slot_number = request.POST.get('sun_slot_number')
 
+        try:
+            doctor_id = MstHealthProfessional.get_doctor_id(request.user)
+        except:
+            return render(request, 'pending_MPO.html')
+
         if all_days:
             no_of_days = (end_date - start_date).days + 1
             #print("no_of_days: ", no_of_days)
@@ -65,7 +71,7 @@ def manage_slot(request):
                     start_time_of_the_day = start_time_all
                     for i in range(7):
                         #print(weekdays[i])
-                        schedule = TblDoctorSchedule(DoctorIdFK=HealthProfessionalPersonalDetails.get_doctor_id(request.user),
+                        schedule = TblDoctorSchedule(DoctorIdFK=doctor_id,
                                                      UserIdFK=request.user,
                                                      ClinicIdFK=Clinic.get_clinic_id(),
                                                      StartDate=start_date,
@@ -86,7 +92,7 @@ def manage_slot(request):
                             for k in range(no_of_slots_of_the_day):
                                 slot = TblDoctorSlot(
                                     DoctorScheduleIdFK=TblDoctorSchedule.get_schedule_by_id(schedule.DoctorScheduleIdPK),
-                                    DoctorIdFK=HealthProfessionalPersonalDetails.get_doctor_id(request.user),
+                                    DoctorIdFK=doctor_id,
                                     UserIdFK=request.user,
                                     ClinicIdFK=Clinic.get_clinic_id(),
                                     SlotDate=slot_date[j],
@@ -102,7 +108,7 @@ def manage_slot(request):
                     start_time_of_the_day = [mon_start_time, tue_start_time, wed_start_time, thu_start_time, fri_start_time, sat_start_time, sun_start_time]
                     for i in range(7):
                         #print(weekdays[i])
-                        schedule = TblDoctorSchedule(DoctorIdFK=HealthProfessionalPersonalDetails.get_doctor_id(request.user),
+                        schedule = TblDoctorSchedule(DoctorIdFK=doctor_id,
                                                      UserIdFK=request.user,
                                                      ClinicIdFK=Clinic.get_clinic_id(),
                                                      StartDate=start_date,
@@ -126,7 +132,7 @@ def manage_slot(request):
                                 slot = TblDoctorSlot(
                                     DoctorScheduleIdFK=TblDoctorSchedule.get_schedule_by_id(
                                         schedule.DoctorScheduleIdPK),
-                                    DoctorIdFK=HealthProfessionalPersonalDetails.get_doctor_id(request.user),
+                                    DoctorIdFK=doctor_id,
                                     UserIdFK=request.user,
                                     ClinicIdFK=Clinic.get_clinic_id(),
                                     SlotDate=slot_date[j],
@@ -146,7 +152,7 @@ def manage_slot(request):
                         #print(weekdays[i])
                         start_time_of_the_day = start_time_all
                         no_of_slots_of_the_day = slots_number[i]
-                        schedule = TblDoctorSchedule(DoctorIdFK=HealthProfessionalPersonalDetails.get_doctor_id(request.user),
+                        schedule = TblDoctorSchedule(DoctorIdFK=doctor_id,
                                                      UserIdFK=request.user,
                                                      ClinicIdFK=Clinic.get_clinic_id(),
                                                      StartDate=start_date,
@@ -172,7 +178,7 @@ def manage_slot(request):
                                 slot = TblDoctorSlot(
                                     DoctorScheduleIdFK=TblDoctorSchedule.get_schedule_by_id(
                                         schedule.DoctorScheduleIdPK),
-                                    DoctorIdFK=HealthProfessionalPersonalDetails.get_doctor_id(request.user),
+                                    DoctorIdFK=doctor_id,
                                     UserIdFK=request.user,
                                     ClinicIdFK=Clinic.get_clinic_id(),
                                     SlotDate=slot_date[j],
@@ -191,7 +197,7 @@ def manage_slot(request):
                         #print(weekdays[i])
                         start_time_of_the_day = start_time[i]
                         no_of_slots_of_the_day = slots_number[i]
-                        schedule = TblDoctorSchedule(DoctorIdFK=HealthProfessionalPersonalDetails.get_doctor_id(request.user),
+                        schedule = TblDoctorSchedule(DoctorIdFK=doctor_id,
                                                      UserIdFK=request.user,
                                                      ClinicIdFK=Clinic.get_clinic_id(),
                                                      StartDate=start_date,
@@ -215,7 +221,7 @@ def manage_slot(request):
                             for k in range(no_of_slots_of_the_day):
                                 slot = TblDoctorSlot(
                                     DoctorScheduleIdFK=TblDoctorSchedule.get_schedule_by_id(schedule.DoctorScheduleIdPK),
-                                    DoctorIdFK=HealthProfessionalPersonalDetails.get_doctor_id(request.user),
+                                    DoctorIdFK=doctor_id,
                                     UserIdFK=request.user,
                                     ClinicIdFK=Clinic.get_clinic_id(),
                                     SlotDate=slot_date[j],
@@ -259,7 +265,7 @@ def manage_slot(request):
                     start_time_of_the_day = start_time_all
                     for i in range(len(weekdays_code)):
                         #print(weekdays[i])
-                        schedule = TblDoctorSchedule(DoctorIdFK=HealthProfessionalPersonalDetails.get_doctor_id(request.user),
+                        schedule = TblDoctorSchedule(DoctorIdFK=doctor_id,
                                                      UserIdFK=request.user,
                                                      ClinicIdFK=Clinic.get_clinic_id(),
                                                      StartDate=start_date,
@@ -291,7 +297,7 @@ def manage_slot(request):
                             for k in range(no_of_slots_of_the_day):
                                 slot = TblDoctorSlot(
                                     DoctorScheduleIdFK=TblDoctorSchedule.get_schedule_by_id(schedule.DoctorScheduleIdPK),
-                                    DoctorIdFK=HealthProfessionalPersonalDetails.get_doctor_id(request.user),
+                                    DoctorIdFK=doctor_id,
                                     UserIdFK=request.user,
                                     ClinicIdFK=Clinic.get_clinic_id(),
                                     SlotDate=slot_date[j],
@@ -308,7 +314,7 @@ def manage_slot(request):
                                              fri_start_time, sat_start_time, sun_start_time]
                     for i in range(len(weekdays_code)):
                         #print(weekdays[i])
-                        schedule = TblDoctorSchedule(DoctorIdFK=HealthProfessionalPersonalDetails.get_doctor_id(request.user),
+                        schedule = TblDoctorSchedule(DoctorIdFK=doctor_id,
                                                      UserIdFK=request.user,
                                                      ClinicIdFK=Clinic.get_clinic_id(),
                                                      StartDate=start_date,
@@ -332,7 +338,7 @@ def manage_slot(request):
                                 slot = TblDoctorSlot(
                                     DoctorScheduleIdFK=TblDoctorSchedule.get_schedule_by_id(
                                         schedule.DoctorScheduleIdPK),
-                                    DoctorIdFK=HealthProfessionalPersonalDetails.get_doctor_id(request.user),
+                                    DoctorIdFK=doctor_id,
                                     UserIdFK=request.user,
                                     ClinicIdFK=Clinic.get_clinic_id(),
                                     SlotDate=slot_date[j],
@@ -366,7 +372,7 @@ def manage_slot(request):
                         #print(weekdays[i])
                         start_time_of_the_day = start_time_all
                         no_of_slots_of_the_day = slots_number[i]
-                        schedule = TblDoctorSchedule(DoctorIdFK=HealthProfessionalPersonalDetails.get_doctor_id(request.user),
+                        schedule = TblDoctorSchedule(DoctorIdFK=doctor_id,
                                                      UserIdFK=request.user,
                                                      ClinicIdFK=Clinic.get_clinic_id(),
                                                      StartDate=start_date,
@@ -391,7 +397,7 @@ def manage_slot(request):
                                 slot = TblDoctorSlot(
                                     DoctorScheduleIdFK=TblDoctorSchedule.get_schedule_by_id(
                                         schedule.DoctorScheduleIdPK),
-                                    DoctorIdFK=HealthProfessionalPersonalDetails.get_doctor_id(request.user),
+                                    DoctorIdFK=doctor_id,
                                     UserIdFK=request.user,
                                     ClinicIdFK=Clinic.get_clinic_id(),
                                     SlotDate=slot_date[j],
@@ -423,7 +429,7 @@ def manage_slot(request):
                         #print(weekdays[i])
                         start_time_of_the_day = start_time[i]
                         no_of_slots_of_the_day = slots_number[i]
-                        schedule = TblDoctorSchedule(DoctorIdFK=HealthProfessionalPersonalDetails.get_doctor_id(request.user),
+                        schedule = TblDoctorSchedule(DoctorIdFK=doctor_id,
                                                      UserIdFK=request.user,
                                                      ClinicIdFK=Clinic.get_clinic_id(),
                                                      StartDate=start_date,
@@ -448,7 +454,7 @@ def manage_slot(request):
                                 slot = TblDoctorSlot(
                                     DoctorScheduleIdFK=TblDoctorSchedule.get_schedule_by_id(
                                         schedule.DoctorScheduleIdPK),
-                                    DoctorIdFK=HealthProfessionalPersonalDetails.get_doctor_id(request.user),
+                                    DoctorIdFK=doctor_id,
                                     UserIdFK=request.user,
                                     ClinicIdFK=Clinic.get_clinic_id(),
                                     SlotDate=slot_date[j],
@@ -463,4 +469,5 @@ def manage_slot(request):
 
         return render(request, 'slot_management.html', {'msg': 'Slot created...'})
     else:
-        return render(request, 'slot_management.html')
+        data = get_user_menu(request)
+        return render(request, 'slot_management.html', {'data': data})

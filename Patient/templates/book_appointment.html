@@ -398,11 +398,12 @@
                                 <table
                                     class="table border border-2 border-secondary-subtle rounded-2 table-responsive ">
                                     <tbody>
+                                        {% if doctor_list %}
                                         {% for d in doctor_list %}
                                         <tr class="docDetail">
                                             <td>
                                                 <span class="btn btn-outline-light btn-sm"> <input type="radio"
-                                                        name="selectDoctor" value="{{d.HealthProfessionalIDPK}}"
+                                                        name="selectDoctor" value="{{d.HealthProfessionalPersonalDetailsIDPK}}"
                                                         id="selectedDoctor"></span>
                                                 <img src="/media/{{d.ProfessionalProfilePic}}" alt="" width="40"
                                                     height="40" class="rounded-circle">
@@ -421,6 +422,8 @@
                                             </td>
                                         </tr>
                                         {% endfor %}
+                                        {% else %} No doctor available
+                                        {% endif %}
                                     </tbody>
                                 </table>
                             </div>

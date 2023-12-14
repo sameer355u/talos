@@ -1,472 +1,194 @@
-{% extends 'base.html' %}
-{% block title %}Patient Registration{% endblock %}
-{% block body %}
+{% extends 'account/base.html' %}
+{% load i18n %}
+{% block head_title %}{% trans "Patient Registration" %}{% endblock head_title %}
+{% block content %}
 {% load static %}
-{%block jscode%}
-<!-- Proceed Next -->
-    <script>
-      function proceedToNextTab() {
-        let currentTab = $('.tab-content .active').attr('id');
-        let nextTab;
 
-        switch (currentTab) {
-          case 'Primary_Information':
-            nextTab = 'Contact_Details';
-            break;
-          case 'Contact_Details':
-            nextTab = 'Medical_History';
-            break;
-          case 'Medical_History':
-            nextTab = 'Others';
-            break;
-
-          default:
-            return; // Exit if the current tab doesn't have a defined next tab
-        }
-
-        console.log('Current Tab:', currentTab);
-        console.log('Next Tab:', nextTab);
-
-        $(`[href="#${nextTab}"]`).tab('show');
-      }
-    </script>
-  <!-- Previous Next -->
-    <script>
-      function Backtoprevioustab() {
-        let curtab = $('.tab-content .active').attr('id');
-        let backtab;
-
-        switch (curtab) {
-          case 'Contact_Details':
-            backtab = 'Primary_Information';
-            break;
-          case 'Medical_History':
-            backtab = 'Contact_Details';
-            break;
-          case 'Others':
-            backtab = 'Medical_History';
-            break;
-          default:
-            return; // Exit if the current tab doesn't have a defined next tab
-        }
-
-        console.log('Current Tab:', curtab);
-        console.log('Previous Tab:', backtab);
-
-        $(`[href="#${backtab}"]`).tab('show');
+  {% block Style%}
+    <style>
+      .navbar a {
+        color: white;
       }
 
-    </script>
-      <!-- Image Dialog -->
-  <script>
-    function openImageDialog() {
-      document.getElementById('imageInput').click();
-    }
-    function displaySelectedImage(input) {
-      var previewImage = document.getElementById('previewImage');
-      if (input.files && input.files[0]) {
-        var reader = new FileReader();
-
-        reader.onload = function (e) {
-          previewImage.src = e.target.result;
-          previewImage.style.display = 'block';
-          selectedImageText.innerText =  input.files[0].name;
-
-        }
-
-        reader.readAsDataURL(input.files[0]);
-
-      }
-    }
-
-
-</script>
-     <!-- Mode of Payment -->
-  <script>
-    function handleselfchange() {
-      var creditCardSection = document.getElementById("creditCardSection");
-      var netBankingSection = document.getElementById("netBankingSection");
-      var upiSection = document.getElementById("upiSection");
-      var cashsection=document.getElementById('cashsection')
-      var paymentself = document.getElementById('paymentmode').value
-
-      if (paymentself === "Credit") {
-        creditCardSection.style.display = "block";
-        netBankingSection.style.display = "none";
-        upiSection.style.display = "none";
-        cashsection.style.display='none'
-
-      }
-      else if (paymentself === "Net") {
-        netBankingSection.style.display = "block";
-        creditCardSection.style.display = "none";
-        upiSection.style.display = "none";
-        cashsection.style.display='none'
-      }
-      else if (paymentself === "UPI") {
-        upiSection.style.display = "block";
-        netBankingSection.style.display = "none";
-        creditCardSection.style.display = "none";
-        cashsection.style.display='none'
-      }
-      else if(paymentself === "Cash"){
-        cashsection.style.display='block'
-        creditCardSection.style.display = "none";
-        upiSection.style.display = "none";
-        netBankingSection.style.display = "none";
+      .navbar-nav a {
+        color: white;
       }
 
-    }
-  </script>
-  <!-- Payment Tab -->
-  <script>
-
-
-    paymentMethodContainer.style.display = "none";
-    insuranceSection.style.display = "none";
-    creditCardSection.style.display = "none";
-    netBankingSection.style.display = "none";
-    upiSection.style.display = "none";
-    function handlePaymentChange() {
-      var paymentType = document.getElementById("paymenttype").value;
-      var paymentMethodContainer = document.getElementById("paymentMethodContainer");
-      var insuranceSection = document.getElementById("Insurance");
-
-
-      if (paymentType === "Self") {
-
-        paymentMethodContainer.style.display = "block";
-        insuranceSection.style.display = "none";
-      }
-      else if (paymentType === "Insurance") {
-        insuranceSection.style.display = "block";
-        paymentMethodContainer.style.display = "none";
-        cashsection.style.display='none'
-        creditCardSection.style.display = "none";
-        netBankingSection.style.display = "none";
-        upiSection.style.display = "none";
+      .theme {
+        background-color: #003a70
       }
 
-      // } else
-      console.log(paymentType, 'option')
 
-    }
-    </script>
+      .nav-tabs {
+        border-bottom: solid red 1px;
+        ;
+      }
 
-<!-- Add Table -->
-<script>
+      .nav-tabs .nav-item .nav-link.active {
 
-    $(document).ready(function () {
-      // Attach the click event handler to the "+" button in the table with ID "educationtableble"
-      $("#medicalhistorytable").on("click", ".add-row", function () {
-        var rowCount = $("#medicalhistorytable tbody tr").length;
-        var newRow = '<tr>' +
-          '<td>' + (rowCount + 1) + '</td>' +
-          '<td><input type="text" name="pretype" class="form-control form-control-lg changetext"></td>' +
-          '<td><input type="text" name="descrptn" class="form-control form-control-lg changetext"></td>' +
+        background: linear-gradient(to bottom, white 95%, white 5%);
+        color: #6ecbc9;
+        border-top: solid red 1px;
+        border-left: solid red 1px;
+        border-right: solid red 1px;
+        border-bottom: solid white 2px;
 
-          '<td><input type="file" name="medrec" class="form-control changetext"></td>' +
-          '<td><input type="text" name="remarks" class="form-control  changetext"></td>' +
+      }
 
 
-          '<td class=""><button type="button" class="btn btn-sm btn-primary theme  add-row "><i class="fa-solid fa-plus fa-lg"></i></button></td>'
-          +
-          '<td><button type="button" class="btn btn-danger btn-sm remove-row"><i class="fas fa-trash-alt fa-lg "></i></button></td>' +
-          '</tr>';
-        $("#medicalhistorytable tbody").append(newRow);
+      .nav-tabs .nav-item .nav-link {
+        background: linear-gradient(to bottom, #6ecbc9 95%, #F9F9F9 5%);
+        border-bottom: solid #F9F9F9 1px;
+        color: white;
+        background-color: #6ecbc9;
+      }
 
-        // Enable minus button in the previous row
-        $(".remove-row").prop("disabled", false);
+      /* .nav-item a,i{
+                  color: white;
 
-        // Disable minus button in the first row when there's only one row
-        if (rowCount === 0) {
-          $(".remove-row:first").prop("disabled", true);
-        }
-      });
+                } */
 
-      // Remove Row
-      $("#medicalhistorytable").on("click", ".remove-row", function () {
-        var rowCount = $("#medicalhistorytable tbody tr").length;
-        if (rowCount > 1) {
-          $(this).closest("tr").remove();
-          updateRowNumbers();
+      button :hover {
+        background-color: #018383;
+      }
 
-          // Disable minus button in the first row when there's only one row left
-          if (rowCount === 2) {
-            $(".remove-row:first").prop("disabled", true);
+
+      .formlabelcolor {
+        color: #003a70;
+      }
+
+      /* For small devices, set overflow-y to auto */
+      @media (max-width: 768px) {
+        body {
+          overflow-y: auto;
           }
-        }
-      });
+          .nav-item{
+            width: 100%;
+          }
 
-      // Update row numbers
-      function updateRowNumbers() {
-        $("#medicalhistorytable tbody tr").each(function (index) {
-          $(this).find("td:first").text(index + 1);
-        });
       }
-    });
 
-</script>
-
-
-
-<script>
-    const column1Height = document.getElementById("column1").offsetHeight;
-    const column2Height = document.getElementById("column2").offsetHeight;
-
-
-
-    // Set the height of both columns to the maximum height
-    const maxHeight = Math.max(column1Height, column2Height);
-    document.getElementById("column1").style.height = maxHeight + "px";
-    document.getElementById("column2").style.height = maxHeight + "px";
-
-</script>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      var radioButtons = document.querySelectorAll('input[name="selectPatient"]');
-
-      radioButtons.forEach(function (radioButton) {
-        radioButton.addEventListener('change', function () {
-          if (this.checked) {
-            var selectedValue = this.value;
-            console.log("Selected value: " + selectedValue);
-          }
-          var tableData = {{ obj | safe}};
-          for(let i=0; i < tableData.length; i++){
-            let valuesArray = Object.values(tableData[i])
-            if(selectedValue==valuesArray[0]) {
-              console.log('In IF')
-              document.getElementById('patientid').value=valuesArray[0]
-              document.getElementById('mfullname').value=valuesArray[1] + " " + valuesArray[2] + " " + valuesArray[3]
-              document.getElementById('mGender').value=valuesArray[4]
-              document.getElementById('mage').value=valuesArray[5]
-              document.getElementById('mbloodgroup').value=valuesArray[6]
-              document.getElementById('memailid').value=valuesArray[7]
-              document.getElementById('maadhar').value=valuesArray[8]
-              document.getElementById('mmaritalstatus').value=valuesArray[9]
-              document.getElementById('mspousename').value=valuesArray[10]
-              document.getElementById('mcontactno').value=valuesArray[11]
-              document.getElementById('mnationality').value=valuesArray[12]
-              document.getElementById('maddress').value=valuesArray[13]
-              document.getElementById('mcity').value=valuesArray[14]
-              document.getElementById('mstate').value=valuesArray[15]
-              document.getElementById('mcountry').value=valuesArray[16]
-              document.getElementById('mpin').value=valuesArray[17]
-              document.getElementById('malternateno').value=valuesArray[18]
-              document.getElementById('memergencypersonname').value=valuesArray[19]
-              document.getElementById('emcontactno').value=valuesArray[20]
-              document.getElementById('mrelation').value=valuesArray[21]
-
-            }
-            console.log(valuesArray[1] + " " + valuesArray[2] + " " + valuesArray[3],'name')
-            {% comment %} console.log(valuesArray, 'datum'); {% endcomment %}
-            {% comment %} console.log(valuesArray[0],'ID') {% endcomment %}
-
-          }
-        });
-      });
-    });
-
-
-  </script>
-
-
-{% endblock %}
-  <style>
-    .navbar a {
-      color: white;
-    }
-
-    .navbar-nav a {
-      color: white;
-    }
-
-    .theme {
-      background-color: #003a70
-    }
-
-
-    .nav-tabs {
-      border-bottom: solid red 1px;
-      ;
-    }
-
-    .nav-tabs .nav-item .nav-link.active {
-
-      background: linear-gradient(to bottom, white 95%, white 5%);
-      color: #6ecbc9;
-      border-top: solid red 1px;
-      border-left: solid red 1px;
-      border-right: solid red 1px;
-      border-bottom: solid white 2px;
-
-    }
-
-
-    .nav-tabs .nav-item .nav-link {
-      background: linear-gradient(to bottom, #6ecbc9 95%, #F9F9F9 5%);
-      border-bottom: solid #F9F9F9 1px;
-      color: white;
-      background-color: #6ecbc9;
-    }
-
-    /* .nav-item a,i{
-                color: white;
-
-              } */
-
-    button :hover {
-      background-color: #018383;
-    }
-
-
-    .formlabelcolor {
-      color: #003a70;
-    }
-
-    /* For small devices, set overflow-y to auto */
-    @media (max-width: 768px) {
-      body {
-        overflow-y: auto;
+      /* For medium devices, set overflow-y to auto */
+      @media (max-width: 992px) {
+        body {
+          overflow-y: auto;
         }
         .nav-item{
-          width: 100%;
+        width: 50%;
         }
-
-    }
-
-    /* For medium devices, set overflow-y to auto */
-    @media (max-width: 992px) {
-      body {
-        overflow-y: auto;
+        .nav-item > a{
+        font-size: .75rem !important;
+        word-wrap:break-word;
+        }
       }
-      .nav-item{
-       width: 50%;
+
+      /* For large devices and above, set overflow-x and overflow-y to hidden */
+      @media (min-width: 992px) {
+        body {
+          overflow-x: hidden;
+          overflow-y: hidden;
+        }
+        .tab-content {
+          height: 170px; /* Adjust the height as needed */
+          overflow-y: auto;
+          overflow-x: hidden;
+        }
+        .tablecontent{
+          height: 170px;
+          overflow-y: auto;
+          overflow-x: hidden;
+        }
       }
-      .nav-item > a{
-      font-size: .75rem !important;
-      word-wrap:break-word;
+      @media (max-width: 768px) {
+
+          /* Styles for small screens */
+        #column1,
+        #column2
+
+        {
+          /* Reset the heights to auto for medium and larger screens */
+          height: auto !important;
+        }
       }
-    }
 
-    /* For large devices and above, set overflow-x and overflow-y to hidden */
-    @media (min-width: 992px) {
-      body {
-        overflow-x: hidden;
-        overflow-y: hidden;
+
+      .changetext {
+        border: solid #c4ccd1 1px;
       }
-      .tab-content {
-        height: 170px; /* Adjust the height as needed */
-        overflow-y: auto;
-        overflow-x: hidden;
-       }
-      .tablecontent{
-        height: 170px;
-        overflow-y: auto;
-        overflow-x: hidden;
+
+      .backgroundgradient {
+        background: linear-gradient(45deg, #6ecbc9, #003a70);
+
+        color: white;
+        transition: all;
       }
-    }
-    @media (max-width: 768px) {
 
-        /* Styles for small screens */
-      #column1,
-      #column2
-
-      {
-        /* Reset the heights to auto for medium and larger screens */
-        height: auto !important;
+      .backgroundgradient:hover {
+        background: linear-gradient(45deg, #003a70, #ec0909);
+        color: white;
       }
-    }
 
-
-    .changetext {
-      border: solid #c4ccd1 1px;
-    }
-
-    .backgroundgradient {
-      background: linear-gradient(45deg, #6ecbc9, #003a70);
-
-      color: white;
-      transition: all;
-    }
-
-    .backgroundgradient:hover {
-      background: linear-gradient(45deg, #003a70, #ec0909);
-      color: white;
-    }
-
-    td {
-      text-align: center;
-    }
+      td {
+        text-align: center;
+      }
 
 
 
 
-    .btncolor {
-      background-color: #018383;
-    }
+      .btncolor {
+        background-color: #018383;
+      }
 
-    ::-webkit-scrollbar-track {
+      ::-webkit-scrollbar-track {
 
-      -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
 
-      background-color: white;
+        background-color: white;
 
-      border-radius: 10px;
+        border-radius: 10px;
 
-    }
-
-
-
-    ::-webkit-scrollbar {
-
-      width: 10px;
-
-      height: 10px;
-
-      background-color: #F5F5F5;
-
-    }
+      }
 
 
 
-    ::-webkit-scrollbar-thumb {
+      ::-webkit-scrollbar {
 
-      border-radius: 10px;
+        width: 10px;
 
-      background-color: #FFF;
+        height: 10px;
 
-      background-image: -webkit-linear-gradient(top,
+        background-color: #F5F5F5;
 
-          #003a70 0%,
-
-          #6ecbc9 50%,
-
-          #6ecbc9 51%,
-
-          #003a70 100%);
+      }
 
 
 
-    }
+      ::-webkit-scrollbar-thumb {
+
+        border-radius: 10px;
+
+        background-color: #FFF;
+
+        background-image: -webkit-linear-gradient(top,
+
+            #003a70 0%,
+
+            #6ecbc9 50%,
+
+            #6ecbc9 51%,
+
+            #003a70 100%);
 
 
-  </style>
 
-{% include 'base_menu_2.html' %}
+      }
 
 
-  {% if messages %}
-  <ul class="messages">
-      {% for message in messages %}
-      <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-      {% endfor %}
-  </ul>
-  {% endif %}
+    </style>
+  {%endblock%}
+  {% include 'base_menu_2.html' %}
 
-  <form method="POST" class="needs-validation"  enctype="multipart/form-data" >
+  <form method="POST"   enctype="multipart/form-data" id="pform" onsubmit="return validateForm()" >
     {% csrf_token %}
     <div class="row g-2 m-1 align-items-stretch">
       <div class=" col-lg-2  col-md-4 col-sm-6 ">
@@ -476,8 +198,9 @@
               <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle"
                 width="80" />
               <div class="mt-3">
-                <label for="id">ID:{{request.user.id}}</label>
-                <h4 class=" mb-0" style="color: #6ecbc9;"> Drent Sue</h4>
+                <label for="pid">ID:{{request.user.id}}</label>
+
+                <h4 class=" mb-0" style="color: #6ecbc9;"> {{request.user.first_name}} {{request.user.last_name}}</h4>
                 <h6 class="fw-semibold formlabelcolor">{{request.user.profession.name}}</h6>
               </div>
             </div>
@@ -487,7 +210,7 @@
       <div class="col-lg-10  col-md-8 col-sm-12">
         <div class="card shadow " id="column2">
           <div class="card-header" style="background-color:white">
-            <h5 class="formlabelcolor mb-0"><span class="mb-0"><img src={% static 'Talos/icon/patientreg.png' %} width="25px"
+            <h5 class="formlabelcolor mb-0"><span class="mb-0"><img src="{% static 'Talos/icon/patientreg.png' %}" width="25px"
                   alt="onboarding"></span> Patient Registration</h5>
           </div>
           <div class="card-body table-responsive border border-danger rounded rounded-2">
@@ -499,10 +222,10 @@
                     width="90px" height="90px" id="previewImage" name="previewImage">
                   <button class="btn btn-outline btn-sm  mx-auto mt-1 align-items-sm-center " type="button" aria-controls="imageInput"
                     style="border: solid lightblue 1px; background-color: transparent;" onclick="openImageDialog()">
-                    <i class="fas fa-camera fa-lg" style="color:#0880a4;" title="Upload Picture"></i></button>
-                   <input type="file" id="imageInput" name="imageInput"  value="" class="form-control d-none" onchange="displaySelectedImage(this)">
-                   <input type="hidden" id="selectedImageText" name="selectedImageText">
-
+                    <i class="fas fa-camera fa-lg" style="color:#0880a4;" title="Upload Picture"></i>
+                   <input type="file" id="imageInput" name="imageInput"  value="" class="form-control" onchange="displaySelectedImage(this)" hidden>
+                   {% comment %} <input type="hidden" id="selectedImageText" name="selectedImageText"> {% endcomment %}
+                  </button>
 
                 </div>
               </div>
@@ -513,7 +236,7 @@
                     <h6 class="card-title  p-0 m-0 "><span class="formlabelcolor fw-bold">Contact Number</span></h6>
 
                     <input type="text" class="form-control form-control-sm changetext p-0 m-0  text-center"
-                      value="" name="contactno" required>
+                      value="{{request.user.phone}}" name="contactno" maxlength="10" minlength="10" readonly>
 
                   </div>
                   <div class="col-lg-3 col-md-4 mb-lg-2 col-sm-12">
@@ -521,12 +244,12 @@
 
 
                     <input type="email" class="form-control form-control-sm changetext m-0 p-0 text-center"
-                      value=" " name="emailid" required>
+                      value=" {{request.user.email}}" name="emailid" readonly >
 
                   </div>
                   <div class="col-lg-3 col-md-4 mb-lg-2 col-sm-12">
                     <h6 class="card-title p-0 m-0 formlabelcolor fw-bold">Date of Birth<span class="text-danger">*</span></h6>
-                     <input type="date" class="form-control form-control-sm changetext m-0  p-0 text-center" value="" name="age"required>
+                     <input type="date" class="form-control form-control-sm changetext m-0  p-0 text-center" value="" name="age" id ="age" required>
 
                   </div>
 
@@ -560,7 +283,7 @@
     <div class="row g-2 m-1 align-items-stretch " >
       <div class=" col-lg-2  col-md-4 col-sm-6 ">
         <div class="card shadow border border-danger rounded rounded-2 " id="column3">
-          <div class="card-header  fw-semibold  text-white" style="background-color: #6ecbc9;"><img src="{% static 'Talos/icon/editview.png' %}" width="22px" alt=""> View/Edit
+          <div class="card-header  fw-semibold  text-white" style="background-color: #6ecbc9;"><img src="{% static 'Talos/icon/editview.png' %}" width="22px" alt="name"> View/Edit
           </div>
           <div class="card-body tablecontent">
             <table class="table table-responsive ">
@@ -572,7 +295,7 @@
                     </td>
                     <td class="p-0">
                        <img
-                         src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsr_agW6Kn1nq-MvsBdq0kQWV93PxRjXDEHw&usqp=CAU"
+                         src="{{patient.PatientProfileImage}} "
                          class="img-fluid md rounded-circle img-thumbnail" width="40px" alt="Patient1">
                     </td>
                     <td class=""> <span> <td>{{ patient.FirstName }} {{ patient.MiddleName|default:'' }} {{ patient.LastName }} </span></td>
@@ -617,7 +340,7 @@
                     <div class="card-body">
                       <div class="row  ">
                         <div class="col-lg-6 col-md-6">
-                          <label for="Gender" class="form-label mb-0 formlabelcolor">Gender <span
+                          <label for="gender" class="form-label mb-0 formlabelcolor">Gender <span
                               class="text-danger">*</span></label>
                           <select name="gender" id="gender" class="form-select form-select-sm changetext" required>
                             <option selected>Select</option>
@@ -646,14 +369,14 @@
                       </div>
                       <div class="row my-2">
                         <div class="col-lg-6 col-md-6">
-                          <label for="Nationality" class="form-label mb-0 formlabelcolor">Nationality</label>
+                          <label for="nationality" class="form-label mb-0 formlabelcolor">Nationality</label>
                           <input type="text" name="nationality" id="nationality"
                             class="form-control form-control-sm changetext" >
                         </div>
                         <div class="col-lg-6 col-md-6 ">
                           <label for="aadhar" class="form-label mb-0 formlabelcolor">Aadhar Number/SSN No. <span
                               class="text-danger">*</span></label>
-                          <input type="text" name="aadhar" id="aadhar" class="form-control form-control-sm changetext" required>
+                          <input type="text" name="aadhar" id="aadhar" class="form-control form-control-sm changetext" maxlength="12" minlength="12" required>
                         </div>
                       </div>
                       <div class="row mt-2">
@@ -688,12 +411,12 @@
                       </div>
                       <div class="row  my-2">
                         <div class="col-lg-6 col-md-6">
-                          <label for="City" class="form-label mb-0 formlabelcolor">City <span
+                          <label for="city" class="form-label mb-0 formlabelcolor">City <span
                             class="text-danger">*</span></label>
                           <input type="text" name="city" id="city" class="form-control form-control-sm changetext" required>
                         </div>
                         <div class="col-lg-6 col-md-6">
-                          <label for="State" class="form-label mb-0 formlabelcolor">State <span
+                          <label for="state" class="form-label mb-0 formlabelcolor">State <span
                             class="text-danger">*</span></label>
                           <input type="text" name="state" id="state" class="form-control form-control-sm changetext" required
                             >
@@ -701,13 +424,13 @@
                       </div>
                       <div class="row  mt-2">
                         <div class="col-lg-6 col-md-6 ">
-                          <label for="Pincode" class="form-label mb-0 formlabelcolor">Pincode <span
+                          <label for="pincode" class="form-label mb-0 formlabelcolor">Pincode <span
                             class="text-danger">*</span></label>
-                          <input type="text" name="pincode" id="pincode" class="form-control form-control-sm changetext" required
+                          <input type="text" name="pincode" id="pincode" class="form-control form-control-sm changetext" required pattern="\d{6}"
                             >
                         </div>
                         <div class="col-lg-6 col-md-6">
-                          <label for="Country" class="form-label mb-0 formlabelcolor">Country <span
+                          <label for="country" class="form-label mb-0 formlabelcolor">Country <span
                             class="text-danger">*</span></label>
                           <input type="text" name="country" id="country" class="form-control form-control-sm changetext" required
                             >
@@ -730,28 +453,32 @@
 
                 <div class="col-md-4 col-lg-3">
 
-                  <label for="emgcontact" class="form-label formlabelcolor">Patient Contact Number </label>
+                  <label for="patcontactno" class="form-label formlabelcolor">Patient Contact Number </label>
                   <Span class="text-danger">*</Span>
-                  <input type="tel" name="patcontactno" id="patcontactno" class="form-control form-control-sm changetext" required>
+                  <input type="tel" name="patcontactno" id="patcontactno" class="form-control form-control-sm changetext" pattern="[0-9]{1}[0-9]{9}" maxlength="10" minlength="10" required>
 
                 </div>
                 <div class="col-md-4 col-lg-3">
 
-                  <label for="FirstName" class="form-label formlabelcolor"> Alternate Number  <span class="required_asterisk text-danger">*</span></label>
+                  <label for="patalternateno" class="form-label formlabelcolor"> Alternate Number  <span class="required_asterisk text-danger">*</span></label>
 
-                  <input type="tel" name="patalternateno" id="patalternateno" class="form-control form-control-sm changetext" >
+                  <input type="tel" name="patalternateno" id="patalternateno" class="form-control form-control-sm changetext" pattern="[0-9]{1}[0-9]{9}" maxlength="10" minlength="10" required>
                 </div>
                 <div class="col-lg-3 col-md-4">
 
-                    <label for="emgcontactname" class="form-label formlabelcolor"> Email ID</label>
+                    <label for="patemail" class="form-label formlabelcolor"> Email ID</label>
                     <Span class="text-danger">*</Span>
-                    <input type="text" name="patemail" id="patemail" class="form-control form-control-sm changetext" required>
+                    <input type="text" name="patemail" id="patemail" class="form-control form-control-sm changetext" required pattern=".+@.+\..+">
                   </div>
               </div>
-              <div class="row justify-content-around">
-                <div class="col-md-4 col-lg-3">
 
-                  <label for="emgcontactname" class="form-label formlabelcolor">Emergency Contact Person Name  </label>
+              <div class="row justify-content-around">
+
+              <h6 class="text-primary ms-3"> Emergency Contact Details</h6>
+              <hr>
+                <div class="col-md-4 col-lg-3" >
+
+                  <label for="emgname" class="form-label formlabelcolor"> Contact Person Name  </label>
                   <input type="text" name="emgname" id="emgname" class="form-control form-control-sm changetext" >
 
                 </div>
@@ -760,13 +487,13 @@
                   <label for="emgcontact" class="form-label formlabelcolor"> Contact Number <span
                     class="text-danger">*</span> </label>
 
-                  <input type="tel" name="emgcontact" id="emgcontact" class="form-control form-control-sm changetext" required>
+                  <input type="text" name="emgcontact" id="emgcontact" class="form-control form-control-sm changetext" pattern="[0-9]{1}[0-9]{9}" maxlength="10" minlength="10" required>
 
 
                 </div>
                 <div class="col-md-4 col-lg-3">
 
-                  <label for="FirstName" class="form-label formlabelcolor"> Contact Relation <span
+                  <label for="emgcontactrelation" class="form-label formlabelcolor"> Contact Relation <span
                     class="text-danger">*</span></label>
 
                   <select name="emgcontactrelation" class="form-select form-select-sm changetext" id="emgcontactrelation" required>
@@ -853,7 +580,7 @@
             <div class="tab-pane fade m-1" id="Others" role="tabpanel" aria-labelledby="others-tab">
               <div class="row ">
                 <div class="col-md-6 col-lg-3">
-                  <label for="FirstName" class="form-label formlabelcolor ">Payment Type  <span class="required_asterisk text-danger">*</span></label>
+                  <label for="paymenttype" class="form-label formlabelcolor ">Payment Type  <span class="required_asterisk text-danger">*</span></label>
                   <select name="paymenttype" class="form-select changetext" id="paymenttype"
                     onchange="handlePaymentChange()" required>
                     <option Selected>Select</option>
@@ -864,21 +591,21 @@
                   </select>
                 </div>
                 <div class="col-md-6 col-lg-3" style="display: none;" id="paymentMethodContainer">
-                  <label for="FirstName" class="form-label formlabelcolor">Mode Of Payment</label>
+                  <label for="paymentmode" class="form-label formlabelcolor">Mode Of Payment</label>
                   <select name="paymentmode" class="form-select changetext" id="paymentmode"
                     onchange="handleselfchange()">
                     <option value="">Select</option>
 
-                    <option value="Credit">Credit/Debit</option>
+                    <option value="Credit/Debit">Credit/Debit</option>
                     <option value="UPI">UPI</option>
-                    <option value="Net">Net Banking</option>
+                    <option value="Net Banking">Net Banking</option>
                     <option value="Cash">Cash</option>
                   </select>
                 </div>
                 <div id="Insurance" style="display: none;">
                   <div class="row">
                     <div class="col-lg-3 col-md-6">
-                      <label for="insurance" class="form-label formlabelcolor">Insurance Name </label>
+                      <label for="insurancename" class="form-label formlabelcolor">Insurance Name </label>
                       <input type="text" name="insurancename" id="insurancename" class="form-control form-control-sm">
                     </div>
                     <div class="col-lg-3 col-md-6">
@@ -888,66 +615,7 @@
                   </div>
                 </div>
               </div>
-              {% comment %} <div class="row" style="display: none;" id="creditCardSection">
-                <div class="row">
-                  <div class="col-lg-4 col-md-6">
-                    <label for="insurance" class="form-label formlabelcolor">Card Holder Name</label>
-                    <input type="text" name="insurancename" id="insurancename" class="form-control form-control-sm">
-                  </div>
-                  <div class="col-lg-4 col-md-6">
-                    <label for="insurance" class="form-label formlabelcolor">Card Number</label>
-                    <input type="text" name="insurancename" id="insurancename" class="form-control form-control-sm">
-                  </div>
 
-                  <div class="col-lg-4 col-md-6 ">
-                    <label for="insurance" class="form-label formlabelcolor ">Expiry Date </label>
-
-                      <input class="form-control form-control-sm" type="month" id="month" name="month" placeholder="MM"
-                       >
-                      <!-- <input class="form-control form-control-sm" type="text" id="year" name="year" placeholder="YYYY"
-                        style="flex: 1;" required> -->
-
-                  </div>
-                </div>
-              </div> {% endcomment %}
-              {% comment %} <div class="row" style="display: none;" id="netBankingSection">
-                <div class="row ">
-                  <div class="col-lg-3 col-md-6">
-                    <label for="netbanking" class="form-label formlabelcolor"> Select Bank</label>
-                    <select name="selectbankname" id="selectbankname" class="form-select changetext">
-                      <option value="">Axis Bank </option>
-                      <option value="">HDFC Bank</option>
-                      <option value="">IDFC</option>
-                      <option value="">ICICI</option>
-                      <option value="">PNB</option>
-                      <option value="">SBI</option>
-                      <option value="">Kotak</option>
-                      <option value="">Canara</option>
-
-                    </select>
-                  </div>
-                </div>
-              </div> {% endcomment %}
-              {% comment %} <div class="row" style="display: none;" id="upiSection">
-                <div class="row justify-content-start">
-                  <div class="col-lg-4  col-md-6">
-                    <label for="upiid" class="form-label formlabelcolor"> Enter UPI ID</label>
-                    <input type="text" name="upiid" id="upiid" class="form-control form-control-sm">
-                  </div>
-                  <div class="col-lg-4 col-md-6">
-                    <label for="txid" class="form-label formlabelcolor"> Transaction ID</label>
-                    <input type="text" name="txid" id="txid" class="form-control form-control-sm">
-                  </div>
-                </div>
-              </div> {% endcomment %}
-              {% comment %} <div class="row" style="display: none;" id="cashsection">
-                <div class="row ">
-                  <div class="col-lg-3 col-md-6">
-                    <label for="amount" class="form-label formlabelcolor">Amount(in Rs.)</label>
-                    <input type="text" name="upiid" id="upiid" class="form-control form-control-sm">
-                  </div>
-                </div>
-              </div> {% endcomment %}
               <div class="row justify-content-between">
                 <div class="col">
                   <button type="submit" class="btn btn-primary  float-end mt-3 mx-2 theme">Submit</button>
@@ -978,21 +646,21 @@
               <div class="row m-1">
                 <div class="col">
 
-                  <label for="fullname" class="form-label mb-0 formlabelcolor">Full Name </label>
+                  <label for="mfullname" class="form-label mb-0 formlabelcolor">Full Name </label>
                   <input type="text" class="form-control" name="mfullname" id="mfullname" value="" placeholder="Shivi" >
                 </div>
                 <div class="col">
-                  <label for="gender" class="form-label mb-0 formlabelcolor">Gender</label>
+                  <label for="mGender" class="form-label mb-0 formlabelcolor">Gender</label>
                   <input type="text" class="form-control" name="mGender" id="mGender" value="" placeholder="Female" >
                 </div>
                 <div class="col">
-                  <label for="age" class="form-label mb-0 formlabelcolor">Age</label>
+                  <label for="mage" class="form-label mb-0 formlabelcolor">Age</label>
                   <input type="text" class="form-control" name="mage" id="mage" value="" placeholder="23">
                 </div>
               </div>
               <div class="row m-1">
                 <div class="col">
-                  <label for="BloodGroup" class="form-label mb-0 formlabelcolor">Blood Group </label>
+                  <label for="mbloodgroup" class="form-label mb-0 formlabelcolor">Blood Group </label>
                   <input type="text" class="form-control" name="mbloodgroup" id="mbloodgroup" value="" placeholder="o+" >
                 </div>
                 <div class="col">
@@ -1000,21 +668,21 @@
                   <input type="text" class="form-control" name="memailid" id="memailid" value="" placeholder="shagrawal@gmail.com">
                 </div>
                 <div class="col">
-                  <label for="Aadhar" class="form-label mb-0 formlabelcolor">Aadhar No</label>
+                  <label for="memailid" class="form-label mb-0 formlabelcolor">Aadhar No</label>
                   <input type="text" class="form-control" name="maadhar" id="maadhar" value="" placeholder="2311111111" >
                 </div>
               </div>
               <div class="row m-1">
                 <div class="col">
-                  <label for="Marital" class="form-label mb-0 formlabelcolor">Marital Status </label>
+                  <label for="mmaritalstatus" class="form-label mb-0 formlabelcolor">Marital Status </label>
                   <input type="text" class="form-control" name="mmaritalstatus" id="mmaritalstatus" value="" placeholder="single">
                 </div>
                 <div class="col">
-                  <label for="Spouse" class="form-label mb-0 formlabelcolor">Spouse Name</label>
+                  <label for="mspousename" class="form-label mb-0 formlabelcolor">Spouse Name</label>
                   <input type="text" class="form-control" name="mspousename" id="mspousename" value="" placeholder="Anil">
                 </div>
                 <div class="col">
-                  <label for="Contact" class="form-label mb-0 formlabelcolor">Contact No</label>
+                  <label for="mcontactno" class="form-label mb-0 formlabelcolor">Contact No</label>
                   <input type="text" class="form-control" name="mcontactno" id="mcontactno" value="" placeholder="2311111111" >
                 </div>
               </div>
@@ -1023,33 +691,33 @@
           <div class="card body mb-1">
             <div class="row m-1">
               <div class="col">
-                <label for="Nationality" class="form-label mb-0 formlabelcolor">Nationality</label>
+                <label for="mnationality" class="form-label mb-0 formlabelcolor">Nationality</label>
                 <input type="text" class="form-control" name="mnationality" id="mnationality" value="" placeholder="Indian">
               </div>
               <div class="col">
-                <label for="Address" class="form-label mb-0 formlabelcolor">Address</label>
+                <label for="maddress" class="form-label mb-0 formlabelcolor">Address</label>
                 <input type="text" class="form-control" name="maddress" id="maddress" value="" placeholder="Bhopal">
               </div>
             </div>
             <div class="row m-1">
 
               <div class="col">
-                <label for="City" class="form-label mb-0 formlabelcolor">City</label>
+                <label for="mcity" class="form-label mb-0 formlabelcolor">City</label>
                 <input type="text" class="form-control" name="mcity" id="mcity" value="" placeholder="Bhopal">
               </div>
               <div class="col">
-                <label for="State" class="form-label mb-0 formlabelcolor">State </label>
+                <label for="mstate" class="form-label mb-0 formlabelcolor">State </label>
                 <input type="text" class="form-control" name="mstate" id="mstate" value="" placeholder="MP">
               </div>
             </div>
             <div class="row m-1">
               <div class="col">
-                <label for="Country" class="form-label mb-0 formlabelcolor">Country </label>
+                <label for="mcountry" class="form-label mb-0 formlabelcolor">Country </label>
                 <input type="text" class="form-control" name="mcountry" id="mcountry" value="" placeholder="India">
               </div>
               <div class="col">
-                <label for="gender" class="form-label mb-0 formlabelcolor">Pin Code</label>
-                <input type="text" class="form-control" name="mpin" id="mpin" value="" placeholder="464651">
+                <label for="mpin" class="form-label mb-0 formlabelcolor">Pin Code</label>
+                <input type="text" class="form-control" name="mpin" id="mpin" value="" placeholder="">
               </div>
 
 
@@ -1059,22 +727,22 @@
           <div class="card body mb-1">
             <div class="row m-1">
               <div class="col">
-                <label for="Alternate" class="form-label mb-0 formlabelcolor">Alternate No</label>
+                <label for="malternateno" class="form-label mb-0 formlabelcolor">Alternate No</label>
                 <input type="text" class="form-control" name="malternateno" id="malternateno" value="" placeholder="9090909090">
               </div>
               <div class="col">
-                <label for="Emergency" class="form-label mb-0 formlabelcolor">Emergency Contact Person Name</label>
+                <label for="memergencypersonname" class="form-label mb-0 formlabelcolor">Emergency Contact Person Name</label>
                 <input type="text" class="form-control" name="memergencypersonname" id="memergencypersonname" value="" placeholder="Aditya">
               </div>
             </div>
             <div class="row m-1">
 
               <div class="col">
-                <label for="Econtact" class="form-label mb-0 formlabelcolor">Contact No</label>
+                <label for="emcontactno" class="form-label mb-0 formlabelcolor">Contact No</label>
                 <input type="text" class="form-control" name="emcontactno" id="emcontactno" value="" placeholder="0990909090">
               </div>
               <div class="col">
-                <label for="State" class="form-label mb-0 formlabelcolor">Contact Relation </label>
+                <label for="mrelation" class="form-label mb-0 formlabelcolor">Contact Relation </label>
                 <input type="text" class="form-control" name="mrelation" id="mrelation" value="" placeholder="Friend">
               </div>
             </div>
@@ -1106,15 +774,264 @@
 
   </form>
 
+  <!-- Proceed Next -->
+   <script>
+     function proceedToNextTab() {
+       let currentTab = $('.tab-content .active').attr('id');
+       let nextTab;
+
+       switch (currentTab) {
+         case 'Primary_Information':
+           nextTab = 'Contact_Details';
+           break;
+         case 'Contact_Details':
+           nextTab = 'Medical_History';
+           break;
+         case 'Medical_History':
+           nextTab = 'Others';
+           break;
+
+         default:
+           return; // Exit if the current tab doesn't have a defined next tab
+       }
+
+
+
+       $(`[href="#${nextTab}"]`).tab('show');
+       const requiredFields = document.querySelectorAll('[required]');
+
+       // Flag to check if all required fields are filled
+       let allFieldsFilled = true;
+
+    // Loop through each required field
+    requiredFields.forEach(field => {
+      if (field.value.trim() === '') {
+        // If any required field is empty, set the flag to false
+        allFieldsFilled = false;
+
+
+        field.style.border = '1px dashed red';
+      } else {
+        // Clear any previous highlighting
+        field.style.border = '';
+      }
+    });
+
+      // If all required fields are filled, proceed to the next tab
+      if (allFieldsFilled) {
+        // Your code to proceed to the next tab goes here
+        console.log('Proceeding to the next tab');
+      } else {
+        // Show an alert or message indicating that required fields are not filled
+        alert('Please fill out all required fields.');
+      }
+    }
+
+   </script>
+   <!-- Previous Next -->
+   <script>
+     function Backtoprevioustab() {
+       let curtab = $('.tab-content .active').attr('id');
+       let backtab;
+
+       switch (curtab) {
+         case 'Contact_Details':
+           backtab = 'Primary_Information';
+           break;
+         case 'Medical_History':
+           backtab = 'Contact_Details';
+           break;
+         case 'Others':
+           backtab = 'Medical_History';
+           break;
+         default:
+           return; // Exit if the current tab doesn't have a defined next tab
+       }
+
+
+       $(`[href="#${backtab}"]`).tab('show');
+     }
+
+   </script>
+     <!-- Image Dialog -->
+   <script>
+      function openImageDialog() {
+        document.getElementById('imageInput').click();
+       }
+      function displaySelectedImage(input) {
+        var previewImage = document.getElementById('previewImage');
+        if (input.files && input.files[0]) {
+          var reader = new FileReader();
+
+          reader.onload = function (e) {
+            previewImage.src = e.target.result;
+            previewImage.style.display = 'block';
+            selectedImageText.innerText =  input.files[0].name;
+
+          }
+
+          reader.readAsDataURL(input.files[0]);
+
+        }
+        }
+
+  </script>
+
+     <!-- Payment Tab -->
+   <script>
+
+     var insuranceSection = document.getElementById("Insurance");
+     paymentMethodContainer.style.display = "none";
+     insuranceSection.style.display = "none";
+
+     function handlePaymentChange() {
+       var paymentType = document.getElementById("paymenttype").value;
+       var paymentMethodContainer = document.getElementById("paymentMethodContainer");
+
+
+
+       if (paymentType === "Self") {
+
+         paymentMethodContainer.style.display = "block";
+         insuranceSection.style.display = "none";
+       }
+       else if (paymentType === "Insurance") {
+         insuranceSection.style.display = "block";
+
+       }
 
 
 
 
+     }
+   </script>
+
+  <!-- Add Table -->
+  <script>
+
+     $(document).ready(function () {
+       // Attach the click event handler to the "+" button in the table with ID "educationtableble"
+       $("#medicalhistorytable").on("click", ".add-row", function () {
+         var rowCount = $("#medicalhistorytable tbody tr").length;
+         var newRow = '<tr>' +
+           '<td>' + (rowCount + 1) + '</td>' +
+           '<td><input type="text" name="pretype" class="form-control changetext"></td>' +
+           '<td><input type="text" name="descrptn" class="form-control changetext"></td>' +
+
+           '<td><input type="file" name="medrec" class="form-control changetext"></td>' +
+           '<td><input type="text" name="remarks" class="form-control  changetext"></td>' +
+
+
+           '<td class=""><button type="button" class="btn btn-sm btn-primary theme  add-row "><i class="fa-solid fa-plus fa-lg"></i></button></td>'
+           +
+           '<td><button type="button" class="btn btn-danger btn-sm remove-row"><i class="fas fa-trash-alt fa-lg "></i></button></td>' +
+           '</tr>';
+         $("#medicalhistorytable tbody").append(newRow);
+
+         // Enable minus button in the previous row
+         $(".remove-row").prop("disabled", false);
+
+         // Disable minus button in the first row when there's only one row
+         if (rowCount === 0) {
+           $(".remove-row:first").prop("disabled", true);
+         }
+       });
+
+       // Remove Row
+       $("#medicalhistorytable").on("click", ".remove-row", function () {
+         var rowCount = $("#medicalhistorytable tbody tr").length;
+         if (rowCount > 1) {
+           $(this).closest("tr").remove();
+           updateRowNumbers();
+
+           // Disable minus button in the first row when there's only one row left
+           if (rowCount === 2) {
+             $(".remove-row:first").prop("disabled", true);
+           }
+         }
+       });
+
+       // Update row numbers
+       function updateRowNumbers() {
+         $("#medicalhistorytable tbody tr").each(function (index) {
+           $(this).find("td:first").text(index + 1);
+         });
+       }
+     });
+
+  </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var today = new Date().toISOString().split('T')[0];
+      document.getElementById('age').max = today;
+    });
+  </script>
+
+  <script>
+     const column1Height = document.getElementById("column1").offsetHeight;
+     const column2Height = document.getElementById("column2").offsetHeight;
 
 
 
+     // Set the height of both columns to the maximum height
+     const maxHeight = Math.max(column1Height, column2Height);
+     document.getElementById("column1").style.height = maxHeight + "px";
+     document.getElementById("column2").style.height = maxHeight + "px";
+
+  </script>
 
 
 
+  <!-- validateForm -->
 
-    {% endblock %}
+   <script>
+     document.addEventListener('DOMContentLoaded', function () {
+       var radioButtons = document.querySelectorAll('input[name="selectPatient"]');
+
+       radioButtons.forEach(function (radioButton) {
+         radioButton.addEventListener('change', function () {
+           if (this.checked) {
+             var selectedValue = this.value;
+
+           }
+           var tableData = {{ obj | safe}};
+           for(let i=0; i < tableData.length; i++){
+             let valuesArray = Object.values(tableData[i])
+             if(selectedValue==valuesArray[0]) {
+               console.log('In IF')
+               document.getElementById('patientid').value=valuesArray[0]
+               document.getElementById('mfullname').value=valuesArray[1] + " " + valuesArray[2] + " " + valuesArray[3]
+               document.getElementById('mGender').value=valuesArray[4]
+               document.getElementById('mage').value=valuesArray[5]
+               document.getElementById('mbloodgroup').value=valuesArray[6]
+               document.getElementById('memailid').value=valuesArray[7]
+               document.getElementById('maadhar').value=valuesArray[8]
+               document.getElementById('mmaritalstatus').value=valuesArray[9]
+               document.getElementById('mspousename').value=valuesArray[10]
+               document.getElementById('mcontactno').value=valuesArray[11]
+               document.getElementById('mnationality').value=valuesArray[12]
+               document.getElementById('maddress').value=valuesArray[13]
+               document.getElementById('mcity').value=valuesArray[14]
+               document.getElementById('mstate').value=valuesArray[15]
+               document.getElementById('mcountry').value=valuesArray[16]
+               document.getElementById('mpin').value=valuesArray[17]
+               document.getElementById('malternateno').value=valuesArray[18]
+               document.getElementById('memergencypersonname').value=valuesArray[19]
+               document.getElementById('emcontactno').value=valuesArray[20]
+               document.getElementById('mrelation').value=valuesArray[21]
+
+             }
+
+             {% comment %} console.log(valuesArray, 'datum'); {% endcomment %}
+             {% comment %} console.log(valuesArray[0],'ID') {% endcomment %}
+
+           }
+         });
+       });
+     });
+
+
+   </script>
+
+{% endblock content %}

@@ -8,35 +8,19 @@
 <script type="text/javascript" src="{% static 'Talos/source/jquery-3.7.0.js' %}"></script>
 <script type="text/javascript" src="{% static 'Talos/source/dataTables.bootstrap.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'Talos/source/jquery.dataTables.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'Talos/source/aos.js' %}"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'Talos/source/jquery.dataTables.min.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'Talos/source/bootstrap.min.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'Talos/source/font-awesome_css_all.min.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'Talos/source/font-awesome.min.css' %}">
-<!-- Custom CSS   -->
-<!--favicon.ico-->
+<link rel="stylesheet" type="text/css" href="{% static 'Talos/source/fa6.4_all.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'Talos/source/fontawesome.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'Talos/source/boxicons.min.css' %}">
 <link rel="icon" type="image/x-icon" href="{% static 'Talos/img/DataNutts_Logo.png' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'Talos/CSS/style.css' %}">
-<!-- End Custom CSS -->
-
-<!-- DataTable-->
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
-<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap.min.js"></script>
-<!-- DataTable End-->
-<!-- Bootstrap 5.3.2-->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/fontawesome.min.css">
-<!---->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
-
-<!--rest_framework-->
 <link rel="stylesheet" type="text/css" href="{% static 'Talos/CSS/forms.css' %}">
-<!--<link rel="stylesheet" type="text/css" href="{% static 'rest_framework/css/bootstrap.min.css.css' %}">-->
-<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-
+<link rel="stylesheet" type="text/css" href="{% static 'Talos/source/aos.css' %}">
+<script type="text/javascript" src="{% static 'Talos/source/aos.js' %}"></script>
 <style>
 .btn-gradient{
     background: linear-gradient(45deg,#6ecbc9, #003a70);
@@ -47,4 +31,138 @@
     background: linear-gradient(45deg, #003a70, #ec0909);
     color: white;
 }
-</style>
+
+                ::-webkit-scrollbar-track {
+
+            -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+
+            background-color: white;
+
+            border-radius: 10px;
+
+        }
+
+
+
+        ::-webkit-scrollbar {
+
+            width: 5px;
+
+            height: 10px;
+
+            background-color: #F5F5F5;
+
+        }
+
+
+
+        ::-webkit-scrollbar-thumb {
+
+            border-radius: 10px;
+
+            background-color: #FFF;
+
+            background-image: -webkit-linear-gradient(top,
+
+                    #003a70 0%,
+
+                    #6ecbc9 50%,
+
+                    #6ecbc9 51%,
+
+                    #003a70 100%);
+
+
+
+        }
+        .theme{
+
+        background-color: #003a70
+
+
+
+        }
+        .textbluecolor{
+            color: #003a70;
+        }
+        .backgroundneela{
+            background-color: #003a70;
+            color:white;
+        }
+        .backgroundlal{
+            background-color: #ec0909;
+            color:white;
+        }
+        .backgroundlal:hover{
+            background-color: #003a70;
+            color:white;
+        }
+        .backgroundneela:hover {
+            background-color: #6ecbc9;
+           color: #003a70;
+        }
+        .textlightwalacolor{
+            color: #6ecbc9  ;
+        }
+        .backgroundlightwala{
+            background-color: #6ecbc9  ;
+        }
+        .backgroundlightwala:hover{
+            background-color: #61b1b0  ;
+        }
+        .nav-tabs .nav-item .nav-link {
+
+            background: linear-gradient(to bottom, #6ecbc9 95%, #F9F9F9 5%);
+            border-bottom: solid #F9F9F9 1px;
+
+            color: white;
+
+          }
+        .backgroundgradient{
+            background: linear-gradient(45deg,#6ecbc9, #003a70);
+
+            color: white;
+            transition: all;
+        }
+        .backgroundgradient:hover{
+            background: linear-gradient(45deg, #003a70, #ec0909);
+            color: white;
+        }
+
+        .backgroundredgradient{
+            background: linear-gradient(45deg, #003a70, #ec0909);
+            color: white;
+            transition: all;
+        }
+        .backgroundredgradient:hover{
+            background: linear-gradient(45deg,#6ecbc9, #003a70);
+            color: white;
+        }
+        .nav-tabs {
+            border-bottom:  solid red 1px; ;
+        }
+
+
+
+
+        .nav-tabs .nav-item .nav-link.active  {
+            background: linear-gradient(to bottom, white 95%, white 5%);
+
+            color: #6ecbc9;
+            border-top: solid red 1px;
+            border-left: solid red 1px;
+            border-right: solid red 1px;
+            border-bottom: solid white 2px;
+
+        }
+
+
+        @media (max-width: 768px) {
+        /* Styles for small screens */
+        #column1,
+        #column2 {
+        /* Reset the heights to auto for medium and larger screens */
+        height: auto !important;
+        }
+        }
+        </style>

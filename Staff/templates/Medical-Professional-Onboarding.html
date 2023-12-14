@@ -1,1150 +1,1191 @@
-{% extends 'base.html' %}
-{% block title %}Medical Professional Onboarding{% endblock %}
-{% block body %}
+{% extends 'account/base.html' %}
+{% load i18n %}
+{% block head_title %}{% trans "Medical Professional Onboarding" %}{% endblock head_title %}
+{% block content %}
 {% load static %}
-<style>
-.navbar a{
-  color: white;
-          }
-.navbar-nav  a{
-              color: white;
-                      }
-.theme{
-  background-color: #003a70
-
+  <style>
+    .navbar a{
+      color: white;
+              }
+    .navbar-nav  a{
+      color: white;
+      }
+    .theme{
+      background-color: #003a70
+        }
+    .nav-tabs {
+      border-bottom:  solid red 1px; ;
+              }
+    .nav-tabs .nav-item .nav-link.active {
+      background: linear-gradient(to bottom, white 95%, white 5%);
+      color: #6ecbc9;
+      border-top: solid red 1px;
+      border-left: solid red 1px;
+      border-right: solid red 1px;
+      border-bottom: solid white 2px;
+      }
+    .nav-tabs .nav-item .nav-link {
+      background: linear-gradient(to bottom, #6ecbc9 95%, #F9F9F9 5%);
+      border-bottom: solid #F9F9F9 1px;
+      color: white;
+      background-color: #6ecbc9;
+     }
+    button  :hover{
+      background-color: #018383;
+    }
+    .formlabelcolor{
+      color: #003a70;
+      }
+    body{
+      overflow-x: hidden;
+      }
+    .changetext{
+      border: solid #c4ccd1 1px ;
+      }
+    .backgroundgradient{
+      background: linear-gradient(45deg,#6ecbc9, #003a70);
+      color: white;
+      transition: all;
+      }
+    .backgroundgradient:hover{
+      background: linear-gradient(45deg, #003a70, #ec0909);
+      color: white;
       }
 
+    @media (max-width: 768px) {
+      /* Styles for small screens */
+      #column1,
+      #column2 {
+        /* Reset the heights to auto for medium and larger screens */
+        height: auto !important;
+        }
+      }
+    td{
+        text-align: center;
+      }
+    ::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+        background-color: white;
+        border-radius: 10px;
+     }
+    ::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+      background-color: #F5F5F5;
 
-.nav-tabs {
-  border-bottom:  solid red 1px; ;
+    }
+    ::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      background-color: #FFF;
+      background-image: -webkit-linear-gradient(top,
+
+        #003a70 0%,
+        #6ecbc9 50%,
+        #6ecbc9 51%,
+        #003a70 100%);
+    }
+    @media (max-width: 768px) {
+      body {
+        overflow-y: auto;
+           }
+      .nav-item{
+        width: 100%;
           }
-
-.nav-tabs .nav-item .nav-link.active {
-
-        background: linear-gradient(to bottom, white 95%, white 5%);
-              color: #6ecbc9;
-              border-top: solid red 1px;
-              border-left: solid red 1px;
-              border-right: solid red 1px;
-              border-bottom: solid white 2px;
-
+    }
+    @media (min-width: 992px) {
+      body {
+            overflow-x: hidden;
+            overflow-y:hidden;
           }
-
-
-.nav-tabs .nav-item .nav-link {
-            background: linear-gradient(to bottom, #6ecbc9 95%, #F9F9F9 5%);
-            border-bottom: solid #F9F9F9 1px;
-            color: white;
-            background-color: #6ecbc9;
-  }
-  /* .nav-item a,i{
-    color: white;
-
-  } */
-
-button  :hover{
-  background-color: #018383;
-  }
-
-
-.formlabelcolor{
-    color: #003a70;
-  }
-
-.changetext{
-
-
-    border: solid #c4ccd1 1px ;
-}
-  .tab-content {
-          max-height: 244px; /* Adjust the height as needed */
+      .tab-content {
+          height: 195px; /* Adjust the height as needed */
           overflow-y: auto;
           overflow-x: hidden;
-      }
-</style>
-{% include 'base_menu_2.html' %}
-<div class="row g-2 my-1 align-items-stretch mx-1">
-    <div class=" col-lg-2  col-md-4 col-sm-6 ">
-        <div class="card shadow  border border-danger rounded rounded-2 " id="column1">
-            <div class="card-body">
-                <div class="d-flex flex-column text-center">
-                    <div class="position-relative">
-                        <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle"
-                             width="80"/>
-                        <button class="btn btn-outline btn-sm position-absolute mb-0 bottom-0 end-30 " type="button"
-                                aria-controls="imageInput"
-                                style="border: solid lightblue 1px; background-color: transparent;"
-                                onclick="openImageDialog()">
-                            <i class="fas fa-camera fa-lg" style="color:#0880a4;" title="Upload Picture"></i>
-                        </button>
-                        <input type="file" id="imageInput" style="display: none;" onchange="displaySelectedImage(this)">
-                    </div>
-
-
-                    <p class="" id="selectedImageText"></p>
-                    <h5 class=" mb-0" style="color: #6ecbc9;">Anderson Besant</h5>
-                    <p class=" fw-semibold formlabelcolor">MBBS,MD</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-10  col-md-8 col-sm-12 ">
-        <div class="card shadow " id="column2">
-            <div class="card-header" style="background-color:white">
-                <h5 class="formlabelcolor fs-5 mb-0">
-<!--                    <span><img src="{% static 'Talos/icon/medonboarding.png' %}" width="28px" alt="onboarding"></span>-->
-                    Medical Professional Onboarding</h5>
-            </div>
-            <div class="card-body border border-danger rounded rounded-2 ">
-                <div class="row   ">
-                    <div class="row justify-content-between mx-2 ">
-                        <div class="col-lg-3 col-md-4 col-sm-12 ">
-                            <label for="FirstName" class="form-label m-0 p-0  formlabelcolor fw-bold">First Name <span
-                                    class="text-danger">*</span> </label>
-                            <input type="text" name="firstname" id="firstname"
-                                   class="form-control-plaintext fw-semibold m-0 p-0" placeholder="Anderson" readonly>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-sm-12">
-                            <label for="FirstName" class="form-label  mb-0 pb-0 formlabelcolor fw-bold">Middle
-                                Name </label>
-                            <input type="text" name="middlename" id="middlename"
-                                   class="form-control-plaintext fw-semibold p-0 m-0" readonly>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-sm-12">
-                            <label for="FirstName" class="form-label  p-0 m-0 formlabelcolor fw-bold">Last Name <span
-                                    class="text-danger">*</span></label>
-                            <input type="text" name="lastname" id="lastname"
-                                   class="form-control-plaintext fw-semibold m-0" placeholder="Beasent" readonly>
-                        </div>
-                    </div>
-                    <div class="row justify-content-between mx-2">
-                        <div class="col-lg-3 col-md-4 col-sm-6">
-                            <label for="FirstName" class="form-label p-0 m-0  formlabelcolor fw-bold">Date of Birth
-                                <span class="text-danger">*</span></label>
-                            <input type="date" name="dob" id="dob" class="form-control-plaintext fw-semibold p-0 m-0"
-                                   value="" placeholder="17-04-1993" readonly>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-sm-6">
-                            <label for="FirstName" class="form-label p-0 m-0 formlabelcolor fw-bold">Mobile Number <span
-                                    class="text-danger">*</span></label>
-                            <input type="text" name="mob" id="mob" class="form-control-plaintext fw-semibold p-0 m-0"
-                                   value="" placeholder="8085660050" readonly>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-sm-6">
-                            <label for="FirstName" class="form-label p-0 m-0 formlabelcolor fw-bold"> Professional Type
-                                <span class="text-danger">*</span></label>
-                            <input type="text" name="professionaltype"
-                                   class="form-control-plaintext fw-semibold p-0 m-0"
-                                   id="professionaltype" value="" placeholder="Surgeon" readonly>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-</div>
-
-<div class="row g-2 m-1 align-items-stretch ">
-    <div class="col-lg-12  col-md-12">
-
-
-        <div class="card-body shadow" style="background-color: #F9F9F9;">
-            <ul class="nav nav-tabs ">
-                <li class="nav-item">
-                    <a class="nav-link active  fw-bold " data-bs-toggle="tab" href="#Primary_Information"> <span><img
-                            src="{% static 'Talos/icon/primaryinfo.png' %}" alt="" width="24px"></span> Primary
-                        Information</a>
-                </li>
-
-                <li class="nav-item ps-1 ">
-                    <a class="nav-link  fw-bold " data-bs-toggle="tab" href="#Education_and_Qualification"> <span><img
-                            src="{% static 'Talos/icon/education.png' %}" alt="" width="24px"></span> Education</a>
-                </li>
-
-                <li class="nav-item ps-1">
-                    <a class="nav-link fw-bold " data-bs-toggle="tab" href="#Specialization"><span><img
-                            src="{% static 'Talos/icon/specialization.png' %}" alt="" width="24px"></span>
-                        Specialization</a>
-                </li>
-                <li class="nav-item ps-1">
-                    <a class="nav-link fw-bold" data-bs-toggle="tab" href="#Experience"><span><img
-                            src="{% static 'Talos/icon/experiece.png' %}" alt="exp" width="24px"></span> Experience</a>
-                </li>
-                <li class="nav-item  fw-bold ps-1">
-                    <a class="nav-link fw-bold " data-bs-toggle="tab" href="#Certifications"><span><img
-                            src="{% static 'Talos/icon/certification.png' %}" alt="" width="24px"></span> Certifications</a>
-                </li>
-                <li class="nav-item ps-1">
-                    <a class="nav-link  fw-bold " data-bs-toggle="tab" href="#Upload_Document"><span><img
-                            src="{% static 'Talos/icon/upload.png' %}" alt="" width="24px"></span> Upload Document</a>
-                </li>
-
-                <li class="nav-item  fw-bold ps-1">
-                    <a class="nav-link fw-bold " data-bs-toggle="tab" href="#Bank_Details"><span><img
-                            src="{% static 'Talos/icon/bankdetails.png' %}" alt="" width="24px"></span> Bank Details</a>
-                </li>
-            </ul>
-            <div class="tab-content border border-danger border-top-0 p-1 rounded rounded-top-0 rounded-bottom-3 bg-white">
-                <div id="Primary_Information" class="tab-pane fade show active ">
-
-                    <div class="row ">
-                        <div class="col-lg-6 col-md-12 mt-2">
-                            <div class="card border-0">
-                                <div class="card-body">
-                                    <div class="row my-2 ">
-                                        <div class="col-lg-6 col-md-6">
-                                            <label for="Gender" class="form-label mb-0 formlabelcolor">Gender <span
-                                                    class="text-danger">*</span></label>
-                                            <select name="gender" id="gender"
-                                                    class="form-select form-select-sm changetext  required">
-                                                <option selected>Select</option>
-                                                <option>Male</option>
-                                                <option>Female</option>
-                                                <option>Others</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-lg-6 col-md-6">
-                                            <label for="patientbloodgroup" class="form-label mb-0 formlabelcolor">Blood
-                                                Group <span class="text-danger">*</span></label>
-                                            <select name="patientbloodgroup"
-                                                    class="form-select form-select-sm changetext "
-                                                    id="patientbloodgroup" required>
-                                                <option selected value="">Choose</option>
-                                                <option>O+</option>
-                                                <option>O-</option>
-                                                <option>A+</option>
-                                                <option>A-</option>
-                                                <option>B+</option>
-                                                <option>B-</option>
-                                                <option>AB+</option>
-                                                <option>AB-</option>
-                                            </select>
-                                        </div>
-
-                                    </div>
-                                    <div class="row my-2">
-                                        <div class="col-lg-6 col-md-6">
-                                            <label for="Nationality"
-                                                   class="form-label mb-0 formlabelcolor">Nationality</label>
-                                            <input type="text" name="nationality" id="nationality"
-                                                   class="form-control form-control-sm changetext">
-                                        </div>
-                                        <div class="col-lg-6 col-md-6 ">
-                                            <label for="aadhar" class="form-label mb-0 formlabelcolor">Aadhar Number/SSN
-                                                No. <span class="text-danger">*</span></label>
-                                            <input type="text" name="aadhar" id="aadhar"
-                                                   class="form-control form-control-sm changetext">
-                                        </div>
-                                    </div>
-                                    <div class="row my-2">
-                                        <div class="col-lg-6 col-md-6">
-                                            <label for="maritals" class="form-labelmb-0 formlabelcolor">Marital
-                                                Status</label>
-                                            <select name="maritals" class="form-select form-select-sm changetext"
-                                                    id="maritals">
-                                                <option selected value="">Choose</option>
-                                                <option>Single</option>
-                                                <option>Married</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-lg-6 col-md-6 ">
-                                            <label for="spousename" class="form-label mb-0 formlabelcolor">Spouse
-                                                Name/Husband Name <span class="text-danger">*</span></label>
-                                            <input type="text" name="spousename" id="spousename"
-                                                   class="form-control form-control-sm changetext" required>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-12 mt-2">
-                            <div class="card border-0">
-                                <div class="card-body">
-                                    <div class="row my-1">
-                                        <div class="col-lg-12 col-md-10 ">
-                                            <label for="address" class="form-label mb-0 formlabelcolor">Address </label>
-                                            <textarea id="address" name="address" class="form-control changetext"
-                                                      placeholder="" id="floatingTextarea" rows="1" required></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="row my-1">
-                                        <div class="col-lg-6 col-md-6">
-                                            <label for="City" class="form-label mb-0 formlabelcolor">City</label>
-                                            <input type="text" name="city" id="city"
-                                                   class="form-control form-control-sm changetext">
-                                        </div>
-                                        <div class="col-lg-6 col-md-4">
-                                            <label for="State" class="form-label mb-0 formlabelcolor">State</label>
-                                            <input type="text" name="state" id="state"
-                                                   class="form-control form-control-sm changetext" required>
-                                        </div>
-                                    </div>
-                                    <div class="row my-2">
-                                        <div class="col-lg-6 col-md-6 ">
-                                            <label for="Pincode" class="form-label mb-0 formlabelcolor">Pincode</label>
-                                            <input type="text" name="pincode" id="pincode"
-                                                   class="form-control form-control-sm changetext" required>
-                                        </div>
-                                        <div class="col-lg-6 col-md-6">
-                                            <label for="Country" class="form-label mb-0 formlabelcolor">Country</label>
-                                            <input type="text" name="country" id="country"
-                                                   class="form-control form-control-sm changetext" required>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row justify-content-end">
-                        <div class="col">
-                            <button type="button" class="btn btn-primary fw-bold float-end mt-2 theme"
-                                    onclick="proceedToNextTab()">Next <i class="fas fa-chevron-right text-white"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div id="Education_and_Qualification" class="tab-pane fade ">
-
-                    <div class="row my-2 g-2 ">
-                        <div class="col-lg-12 table-responsive">
-                            <table id="educationtable" class="table table-bordered">
-                                <thead>
-                                <tr>
-                                    <th>SNo.</th>
-                                    <th>Qualification <span class="required_asterisk text-danger">*</span></th>
-                                    <th>Current Status<span class="required_asterisk text-danger">*</span></th>
-                                    <th>Passing Year<span class="required_asterisk text-danger">*</span></th>
-                                    <th>Institute Name <span class="required_asterisk text-danger">*</span></th>
-                                    <th>University Name<span class="required_asterisk text-danger">*</span></th>
-
-                                    <th colspan="2"> Actions</th> <!-- Plus Button Column -->
-
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td><input type="text" name="qualification1"
-                                               class="form-control form-control-xs changetext"></td>
-                                    <td><select name="currentstatus1" class="form-select form-select-xs changetext">
-                                        <option selected value="">Choose</option>
-                                        <option>Pursuing</option>
-                                        <option>Completed</option>
-                                    </select>
-                                    </td>
-                                    <td><input type="text" name="passingyear1"
-                                               class="form-control form-control-xs changetext"></td>
-                                    <td><input type="text" name="institute1"
-                                               class="form-control form-control-lg changetext"></td>
-                                    <td><input type="text" name="university1"
-                                               class="form-control form-control-lg changetext"></td>
-
-                                    <td class="">
-                                        <button type="button" class="btn btn-sm btn-primary theme  add-row "
-                                        ><i class="fa-solid fa-plus fa-lg"></i></button>
-                                    </td>
-                                    <!-- Plus Button -->
-                                    <td class="">
-                                        <button type="button" class="btn btn-danger btn-sm remove-row"
-                                                disabled><i class="fas fa-trash-alt fa-lg "></i></button>
-                                    </td>
-                                    <!-- Minus Button (disabled) -->
-                                </tr>
-                                </tbody>
-                            </table>
-
-                        </div>
-                    </div>
-
-                    <div class="row justify-content-end">
-                        <div class="col">
-
-                            <button type="button" class="btn btn-primary fw-bold float-end mt-3  mx-2 theme"
-                                    onclick="proceedToNextTab()">Next <i class="fas fa-chevron-right text-white"></i>
-                            </button>
-
-                            <button type="button" class="btn btn-outline-secondary fw-bold float-end mt-3"
-                                    onclick="Backtoprevioustab()"
-                            ><i class="fas fa-chevron-left text-dark"></i> Back
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <!-- End Education Tab -->
-                <div id="Specialization" class="tab-pane fade">
-                    <div class="row my-2 g-2 ">
-                        <div class="col-lg-12 table-responsive">
-                            <table id="specializationtable" class="table table-bordered">
-                                <thead>
-                                <tr>
-                                    <th>SNo.</th>
-                                    <th>Type<span class="required_asterisk ">*</span></th>
-                                    <th>Experience<span class="required_asterisk text-danger">*</span></th>
-                                    <th>Fellowship<span class="required_asterisk text-danger">*</span></th>
-
-
-                                    <th colspan="2"> Actions</th> <!-- Plus Button Column -->
-
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td><select name="spectype1" class="form-select changetext">
-                                        <option selected value="">Choose</option>
-                                        <option>Oncologist</option>
-                                        <option>Family medicine</option>
-                                        <option>Internal medicine</option>
-                                        <option>Surgeon</option>
-                                        <option>Radiologist</option>
-                                        <option>Dermatologist</option>
-                                        <option>Nephrologist</option>
-                                        <option>Pulmonologist</option>
-                                        <option>Cardiologist</option>
-                                    </select>
-                                    </td>
-                                    <td><input type="text" name="experiences1" class="form-control changetext"></td>
-                                    <td><input type="text" name="fellowship1"
-                                               class="form-control form-control-sm changetext"></td>
-
-
-                                    <td class="">
-                                        <button type="button" class="btn btn-sm btn-primary theme  add-row "
-                                        ><i class="fa-solid fa-plus fa-lg"></i></button>
-                                    </td>
-                                    <!-- Plus Button -->
-                                    <td class="">
-                                        <button type="button" class="btn btn-danger btn-sm remove-row"
-                                                disabled><i class="fas fa-trash-alt fa-lg "></i></button>
-                                    </td>
-                                    <!-- Minus Button (disabled) -->
-                                </tr>
-                                </tbody>
-                            </table>
-
-                        </div>
-                    </div>
-
-                    <div class="row justify-content-end">
-                        <div class="col">
-
-                            <button type="button" class="btn btn-primary fw-bold float-end mt-3  mx-2 theme"
-                                    onclick="proceedToNextTab()">Next <i class="fas fa-chevron-right text-white"></i>
-                            </button>
-
-                            <button type="button" class="btn btn-outline fw-bold float-end mt-3"
-                                    onclick="Backtoprevioustab()"
-                                    style="background-color: #ced4da;"><i class="fas fa-chevron-left text-dark"></i>
-                                Back
-                            </button>
-                        </div>
-                    </div>
-
-
-                </div>
-                <!-- End Specialization -->
-                <div id="Experience" class="tab-pane fade">
-                    <div class="row my-2 g-2 ">
-                        <div class="col-lg-12 table-responsive">
-                            <table id="experiencetable" class="table table-bordered">
-                                <thead>
-                                <tr>
-                                    <th>SNo.</th>
-                                    <th> Institute Name<span class="required_asterisk text-danger">*</span></th>
-                                    <th>Role<span class="required_asterisk text-danger">*</span></th>
-                                    <th>Experience<span class="required_asterisk text-danger">*</span></th>
-                                    <th>Job Description <span class="required_asterisk text-danger">*</span></th>
-                                    <th>Start Date<span class="required_asterisk text-danger">*</span></th>
-                                    <th>End Date<span class="required_asterisk text-danger">*</span></th>
-
-                                    <th colspan="2"> Actions</th> <!-- Plus Button Column -->
-
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td><input type="text" name="institutename1"
-                                               class="form-control form-control-lg changetext"></td>
-                                    <td><input type="text" name="role1" class="form-control form-control-xs changetext">
-                                    </td>
-                                    <td><input type="text" name="experien1"
-                                               class="form-control form-control-xs changetext"></td>
-                                    <td><input type="text" name="jobdesc1"
-                                               class="form-control form-control-lg changetext"></td>
-                                    <td><input type="date" name="sdate1"
-                                               class="form-control form-control-xs changetext"></td>
-                                    <td><input type="date" name="edate1"
-                                               class="form-control form-control-xs changetext"></td>
-
-                                    <td class="">
-                                        <button type="button" class="btn btn-sm btn-primary theme  add-row "
-                                        ><i class="fa-solid fa-plus fa-lg"></i></button>
-                                    </td>
-                                    <!-- Plus Button -->
-                                    <td class="">
-                                        <button type="button" class="btn btn-danger btn-sm remove-row"
-                                                disabled><i class="fas fa-trash-alt fa-lg "></i></button>
-                                    </td>
-                                    <!-- Minus Button (disabled) -->
-                                </tr>
-                                </tbody>
-                            </table>
-
-                        </div>
-                    </div>
-
-
-                    <div class="row justify-content-end">
-                        <div class="col">
-
-                            <button type="button" class="btn btn-primary fw-bold float-end mt-3  mx-2"
-                                    onclick="proceedToNextTab()" style=" background-color: #088395;">Next <i
-                                    class="fas fa-chevron-right text-white"></i></button>
-
-                            <button type="button" class="btn btn-outline fw-bold float-end mt-3"
-                                    onclick="Backtoprevioustab()"
-                                    style="background-color: #ced4da;"><i class="fas fa-chevron-left text-dark"></i>
-                                Back
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div id="Certifications" class="tab-pane fade">
-
-                    <div class="row my-2 g-2 ">
-                        <div class="col-lg-12 table-responsive">
-                            <table id="certificationtable" class="table table-bordered">
-                                <thead>
-                                <tr>
-                                    <th>SNo.</th>
-                                    <th>Certificate Name<span class="required_asterisk text-danger">*</span></th>
-                                    <th>Upload Certificate<span class="required_asterisk text-danger">*</span></th>
-                                    <th>Issue Date<span class="required_asterisk text-danger">*</span></th>
-                                    <th>Expiry Date<span class="required_asterisk text-danger">*</span></th>
-
-
-                                    <th colspan="2"> Actions</th> <!-- Plus Button Column -->
-
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td><input type="text" name="certname1" class="form-control changetext"></td>
-                                    <td><input type="file" name="uploadcert1" class="form-control changetext"></td>
-                                    <td><input type="date" name="issued1" class="form-control changetext"></td>
-                                    <td><input type="date" name="expiryd1" class="form-control changetext"></td>
-
-
-                                    <td class="">
-                                        <button type="button" class="btn btn-sm btn-primary theme  add-row "
-                                        ><i class="fa-solid fa-plus fa-lg"></i></button>
-                                    </td>
-                                    <!-- Plus Button -->
-                                    <td class="">
-                                        <button type="button" class="btn btn-danger btn-sm remove-row"
-                                                disabled><i class="fas fa-trash-alt fa-lg "></i></button>
-                                    </td>
-                                    <!-- Minus Button (disabled) -->
-                                </tr>
-                                </tbody>
-                            </table>
-
-                        </div>
-                    </div>
-
-                    <div class="row justify-content-end">
-                        <div class="col">
-                            <button type="button" class="btn btn-primary fw-bold float-end mt-3  mx-2 theme"
-                                    onclick="proceedToNextTab()">Next <i class="fas fa-chevron-right text-white"></i>
-                            </button>
-
-                            <button type="button" class="btn btn-outline fw-bold float-end mt-3"
-                                    onclick="Backtoprevioustab()"
-                                    style="background-color: #ced4da;"><i class="fas fa-chevron-left text-dark"></i>
-                                Back
-                            </button>
-                        </div>
-                    </div>
-
-                </div>
-                <div id="Upload_Document" class="tab-pane fade">
-
-                    <div class="border border-light-subtle border-2 rounded-3 my-1" id="formContainer_Upload_Document">
-                        <div class="row justify-content-between m-2">
-                            <div class="col-lg-4 col-md-4 col-sm-6">
-                                <label for="FirstName" class="form-label mb-0 formlabelcolor">Upload Aadhar <span
-                                        class="text-danger">*</span></label>
-                                <input type="file" name="firstname" id="firstname"
-                                       class="form-control form-control-sm changetext" required>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-6">
-                                <label for="FirstName" class="form-label mb-0 formlabelcolor">Upload PAN <span
-                                        class="text-danger">*</span></label>
-                                <input type="file" name="firstname" id="firstname"
-                                       class="form-control form-control-sm changetext" required>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-6">
-                                <label for="FirstName" class="form-label mb-0 formlabelcolor">Upload Digital Signature
-                                    <span class="text-danger">*</span></label>
-                                <input type="file" name="firstname" id="firstname"
-                                       class="form-control form-control-sm changetext" required>
-                            </div>
-                        </div>
-                        <h6 class="ms-2 my-3 border-bottom text-success fw-bold">Add more authenticity to your
-                            profile </h6>
-                        <div class="row my-2 g-2 mx-1">
-                            <div class="col-lg-12 table-responsive">
-                                <table id="uploaddocstable" class="table table-bordered">
-                                    <thead>
-                                    <tr>
-                                        <th>SNo.</th>
-                                        <th>Document Type<span class="required_asterisk text-danger">*</span></th>
-                                        <th>Document Name<span class="required_asterisk text-danger">*</span></th>
-
-                                        <th>Upload Document<span class="required_asterisk text-danger">*</span></th>
-                                        <th>Remarks<span class="required_asterisk text-danger">*</span></th>
-
-
-                                        <th colspan="2"> Actions</th> <!-- Plus Button Column -->
-
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td><select name="doctype1" class="form-select changetext">
-                                            <option selected value="">Choose</option>
-                                            <option>Marksheet</option>
-                                            <option>ID Proof</option>
-                                            <option>ABC</option>
-                                        </select>
-                                        </td>
-                                        <td><input type="text" name="docname1" class="form-control changetext"></td>
-                                        <td><input type="file" name="uploaddoc1" class="form-control changetext"></td>
-
-                                        <td><input type="text" name="remarks1" class="form-control changetext"></td>
-
-
-                                        <td class="">
-                                            <button type="button" class="btn btn-sm btn-primary theme  add-row "
-                                            ><i class="fa-solid fa-plus fa-lg"></i></button>
-                                        </td>
-                                        <!-- Plus Button -->
-                                        <td class="">
-                                            <button type="button" class="btn btn-danger btn-sm remove-row"
-                                                    disabled><i class="fas fa-trash-alt fa-lg "></i></button>
-                                        </td>
-                                        <!-- Minus Button (disabled) -->
-                                    </tr>
-                                    </tbody>
-                                </table>
-
-                            </div>
-                        </div>
-                        <!-- <div class="row justify-content-between m-2">
-                          <div class="col-lg-4 col-md-4 col-sm-6">
-                            <label for="FirstName" class="form-label mb-0 formlabelcolor">Upload 12th Marksheet <span class="text-danger">*</span></label>
-                            <input type="file" name="firstname" id="firstname" class="form-control form-control-sm" required>
-                          </div>
-                          <div class="col-lg-4 col-md-4 col-sm-6">
-                            <label for="FirstName" class="form-label mb-0 formlabelcolor">Upload 10th Marksheet <span class="text-danger">*</span></label>
-                            <input type="file" name="firstname" id="firstname" class="form-control form-control-sm" required>
-                          </div>
-                          <div class="col-lg-4 col-md-4 col-sm-6">
-                            <label for="FirstName" class="form-label mb-0 formlabelcolor">Upload Birth Certificate  <span class="text-danger">*</span></label>
-                            <input type="file" name="firstname" id="firstname" class="form-control form-control-sm" required>
-                          </div>
-                        </div>     -->
-                    </div>
-                    <!-- <div id="documentTable"> -->
-                    <!-- Table structure will be created here -->
-                    <!-- </div> -->
-                    <div class="row justify-content-end">
-                        <div class="col">
-                            <button type="button" class="btn btn-primary fw-bold float-end mt-3  mx-2 theme"
-                                    onclick="proceedToNextTab()">Next <i class="fas fa-chevron-right text-white"></i>
-                            </button>
-
-                            <button type="button" class="btn btn-outline fw-bold float-end mt-3"
-                                    onclick="Backtoprevioustab()"
-                                    style="background-color: #ced4da;"><i class="fas fa-chevron-left text-dark"></i>
-                                Back
-                            </button>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div id="Bank_Details" class="tab-pane fade">
-                    <div class="row justify-content-between m-2">
-                        <div class="col-lg-3 col-md-4 col-sm-6">
-                            <label for="FirstName" class="form-label mb-0 formlabelcolor">Account Type</label>
-                            <select name="Patient_Blood_Group" class="form-select form-select-sm changetext"
-                                    id="">
-                                <option selected value="">Choose</option>
-                                <option>Saving</option>
-                                <option>Current</option>
-                            </select>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-sm-6">
-                            <label for="FirstName" class="form-label mb-0 formlabelcolor">Account Holder Name</label>
-                            <input type="text" name="firstname" id="firstname"
-                                   class="form-control form-control-sm changetext">
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-sm-6">
-                            <label for="FirstName" class="form-label mb-0 formlabelcolor">Account Number</label>
-                            <input type="text" name="firstname" id="firstname"
-                                   class="form-control form-control-sm changetext">
-                        </div>
-                    </div>
-                    <div class="row justify-content-between m-2">
-                        <div class="col-lg-3 col-md-4 col-sm-6">
-                            <label for="FirstName" class="form-label mb-0 formlabelcolor">IFSC Code</label>
-                            <input type="text" name="firstname" id="firstname"
-                                   class="form-control form-control-sm changetext">
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-sm-6">
-                            <label for="FirstName" class="form-label mb-0 formlabelcolor">Bank Name</label>
-                            <input type="text" name="firstname" id="firstname"
-                                   class="form-control form-control-sm changetext">
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-sm-6">
-                            <label for="FirstName" class="form-label mb-0 formlabelcolor">Branch Name</label>
-                            <input type="text" name="firstname" id="firstname"
-                                   class="form-control form-control-sm changetext">
-                        </div>
-                    </div>
-                    <div class="row justify-content-between">
-                        <div class="col">
-                            <button type="submit" class="btn btn-primary  float-end mt-3 mx-2"
-                                    style="background-color: #018383;">Submit
-                            </button>
-                            <button type="button" class="btn btn-outline fw-bold float-end mt-3"
-                                    onclick="Backtoprevioustab()"
-                                    style="background-color: #ced4da;"><i class="fas fa-chevron-left text-dark"></i>
-                                Back
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-</div>
-
-<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-<!-- Proceed Button -->
-<script>
-    function proceedToNextTab() {
-      let currentTab = $('.tab-content .active').attr('id');
-      let nextTab;
-
-      switch(currentTab) {
-          case 'Primary_Information':
-              nextTab = 'Education_and_Qualification';
-              break;
-          case 'Education_and_Qualification':
-              nextTab = 'Specialization';
-              break;
-          case 'Specialization':
-              nextTab = 'Experience';
-              break;
-          case 'Experience':
-              nextTab = 'Certifications';
-              break;
-          case 'Certifications':
-              nextTab = 'Upload_Document';
-              break;
-          case 'Upload_Document':
-              nextTab = 'Bank_Details';
-              break;
-          default:
-              return; // Exit if the current tab doesn't have a defined next tab
-      }
-
-      console.log('Current Tab:', currentTab);
-      console.log('Next Tab:', nextTab);
-
-      $(`[href="#${nextTab}"]`).tab('show');
-  }
-</script>
-
-<!-- Back Button -->
-<script>
-    function Backtoprevioustab(){
-let curtab = $('.tab-content .active').attr('id');
-let backtab;
-
-switch(curtab){
-case 'Education_and_Qualification':
-  backtab = 'Primary_Information';
-  break;
-case 'Specialization':
-  backtab = 'Education_and_Qualification';
-  break;
-case 'Experience':
-  backtab = 'Specialization';
-  break;
-case 'Certifications':
-  backtab = 'Experience';
-  break;
-case 'Upload_Document':
-  backtab = 'Certifications';
-  break;
-case 'Bank_Details':
-  backtab = 'Upload_Document';
-  break;
-}
-
-console.log('Current Tab:', curtab);
-console.log('Previous Tab:', backtab);
-
-$(`[href="#${backtab}"]`).tab('show');
-}
-
-</script>
-
-<!-- open file dialog -->
-<script>
-    function openImageDialog() {
-        document.getElementById('imageInput').click();
-    }
-
-    function displaySelectedImage(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-
-            reader.onload = function (e) {
-                var selectedImageText = document.getElementById('selectedImageText');
-                selectedImageText.innerText = 'Selected Image: ' + input.files[0].name;
-            }
-
-            reader.readAsDataURL(input.files[0]);
         }
     }
-</script>
+    /* For medium devices, set overflow-y to auto */
+    @media (max-width: 992px) {
+      body {
+          overflow-y: auto;
+      }
+      .nav-item{
+        width: 50%;
+      }
+      .nav-item > a{
+        font-size: .75rem !important;
+        word-wrap:break-word;
+        }
+    }
+    #fileInput {
+      visibility: hidden;
+    }
 
-<!-- Add more -->
+    #file-label {
+
+      padding: 5px;
+      background-color: white;
+      color:#6ecbc9 ;
+      cursor: pointer;
+    }
+
+    #file-icon {
+
+      font-size: 1.5em; /* Adjust the font size as needed */
+      color: #0880a4;
+      cursor: pointer;
+    }
 
 
-<script>
-    const column1Height = document.getElementById("column1").offsetHeight;
-  const column2Height = document.getElementById("column2").offsetHeight;
+  </style>
+{% include 'base_menu_2.html' %}
+
+<form action="" method="POST" class="needs-validation" enctype="multipart/form-data">
+  {% csrf_token%}
+  <div class="row g-2 my-1 align-items-stretch mx-1">
+    <div class=" col-lg-2  col-md-4 col-sm-6 ">
+      <div class="card shadow  border border-danger rounded rounded-2 " id="column1">
+        <div class="card-body">
+          <div class="d-flex flex-column text-center">
+            <div class="position-relative">
+              <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="70px" height="70px" id="previewImage" name="previewImage">
+
+              <label for="fileInput" id="file-label">
+                <i class="fas fa-camera fa-lg bottom-30" id="file-icon"  title="Upload Picture"></i>
+              </label>
+              <input type="file" id="fileInput" class="mb-0" name="fileInput" onchange="displayFileName()">
+            </div>
+
+              <p class=" fw-semibold formlabelcolor mb-0" id="mpoid">ID:{{request.user.id}}</p>
+              <h5 class=" mb-0" id="username" style="color: #6ecbc9;">{{request.user.first_name}} {{request.user.last_name}}</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-10  col-md-8 col-sm-12 ">
+      <div class="card shadow " id="column2" >
+        <div class="card-header" style="background-color:white" >
+             <h6 class="formlabelcolor fs-5" ><span><img src="{%static 'Talos/icon/medonboarding.png' %}" width="28px" alt="onboarding"></span> Medical Professional Onboarding</h5>
+        </div>
+        <div class="card-body border border-danger rounded rounded-2 ">
+          <div class="row   ">
+            <div class="row justify-content-between mx-2 ">
+              <div class="col-lg-3 col-md-4 col-sm-4 ">
+                  <label for="FirstName" class="form-label m-0 p-0  formlabelcolor fw-bold">First Name </label>
+                  <input type="text" name="firstname" id="firstname" class="form-control-plaintext fw-semibold m-0 p-0" value="{{request.user.first_name}}" placeholder="" readonly>
+              </div>
+              <div class="col-lg-3 col-md-4 col-sm-4">
+                  <label for="FirstName" class="form-label  mb-0 pb-0 formlabelcolor fw-bold">Middle Name </label>
+                  <input type="text" name="middlename" id="middlename" class="form-control-plaintext fw-semibold p-0 m-0" readonly>
+              </div>
+              <div class="col-lg-3 col-md-4 col-sm-4">
+                    <label for="FirstName" class="form-label  p-0 m-0 formlabelcolor fw-bold">Last Name </label>
+                    <input type="text" name="lastname" id="lastname" class="form-control-plaintext fw-semibold m-0 p-0" value="{{request.user.last_name}}" placeholder="Beasent" readonly>
+              </div>
+              <div class="col-lg-3 col-md-4 col-sm-4">
+                <label for="FirstName" class="form-label p-0 m-0  formlabelcolor fw-bold">Date of Birth </label>
+                <input type="text" name="dob" id="dob" class="form-control-plaintext fw-semibold p-0 m-0" value="{{request.user.dob}}" placeholder="17-04-1993" readonly>
+              </div>
+            </div>
+            <div class="row justify-content-between mx-2">
+
+              <div class="col-lg-3 col-md-4 col-sm-4">
+                    <label for="FirstName" class="form-label p-0 m-0 formlabelcolor fw-bold">Mobile No. </label>
+                    <input type="text" name="mob" id="mob" class="form-control-plaintext fw-semibold p-0 m-0" value="{{request.user.phone}}" placeholder="8085660050" readonly>
+              </div>
+              <div class="col-lg-3 col-md-4 col-sm-4">
+                <label for="FirstName" class="form-label p-0 m-0 formlabelcolor fw-bold"> Professional Type </label>
+                <input  type="text" name="professionaltype" class="form-control-plaintext fw-semibold p-0 m-0"
+                id="professionaltype" value="{{request.user.profession.name}}" placeholder="Surgeon" readonly>
+              </div>
+              <div class="col-lg-3 col-md-4 col-sm-4">
+                <label for="FirstName" class="form-label p-0 m-0 formlabelcolor fw-bold"> Alternate Mobile <span class="text-danger">*</span> </label>
+                <input type="text" name="alternateno" id="alternateno" class="form-control-plaintext fw-semibold p-0 m-0" value="" placeholder=""  pattern="[0-9]{1}[0-9]{9}" maxlength="10" minlength="10" required>
+              </div>
+              <div class="col-lg-3 col-md-4 col-sm-4">
+                <label for="FirstName" class="form-label p-0 m-0 formlabelcolor fw-bold"> Personal Email  <span class="text-danger">*</span> </label>
+                <input type="text" name="persemail" id="persemail" class="form-control-plaintext fw-semibold p-0 m-0" value="" placeholder="" pattern=".+@.+\..+" required>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row g-2 m-1 align-items-stretch ">
+    <div class="col-lg-12  col-md-12">
+      <div class="card-body shadow" style="background-color: #F9F9F9;">
+        <ul class="nav nav-tabs " >
+              <li class="nav-item">
+                <a class="nav-link active  fw-bold "  data-bs-toggle="tab" href="#Primary_Information"> <span><img src="{%static 'Talos/icon/primaryinfo.png' %}" alt="" width="24px"></span> Primary Information</a>
+              </li>
+
+              <li class="nav-item ps-1 " >
+                <a class="nav-link  fw-bold "  data-bs-toggle="tab" href="#Education_and_Qualification"> <span ><img src="{%static 'Talos/icon/education.png' %}" alt="" width="24px"></span> Education</a>
+              </li>
 
 
-  // Set the height of both columns to the maximum height
-  const maxHeight = Math.max(column1Height, column2Height);
-  document.getElementById("column1").style.height = maxHeight + "px";
-  document.getElementById("column2").style.height = maxHeight + "px";
-</script>
+              <li class="nav-item ps-1">
+                <a class="nav-link fw-bold"  data-bs-toggle="tab" href="#Experience"><span><img src="{%static 'Talos/icon/experiece.png' %}" alt="exp" width="24px"></span> Experience</a>
+              </li>
+              <li class="nav-item  fw-bold ps-1">
+                <a class="nav-link fw-bold "   data-bs-toggle="tab" href="#Certifications"><span ><img src="{%static 'Talos/icon/certification.png' %}" alt="" width="24px"></span> Certifications</a>
+             </li>
+              <li class="nav-item ps-1">
+                <a class="nav-link  fw-bold "   data-bs-toggle="tab" href="#Upload_Document"><span ><img src="{%static 'Talos/icon/upload.png' %}" alt="" width="24px"></span> Upload Document</a>
+              </li>
+
+              <li class="nav-item  fw-bold ps-1">
+                 <a class="nav-link fw-bold "   data-bs-toggle="tab" href="#Bank_Details"><span ><img src="{%static 'Talos/icon/bankdetails.png' %}" alt="" width="24px"></span> Bank Details</a>
+              </li>
+        </ul>
+        <div class="tab-content border border-danger border-top-0 p-1 rounded rounded-top-0 rounded-bottom-3 bg-white" >
+          <div id="Primary_Information" class="tab-pane fade show active ">
+
+                  <div class="row ">
+                    <div class="col-lg-6 col-md-12 ">
+                      <div class="card border-0 ">
+                        <div class="card-body ">
+                          <div class="row  ">
+                            <div class="col-lg-6 col-md-6">
+                                    <label for="Gender" class="form-label mb-0 formlabelcolor">Gender <span class="text-danger">*</span></label>
+                                    <select name="gender" id="gender" class="form-select form-select-sm changetext  "required>
+                                    <option selected>Select</option>
+                                    <option>Male</option>
+                                    <option>Female</option>
+                                    <option>Others</option>
+                                    </select>
+                            </div>
+                            <div class="col-lg-6 col-md-6">
+                                <label for="patientbloodgroup" class="form-label mb-0 formlabelcolor">Blood Group <span class="text-danger">*</span></label>
+                                <select name="patientbloodgroup" class="form-select form-select-sm changetext "
+                                 id="patientbloodgroup" required>
+                                 <option selected value="">Choose </option>
+                                 <option>O+</option>
+                                 <option>O-</option>
+                                 <option>A+</option>
+                                 <option>A-</option>
+                                 <option>B+</option>
+                                 <option>B-</option>
+                                 <option>AB+</option>
+                                 <option>AB-</option>
+                                 </select>
+                            </div>
+
+                          </div>
+                          <div class="row my-1">
+                            <div class="col-lg-6 col-md-6">
+                              <label for="Nationality" class="form-label mb-0 formlabelcolor">Nationality  <span class="text-danger">*</span></label>
+                              <input type="text" name="nationality" id="nationality" class="form-control form-control-sm changetext" required>
+                            </div>
+                            <div class="col-lg-6 col-md-6 ">
+                              <label for="aadhar" class="form-label mb-0 formlabelcolor">Aadhar Number/SSN No. <span class="text-danger">*</span></label>
+                              <input type="text" name="aadhar" id="aadhar" class="form-control form-control-sm changetext" maxlength="12" minlength="12"required>
+                            </div>
+                          </div>
+                          <div class="row my-1">
+                            <div class="col-lg-6 col-md-6">
+                              <label for="maritals" class="form-labelmb-0 formlabelcolor">Marital Status  <span class="text-danger">*</span></label>
+                              <select name="maritals" class="form-select form-select-sm changetext"
+                              id="maritals" required>
+                              <option selected value="">Choose </option>
+                              <option>Single</option>
+                              <option>Married</option>
+                              </select>
+                            </div>
+                            <div class="col-lg-6 col-md-6 ">
+                              <label for="spousename" class="form-label mb-0 formlabelcolor">Spouse Name/Husband Name <span class="text-danger">*</span></label>
+                              <input type="text" name="spousename" id="spousename" class="form-control form-control-sm changetext" required>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 col-md-12 ">
+                      <div class="card border-0">
+                        <div class="card-body">
+                          <div class="row ">
+                            <div class="col-lg-12 col-md-10 ">
+                              <label for="address" class="form-label mb-0 formlabelcolor">Address <span class="text-danger">*</span> </label>
+                              <textarea id="address" name="address" class="form-control changetext" placeholder="" id="floatingTextarea" rows="1" required></textarea>
+                            </div>
+                          </div>
+                          <div class="row my-1">
+                            <div class="col-lg-6 col-md-6">
+                              <label for="City" class="form-label mb-0 formlabelcolor">City  <span class="text-danger">*</span></label>
+                              <input type="text" name="city" id="city" class="form-control form-control-sm changetext"required>
+                            </div>
+                            <div class="col-lg-6 col-md-6">
+                              <label for="State" class="form-label mb-0 formlabelcolor">State  <span class="text-danger">*</span></label>
+                              <input type="text" name="state" id="state" class="form-control form-control-sm changetext" required>
+                            </div>
+                          </div>
+                          <div class="row my-1">
+                            <div class="col-lg-6 col-md-6 ">
+                              <label for="Pincode" class="form-label mb-0 formlabelcolor">Pincode  <span class="text-danger">*</span></label>
+                              <input type="text" name="pincode" id="pincode" class="form-control form-control-sm changetext" required>
+                            </div>
+                            <div class="col-lg-6 col-md-6">
+                              <label for="Country" class="form-label mb-0 formlabelcolor">Country  <span class="text-danger">*</span></label>
+                              <input type="text" name="country" id="country" class="form-control form-control-sm changetext" required>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                <div class="row justify-content-end">
+                      <div class="col">
+                        <button type="button" class="btn btn-primary fw-bold float-end mt-1 theme"
+                        onclick="proceedToNextTab()">Next <i class="fas fa-chevron-right text-white"></i></button>
+                      </div>
+               </div>
+          </div>
+          <div id="Education_and_Qualification" class="tab-pane fade ">
+
+              <div class="row my-1 g-2 ">
+                      <div class="col-lg-12 table-responsive">
+                          <table id="educationtable" class="table table-bordered">
+                              <thead>
+                                  <tr>
+                                      <th>SNo.</th>
+                                      <th>Type <span class="required_asterisk text-danger">*</span></th>
+                                      <th>Name</th>
+                                      <th>Current Status<span class="required_asterisk text-danger">*</span></th>
+                                      <th>Passing Year<span class="required_asterisk text-danger">*</span></th>
+                                      <th>Institute/Board Name <span class="required_asterisk text-danger">*</span></th>
+                                      <th >University Name<span class="required_asterisk text-danger">*</span></th>
+
+                                      <th colspan="2"> Actions</th> <!-- Plus Button Column -->
+
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  <tr>
+                                      <td>1</td>
+                                      <td><select name="qualification" id="qualification" class="form-select changetext qualification" onchange="updateUI(this)" required>
+                                        <option selected value="">Choose </option>
+                                        {% for degree in educationtype%}
+                                        <option value="{{degree.FlagValue}}">{{degree.FlagValue}}</option>
+                                        {% endfor%}
+                                        <option value="Specialization">Specialization</option>
+                                        </select>
+                                      </td>
+
+                                      <td class="qualifytd"><input type="text" name="qualificationname" id="qualificationn" class="form-control form-control-xs changetext qualificationname" ></td>
+                                      <td class="specializationDropdown" style="display: none;">
+                                        <select name="qualificationname" class="form-select" >
+                                          <option selected >Choose </option>
+                                          {% for sp in specializationtype%}
+                                          <option value="{{sp.FlagValue}}">{{sp.FlagValue}}</option>
+                                          {% endfor%}
+                                        </select></td>
+                                      <td><select  name="currentstatus" class="form-select form-select-xs changetext" required>
+                                        <option selected value="">Choose </option>
+                                        <option>Pursuing.............</option>
+                                        <option>Completed</option>
+                                        </select>
+                                      </td>
+                                      <td><input type="text" name="passingyear" class="form-control changetext" required></td>
+                                      <td><select name="institute" class="form-select changetext" required>
+                                        <option selected value="">Choose </option>
+                                        {% for institute in collegelist%}
+                                        <option value="{{institute.CollegeIDPK}}">{{institute.CollegeName}}</option>
+                                        {% endfor%}
+                                        </select>
+                                      </td>
+                                      <td><select name="university" class="form-select changetext" required>
+                                        <option selected value="">Choose</option>
+                                        {% for university in universitylist%}
+                                        <option value="{{university.UniversityIDPK}}">{{university.UniversityName}}</option>
+                                        {% endfor%}
+                                        </select>
+                                      </td>
+                                      <td class=""><button type="button" class="btn btn-sm btn-primary theme  add-row "
+                                        ><i class="fa-solid fa-plus fa-lg"></i></button></td>
+                                <!-- Plus Button -->
+                                      <td class=""><button type="button" class="btn btn-danger btn-sm remove-row"
+                                        disabled><i class="fas fa-trash-alt fa-lg "></i></button>
+                                      </td>
+                                      <!-- Minus Button (disabled) -->
+                                  </tr>
+                              </tbody>
+                          </table>
+
+                      </div>
+              </div>
+
+                <div class="row justify-content-end">
+              <div class="col">
+
+                <button type="button" class="btn btn-primary fw-bold float-end mt-3  mx-2 theme"
+                onclick="proceedToNextTab()" >Next <i class="fas fa-chevron-right text-white"></i></button>
+
+                <button type="button" class="btn btn-outline-secondary fw-bold float-end mt-3" onclick="Backtoprevioustab()"
+               ><i class="fas fa-chevron-left text-dark"></i> Back
+             </button>
+              </div>
+                </div>
+          </div>
+
+          <div id="Experience" class="tab-pane fade">
+              <div class="row my-1 g-2 ">
+                <div class="col-lg-12 table-responsive">
+                  <table id="experiencetable" class="table table-bordered">
+                      <thead>
+                        <tr>
+                                <th>SNo.</th>
+                                <th> Institute Name<span class="required_asterisk text-danger">*</span></th>
+                                <th>Role<span class="required_asterisk text-danger">*</span></th>
+                                <th>Experience(in years)<span class="required_asterisk text-danger">*</span></th>
+                                <th>Job Description <span class="required_asterisk text-danger">*</span></th>
+                                <th >Start Date<span class="required_asterisk text-danger">*</span></th>
+                                <th >End Date<span class="required_asterisk text-danger">*</span></th>
+
+                                <th colspan="2"> Actions</th> <!-- Plus Button Column -->
+
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                                <td>1</td>
+                                <td><input type="text" name="institutename" class="form-control changetext" required></td>
+                                <td><input type="text" name="role" class="form-control changetext" required></td>
+                                <td><input type="text" name="experien" class="form-control changetext" required></td>
+                                <td><input type="text" name="jobdesc" class="form-control  changetext" required></td>
+                                <td><input type="date" name="stdate" id="dateInput"  class="form-control changetext dateInput" required></td>
+                                <td><input type="date" name="endate" id="endate" class="form-control changetext endate" required></td>
+
+                                <td class=""><button type="button" class="btn btn-sm btn-primary theme  add-row "
+                                  ><i class="fa-solid fa-plus fa-lg"></i></button></td>
+                          <!-- Plus Button -->
+                                <td class=""><button type="button" class="btn btn-danger btn-sm remove-row "
+                                  disabled><i class="fas fa-trash-alt fa-lg "></i></button>
+                                </td>
+                                <!-- Minus Button (disabled) -->
+                        </tr>
+                      </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="row justify-content-end">
+                <div class="col">
+
+                    <button type="button" class="btn btn-primary fw-bold float-end mt-3  mx-2 theme"
+                    onclick="proceedToNextTab()" >Next <i class="fas fa-chevron-right text-white"></i></button>
+
+                    <button type="button" class="btn btn-outline fw-bold float-end mt-3 " onclick="Backtoprevioustab()"
+                    style="background-color: #ced4da;"><i class="fas fa-chevron-left text-dark"></i> Back
+                   </button>
+                </div>
+              </div>
+          </div>
+          <div id="Certifications" class="tab-pane fade">
+
+              <div class="row my-1 g-2 ">
+                <div class="col-lg-12 table-responsive">
+                    <table id="certificationtable" class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>SNo.</th>
+                                <th>Certificate Type <span class="required_asterisk text-danger">*</span></th>
+                                <th>Upload Certificate <span class="required_asterisk text-danger">*</span></th>
+                                <th>Issue Date <span class="required_asterisk text-danger">*</span></th>
+                                <th>Expiry Date <span class="required_asterisk text-danger">*</span></th>
 
 
-<!-- tooltip script -->
-<script>
+                                <th colspan="2"> Actions</th> <!-- Plus Button Column -->
 
-    (() => {
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                               <td><select name="certtype" id="certtype" class="form-select" required >
+                                 <option value="" selected>Choose</option>
+                                 {% for certf in cert_type%}
+                                    <option value="{{certf.FlagValue}}">{{certf.FlagValue}}</option>
 
-  "use strict";
+                                 {% endfor %}
 
-  const tooltipTriggerList = Array.from(
 
-    document.querySelectorAll('[data-bs-toggle="tooltip"]')
+                                </select></td>
 
-  );
+                                <td><input type="file"  name="uploadcert" class="form-control changetext" required></td>
+                                <td><input type="date" name="issued" id="issued" class="form-control changetext issued" required></td>
+                                <td><input type="date" name="expiryd" id="expiryd" class="form-control changetext expiryd" required></td>
 
-  tooltipTriggerList.forEach((tooltipTriggerEl) => {
 
-    new bootstrap.Tooltip(tooltipTriggerEl);
+                                <td class=""><button type="button" class="btn btn-sm btn-primary theme add-row "
+                                  ><i class="fa-solid fa-plus fa-lg"></i></button></td>
+                          <!-- Plus Button -->
+                                <td class=""><button type="button" class="btn btn-danger btn-sm remove-row"
+                                  disabled><i class="fas fa-trash-alt fa-lg "></i></button>
+                                </td>
+                                <!-- Minus Button (disabled) -->
+                            </tr>
+                        </tbody>
+                    </table>
 
-  });
+                </div>
+              </div>
 
-  })();
-</script>
-<!-- education table -->
-<script>
+              <div class="row justify-content-end">
+                <div class="col">
+                <button type="button" class="btn btn-primary fw-bold float-end mt-3  mx-2 theme"
+                onclick="proceedToNextTab()" >Next <i class="fas fa-chevron-right text-white"></i></button>
+
+                <button type="button" class="btn btn-outline fw-bold float-end mt-3" onclick="Backtoprevioustab()"
+                style="background-color: #ced4da;"><i class="fas fa-chevron-left text-dark"></i> Back
+                </button>
+                </div>
+              </div>
+
+          </div>
+          <div id="Upload_Document" class="tab-pane fade">
+
+
+                <h6 class="ms-2 mt-1 border-bottom text-success fw-bold">Add more authenticity to your profile </h6>
+                <div class="row my-1 g-2 mx-1">
+                  <div class="col-lg-12 table-responsive">
+                    <table id="uploaddocstable" class="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th>SNo.</th>
+                          <th>Document Type<span class="required_asterisk text-danger">*</span></th>
+                          <th>Document Name</th>
+
+                          <th>Upload Document<span class="required_asterisk text-danger">*</span></th>
+                          <th>Remarks<span class="required_asterisk text-danger">*</span></th>
+
+
+
+                          <th colspan="2"> Actions</th> <!-- Plus Button Column -->
+                        </tr>
+                      </thead>
+                      <tbody>
+                              <tr>
+                                  <td>1</td>
+                                 <td><select name="doctype" class="form-select changetext" required>
+                                  <option selected value="">Choose </option>
+                                  {% for docs in doc_type %}
+                                   <option value="{{docs.FlagValue}}">{{docs.FlagValue}}</option>
+                                  {% endfor %}
+                                  </select>
+                                 </td>
+                                  <td><input type="text" name="docname" class="form-control changetext"></td>
+                                  <td><input type="file"  name="uploaddoc" class="form-control changetext" required></td>
+
+                                  <td><input type="text" name="remarks" class="form-control changetext" required></td>
+
+
+                                  <td class=""><button type="button" class="btn btn-sm btn-primary theme add-row "
+                                    ><i class="fa-solid fa-plus fa-lg"></i></button></td>
+                            <!-- Plus Button -->
+                                  <td class=""><button type="button" class="btn btn-danger btn-sm remove-row"
+                                    disabled><i class="fas fa-trash-alt fa-lg "></i></button>
+                                  </td>
+                                  <!-- Minus Button (disabled) -->
+                              </tr>
+                      </tbody>
+                    </table>
+
+                  </div>
+                </div>
+
+
+              <div class="row justify-content-end">
+                <div class="col">
+                <button type="button" class="btn btn-primary fw-bold float-end mt-3  mx-2 theme"
+                onclick="proceedToNextTab()">Next <i class="fas fa-chevron-right text-white"></i></button>
+
+                <button type="button" class="btn btn-outline fw-bold float-end mt-3" onclick="Backtoprevioustab()"
+                style="background-color: #ced4da;"><i class="fas fa-chevron-left text-dark"></i> Back
+                </button>
+                </div>
+              </div>
+
+          </div>
+          <div id="Bank_Details" class="tab-pane fade">
+                <div class="row justify-content-between m-1">
+                  <div class="col-lg-3 col-md-3 col-sm-6">
+                            <label for="FirstName" class="form-label mb-0 formlabelcolor">Account Type <span class="required_asterisk text-danger">*</span></label>
+                            <select name="accounttype" class="form-select form-select-sm changetext"
+                            id="accounttype" >
+                            <option selected value="">Choose </option>
+                            <option>Saving</option>
+                            <option>Current</option>
+                            </select>
+                  </div>
+                  <div class="col-lg-3 col-md-3 col-sm-6">
+                            <label for="FirstName" class="form-label mb-0 formlabelcolor">Account Holder Name <span class="required_asterisk text-danger">*</span></label>
+                            <input type="text" name="holdername" id="holdername" class="form-control form-control-sm changetext" required>
+                  </div>
+                  <div class="col-lg-3 col-md-3 col-sm-6">
+                            <label for="FirstName" class="form-label mb-0 formlabelcolor">Account Number <span class="required_asterisk text-danger">*</span></label>
+                            <input type="text" name="accnumber" id="accnumber" class="form-control form-control-sm changetext" required>
+                  </div>
+                </div>
+                <div class="row justify-content-between m-2">
+                  <div class="col-lg-3 col-md-3 col-sm-6">
+                            <label for="FirstName" class="form-label mb-0 formlabelcolor">IFSC Code <span class="required_asterisk text-danger">*</span></label>
+                            <input type="text" name="ifsccode" id="ifsccode" class="form-control form-control-sm changetext" required>
+                  </div>
+                  <div class="col-lg-3 col-md-3 col-sm-6">
+                            <label for="FirstName" class="form-label mb-0 formlabelcolor">Bank Name <span class="required_asterisk text-danger">*</span></label>
+                            <input type="text" name="bankname" id="bankname" class="form-control form-control-sm changetext" required>
+                  </div>
+                  <div class="col-lg-3 col-md-3 col-sm-6">
+                            <label for="FirstName" class="form-label mb-0 formlabelcolor">Branch Name <span class="required_asterisk text-danger">*</span></label>
+                            <input type="text" name="branchname" id="branchname" class="form-control form-control-sm changetext" required>
+                  </div>
+                </div>
+                <div class="row justify-content-between">
+                  <div class="col">
+                    <button type="submit" class="btn btn-primary  float-end mt-3 mx-2"
+                    style="background-color: #018383;">Submit</button>
+                    <button type="button" class="btn btn-outline fw-bold float-end mt-3" onclick="Backtoprevioustab()"
+                    style="background-color: #ced4da;"><i class="fas fa-chevron-left text-dark"></i> Back
+                    </button>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+
+  <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+
+  <!-- Proceed Button some validation for required file -->
+  <script>
+      function proceedToNextTab() {
+        let currentTab = $('.tab-content .active').attr('id');
+        let nextTab;
+
+        switch(currentTab) {
+            case 'Primary_Information':
+                nextTab = 'Education_and_Qualification';
+                 const requiredFields = document.querySelectorAll('[required]');
+
+        // Flag to check if all required fields are filled
+        let allFieldsFilled = true;
+
+     // Loop through each required field
+     requiredFields.forEach(field => {
+       if (field.value.trim() === '') {
+         // If any required field is empty, set the flag to false
+         allFieldsFilled = false;
+
+
+         field.style.border = '1px dashed red';
+       } else {
+         // Clear any previous highlighting
+         field.style.border = '';
+       }
+     });
+
+       // If all required fields are filled, proceed to the next tab
+       if (allFieldsFilled) {
+         // Your code to proceed to the next tab goes here
+         console.log('Proceeding to the next tab');
+       } else {
+         // Show an alert or message indicating that required fields are not filled
+         alert('Please fill out all required fields.');
+       }
+                break;
+            case 'Education_and_Qualification':
+                nextTab = 'Experience';
+                break;
+            case 'Experience':
+                nextTab = 'Certifications';
+                break;
+            case 'Certifications':
+                nextTab = 'Upload_Document';
+                break;
+            case 'Upload_Document':
+                nextTab = 'Bank_Details';
+                const requiredField = document.querySelectorAll('[required]');
+
+                // Flag to check if all required fields are filled
+                let allFieldsFilleds = true;
+
+             // Loop through each required field
+             requiredField.forEach(field => {
+               if (field.value.trim() === '') {
+                 // If any required field is empty, set the flag to false
+                 allFieldsFilleds = false;
+
+
+                 field.style.border = '1px dashed red';
+               } else {
+                 // Clear any previous highlighting
+                 field.style.border = '';
+               }
+             });
+
+               // If all required fields are filled, proceed to the next tab
+               if (allFieldsFilleds) {
+                 // Your code to proceed to the next tab goes here
+                 console.log('Proceeding to the next tab');
+               } else {
+                 // Show an alert or message indicating that required fields are not filled
+                 alert('Please fill out all required fields.');
+               }
+                break;
+
+            default:
+                return; // Exit if the current tab doesn't have a defined next tab
+        }
+
+
+        $(`[href="#${nextTab}"]`).tab('show');
+
+    }
+  </script>
+
+  <!-- Back Button -->
+  <script>
+      function Backtoprevioustab(){
+      let curtab = $('.tab-content .active').attr('id');
+        let backtab;
+
+    switch(curtab){
+    case 'Education_and_Qualification':
+      backtab = 'Primary_Information';
+      break;
+    case 'Experience':
+      backtab = 'Education_and_Qualification';
+      break;
+    case 'Certifications':
+      backtab = 'Experience';
+      break;
+    case 'Upload_Document':
+      backtab = 'Certifications';
+      break;
+    case 'Bank_Details':
+      backtab = 'Upload_Document';
+      break;
+
+    }
+
+    console.log('Current Tab:', curtab);
+    console.log('Previous Tab:', backtab);
+
+    $(`[href="#${backtab}"]`).tab('show');
+    }
+
+  </script>
+
+  <!-- open file dialog -->
+
+  <script>
+    function displayFileName() {
+        const fileInput = document.getElementById('fileInput');
+        const fileLabel = document.getElementById('file-label');
+        var previewImage=document.getElementById('previewImage');
+
+        if (fileInput.files.length > 0) {
+            const fileName = fileInput.files[0].name;
+            fileLabel.innerHTML = `<i class="fas fa-camera fa-lg " id="file-icon" style="color:#0880a4;" title="Upload Picture"></i> ${fileName}`;
+            previewImage.style.display='none'
+            fileInput=fileName
+        }
+    }
+   </script>
+  <!-- height set -->
+  <script>
+      const column1Height = document.getElementById("column1").offsetHeight;
+    const column2Height = document.getElementById("column2").offsetHeight;
+
+
+    // Set the height of both columns to the maximum height
+    const maxHeight = Math.max(column1Height, column2Height);
+    document.getElementById("column1").style.height = maxHeight + "px";
+    document.getElementById("column2").style.height = maxHeight + "px";
+  </script>
+
+   <!-- UpdateUI -->
+  <script>
+    function updateUI(selectElement) {
+
+      var row = selectElement.closest('tr');
+
+
+      var qualificationDropdown = row.querySelector('.qualification');
+      var qualifytd = row.querySelector('.qualifytd');
+      var specializationDropdown = row.querySelector('.specializationDropdown');
+      var texttype=row.querySelector('.qualificationname')
+
+      var selectedValue = qualificationDropdown.value;
+      console.log(selectedValue)
+      if (selectedValue === 'Specialization') {
+          qualifytd.style.display = 'none';
+          specializationDropdown.style.display = 'block';
+
+      }
+      else {
+          qualifytd.style.display = 'block';
+          specializationDropdown.style.display = 'none';
+      }
+  }
+
+  </script>
+
+  <!-- tooltip script -->
+  <script>
+
+      (() => {
+
+    "use strict";
+
+    const tooltipTriggerList = Array.from(
+
+      document.querySelectorAll('[data-bs-toggle="tooltip"]')
+
+    );
+
+    tooltipTriggerList.forEach((tooltipTriggerEl) => {
+
+      new bootstrap.Tooltip(tooltipTriggerEl);
+
+    });
+
+    })();
+  </script>
+
+  <!-- education table -->
+  <script>
     $(document).ready(function () {
-  // Attach the click event handler to the "+" button in the table with ID "educationtableble"
-  $("#educationtable").on("click", ".add-row", function () {
-  var rowCount = $("#educationtable tbody tr").length;
-  var newRow = '<tr>' +
-      '<td>' + (rowCount + 1) + '</td>' +
-      '<td><input type="text" name="qualification' + (rowCount + 1) + '" class="form-control form-control-sm"></td>' +
-      '<td><select name="currentstatus' + (rowCount + 1) + '" class="form-select form-select-sm">'+
-        '<option selected value="">Choose </option>' +
-        '<option>Pursuing</option>' +
-        '<option>Completed</option>'+
-        '</select></td>' +
-      '<td><input type="text" name="passingyear' + (rowCount + 1) + '" class="form-control form-control-sm"></td>' +
-      '<td><input type="text" name="institute' + (rowCount + 1) + '" class="form-control"></td>' +
-      '<td><input type="text" name="university' + (rowCount + 1) + '" class="form-control"></td>' +
-
-      '<td><button type="button" class="btn btn-sm add-row btn-primary theme  "><i class="fa-solid fa-plus fa-lg"></i></button></td>'
-      +
-      '<td><button type="button" class="btn btn-danger btn-sm remove-row"><i class="fas fa-trash-alt fa-lg text-white"></i></button></td>' +
-      '</tr>';
-  $("#educationtable tbody").append(newRow);
-
-  // Enable minus button in the previous row
-  $(".remove-row").prop("disabled", false);
-
-  // Disable minus button in the first row when there's only one row
-  if (rowCount === 0) {
-  $(".remove-row:first").prop("disabled", true);
-  }
-  });
-
-  // Remove Row
-  $("#educationtable").on("click", ".remove-row", function () {
-  var rowCount = $("#educationtable tbody tr").length;
-  if (rowCount > 1) {
-  $(this).closest("tr").remove();
-  updateRowNumbers();
-
-  // Disable minus button in the first row when there's only one row left
-  if (rowCount === 2) {
-  $(".remove-row:first").prop("disabled", true);
-  }
-  }
-  });
-
-  // Update row numbers
-  function updateRowNumbers() {
-  $("#educationtable tbody tr").each(function (index) {
-  $(this).find("td:first").text(index + 1);
-  });
-  }
-  });
-
-</script>
-<!-- specialization table -->
-<script>
-    $(document).ready(function () {
-  // Attach the click event handler to the "+" button in the table with ID "educationtableble"
-  $("#specializationtable").on("click", ".add-row", function () {
-  var rowCount = $("#specializationtable tbody tr").length;
-  var newRow = '<tr>' +
-      '<td>' + (rowCount + 1) + '</td>' +
-      '<td><select  name="spectype' + (rowCount + 1) + '" class="form-control form-control-sm">'+
-        '<option selected value="">Choose </option>' +
-        '<option>Oncologist</option>' +
-        '<option>Family medicine</option>'+
-        '<option>Internal medicine</option>'+
-        '<option>Surgeon</option>'+
-        '<option>Radiologist</option>'+
-        '<option>Dermatologist</option>'+
-        '<option>Nephrologist</option>'+
-        '<option>Pulmonologist</option>'+
-        '<option>Cardiologist</option>'+
-        '</select></td>' +
-      '<td><input type="text" name="experiences' + (rowCount + 1) + '" class="form-control"></td>' +
-      '<td><input type="text" name="fellowship' + (rowCount + 1) + '" class="form-control "></td>' +
-
-
-      '<td><button type="button" class="btn btn-sm add-row btn-primary theme  "><i class="fa-solid fa-plus fa-lg"></i></button></td>'
-      +
-      '<td><button type="button" class="btn btn-danger btn-sm remove-row"><i class="fas fa-trash-alt fa-lg text-white"></i></button></td>' +
-      '</tr>';
-  $("#specializationtable tbody").append(newRow);
-
-  // Enable minus button in the previous row
-  $(".remove-row").prop("disabled", false);
-
-  // Disable minus button in the first row when there's only one row
-  if (rowCount === 0) {
-  $(".remove-row:first").prop("disabled", true);
-  }
-  });
-
-  // Remove Row
-  $("#specializationtable").on("click", ".remove-row", function () {
-  var rowCount = $("#specializationtable tbody tr").length;
-  if (rowCount > 1) {
-  $(this).closest("tr").remove();
-  updateRowNumbers();
-
-  // Disable minus button in the first row when there's only one row left
-  if (rowCount === 2) {
-  $(".remove-row:first").prop("disabled", true);
-  }
-  }
-  });
-
-  // Update row numbers
-  function updateRowNumbers() {
-  $("#specializationtable tbody tr").each(function (index) {
-  $(this).find("td:first").text(index + 1);
-  });
-  }
-  });
-
-</script>
-<!-- certification table -->
-<script>
-    $(document).ready(function () {
-  // Attach the click event handler to the "+" button in the table with ID "educationtableble"
-  $("#certificationtable").on("click", ".add-row", function () {
-  var rowCount = $("#certificationtable tbody tr").length;
-  var newRow = '<tr>' +
-      '<td>' + (rowCount + 1) + '</td>' +
-      '<td><input type="text" name="certname' + (rowCount + 1) + '" class="form-control "></td>' +
-
-      '<td><input type="file" name="uploadcert' + (rowCount + 1) + '" class="form-control "></td>' +
-      '<td><input type="date" name="issued' + (rowCount + 1) + '" class="form-control"></td>' +
-      '<td><input type="date" name="expiryd' + (rowCount + 1) + '" class="form-control"></td>' +
-
-      '<td><button type="button" class="btn btn-sm add-row btn-primary theme  "><i class="fa-solid fa-plus fa-lg"></i></button></td>'
-      +
-      '<td><button type="button" class="btn btn-danger btn-sm remove-row"><i class="fas fa-trash-alt fa-lg text-white"></i></button></td>' +
-      '</tr>';
-  $("#certificationtable tbody").append(newRow);
-
-  // Enable minus button in the previous row
-  $(".remove-row").prop("disabled", false);
-
-  // Disable minus button in the first row when there's only one row
-  if (rowCount === 0) {
-  $(".remove-row:first").prop("disabled", true);
-  }
-  });
-
-  // Remove Row
-  $("#certificationtable").on("click", ".remove-row", function () {
-  var rowCount = $("#certificationtable tbody tr").length;
-  if (rowCount > 1) {
-  $(this).closest("tr").remove();
-  updateRowNumbers();
-
-  // Disable minus button in the first row when there's only one row left
-  if (rowCount === 2) {
-  $(".remove-row:first").prop("disabled", true);
-  }
-  }
-  });
-
-  // Update row numbers
-  function updateRowNumbers() {
-  $("#certificationtable tbody tr").each(function (index) {
-  $(this).find("td:first").text(index + 1);
-  });
-  }
-  });
-
-</script>
-<!-- expereince table -->
-<script>
-    $(document).ready(function () {
-  // Attach the click event handler to the "+" button in the table with ID "educationtableble"
-  $("#experiencetable").on("click", ".add-row", function () {
-  var rowCount = $("#experiencetable tbody tr").length;
-  var newRow = '<tr>' +
-      '<td>' + (rowCount + 1) + '</td>' +
-      '<td><input type="text" name="institutename' + (rowCount + 1) + '" class="form-control form-control-lg "></td>' +
-
-      '<td><input type="text" name="role' + (rowCount + 1) + '" class="form-control form-control-xs "></td>' +
-      '<td><input type="text" name="experien' + (rowCount + 1) + '" class="form-control form-control-xs"></td>' +
-      '<td><input type="text" name="jobdesc' + (rowCount + 1) + '" class="form-control form-control-lg"></td>' +
-      '<td><input type="date" name="sdate' + (rowCount + 1) + '" class="form-control form-control-xs"></td>' +
-      '<td><input type="date" name="edate' + (rowCount + 1) + '" class="form-control form-control-xs"></td>' +
-      '<td><button type="button" class="btn btn-sm add-row btn-primary theme  "><i class="fa-solid fa-plus fa-lg"></i></button></td>'
-      +
-      '<td><button type="button" class="btn btn-danger btn-sm remove-row"><i class="fas fa-trash-alt fa-lg text-white"></i></button></td>' +
-      '</tr>';
-  $("#experiencetable tbody").append(newRow);
-
-  // Enable minus button in the previous row
-  $(".remove-row").prop("disabled", false);
-
-  // Disable minus button in the first row when there's only one row
-  if (rowCount === 0) {
-  $(".remove-row:first").prop("disabled", true);
-  }
-  });
-
-  // Remove Row
-  $("#experiencetable").on("click", ".remove-row", function () {
-  var rowCount = $("#experiencetable tbody tr").length;
-  if (rowCount > 1) {
-  $(this).closest("tr").remove();
-  updateRowNumbers();
-
-  // Disable minus button in the first row when there's only one row left
-  if (rowCount === 2) {
-  $(".remove-row:first").prop("disabled", true);
-  }
-  }
-  });
-
-  // Update row numbers
-  function updateRowNumbers() {
-  $("#experiencetable tbody tr").each(function (index) {
-  $(this).find("td:first").text(index + 1);
-  });
-  }
-  });
-
-</script>
-<!-- upload docs table -->
-<script>
-    $(document).ready(function () {
-  // Attach the click event handler to the "+" button in the table with ID "educationtableble"
-  $("#uploaddocstable").on("click", ".add-row", function () {
-  var rowCount = $("#uploaddocstable tbody tr").length;
-  var newRow = '<tr>' +
-      '<td>' + (rowCount + 1) + '</td>' +
-      '<td><select  name="doctype' + (rowCount + 1) + '" class="form-select ">'+
-        '<option selected value="">Choose </option>'+
-                                          '<option>Marksheet</option>'+
-                                          '<option>ID Proof</option>'+
-                                          '<option>ABC</option>'+
+    // Attach the click event handler to the "+" button in the table with ID "educationtableble"
+      $("#educationtable").on("click", ".add-row", function () {
+      var rowCount = $("#educationtable tbody tr").length;
+      var newRow = '<tr>' +
+          '<td>' + (rowCount + 1) + '</td>' +
+          '<td><select name="qualification" id="qualification" class="form-select changetext qualification "  onchange="updateUI(this)" required>'+
+                                          '<option selected value="">Choose </option>'+
+                                          '{% for degree in educationtype%}'+
+                                          '<option value="{{degree.FlagValue}}">{{degree.FlagValue}}</option>'+
+                                          '{% endfor%}'+
+                                          '<option value="Specialization">Specialization</option>'+
                                           '</select></td>' +
+          '<td class="qualifytd"><input type="text" name="qualificationname" id="qualificationname" class="form-control form-control-xs changetext"></td>'+
+        ' <td class="specializationDropdown" style="display: none;">'+
+                                          '<select name="qualificationname" class="form-select changetext" >'+
+                                          ' <option selected ">Choose </option>'+
+                                            '{% for sp in specializationtype%}'+
+                                            '<option value="{{sp.FlagValue}}">{{sp.FlagValue}}</option>'+
+                                            '{% endfor%}'+
+          '</select></td>'+
+          '<td><select name="currentstatus" class="form-select changetext"required >'+
+            '<option selected value="">Choose </option>' +
+            '<option>Pursuing</option>' +
+            '<option>Completed</option>'+
+            '</select></td>' +
+            ' <td><input type="text" name="passingyear" class="form-control changetext" required></td>'+
+          '<td><select name="institute" class="form-select changetext" required>'+
+            '<option selected value="">Choose </option>'+
+            '{% for institute in collegelist%}'+
+            '<option value="{{institute.CollegeIDPK}}">{{institute.CollegeName}}</option>'+
+            '{% endfor%}'+
+            '</select>'+
+            '</td>'+
+          '<td><select name="university" class="form-select changetext" required>'+
+            '<option selected value="">Choose</option>'+
+            '{% for university in universitylist%}'+
+            '<option value="{{university.UniversityIDPK}}">{{university.UniversityName}}</option>'+
+            '{% endfor%}'+
+            '</select></td>'+
 
-      '<td><input type="text" name="docname' + (rowCount + 1) + '" class="form-control "></td>' +
-      '<td><input type="file" name="uploaddoc' + (rowCount + 1) + '" class="form-control"></td>' +
-      '<td><input type="date" name="remarks' + (rowCount + 1) + '" class="form-control"></td>' +
 
-      '<td><button type="button" class="btn btn-sm add-row btn-primary theme  "><i class="fa-solid fa-plus fa-lg"></i></button></td>'
-      +
-      '<td><button type="button" class="btn btn-danger btn-sm remove-row"><i class="fas fa-trash-alt fa-lg text-white"></button></td>' +
-      '</tr>';
-  $("#uploaddocstable tbody").append(newRow);
+          '<td><button type="button" class="btn btn-sm add-row btn-primary theme  "><i class="fa-solid fa-plus fa-lg"></i></button></td>'
+          +
+          '<td><button type="button" class="btn btn-danger btn-sm remove-row"><i class="fas fa-trash-alt fa-lg text-white"></i></button></td>' +
+          '</tr>';
+      $("#educationtable tbody").append(newRow);
 
-  // Enable minus button in the previous row
-  $(".remove-row").prop("disabled", false);
+      // Enable minus button in the previous row
+      $(".remove-row").prop("disabled", false);
 
-  // Disable minus button in the first row when there's only one row
-  if (rowCount === 0) {
-  $(".remove-row:first").prop("disabled", true);
-  }
-  });
+      // Disable minus button in the first row when there's only one row
+      if (rowCount === 0) {
+      $(".remove-row:first").prop("disabled", true);
+      }
+      });
 
-  // Remove Row
-  $("#uploaddocstable").on("click", ".remove-row", function () {
-  var rowCount = $("#uploaddocstable tbody tr").length;
-  if (rowCount > 1) {
-  $(this).closest("tr").remove();
-  updateRowNumbers();
+      // Remove Row
+      $("#educationtable").on("click", ".remove-row", function () {
+      var rowCount = $("#educationtable tbody tr").length;
+      if (rowCount > 1) {
+      $(this).closest("tr").remove();
+      updateRowNumbers();
 
-  // Disable minus button in the first row when there's only one row left
-  if (rowCount === 2) {
-  $(".remove-row:first").prop("disabled", true);
-  }
-  }
-  });
+      // Disable minus button in the first row when there's only one row left
+      if (rowCount === 2) {
+      $(".remove-row:first").prop("disabled", true);
+      }
+      }
+      });
 
-  // Update row numbers
-  function updateRowNumbers() {
-  $("#uploaddocstable tbody tr").each(function (index) {
-  $(this).find("td:first").text(index + 1);
-  });
-  }
-  });
+      // Update row numbers
+      function updateRowNumbers() {
+      $("#educationtable tbody tr").each(function (index) {
+      $(this).find("td:first").text(index + 1);
+      });
+      }
+      });
 
-</script>
+ </script>
+
+  <!-- certification table -->
+  <script>
+    $(document).ready(function () {
+      // Attach the click event handler to the "+" button in the table with ID "educationtableble"
+      $("#certificationtable").on("click", ".add-row", function () {
+        var rowCount = $("#certificationtable tbody tr").length;
+        var newRow = '<tr>' +
+          '<td>' + (rowCount + 1) + '</td>' +
+          '<td><select name="certtype" class="form-select changetext" required>'+
+          '<option value="" selected>Choose</option>'+
+          '{% for certf in cert_type%}'+
+          '<option value="{{certf.FlagValue}}">{{certf.FlagValue}}</option>'+
+          '{% endfor %}'+
+          '</select></td>' +
+
+          '<td><input type="file" name="uploadcert" class="form-control changetext" required></td>' +
+          '<td><input type="date" name="issued" class="form-control changetext issued" required></td>' +
+          '<td><input type="date" name="expiryd" class="form-control changetext expiryd" required></td>' +
+
+          '<td><button type="button" class="btn btn-sm add-row btn-primary theme  "><i class="fa-solid fa-plus fa-lg"></i></button></td>' +
+          '<td><button type="button" class="btn btn-danger btn-sm remove-row"><i class="fas fa-trash-alt fa-lg text-white"></i></button></td>' +
+          '</tr>';
+        $("#certificationtable tbody").append(newRow);
+
+        // Enable minus button in the previous row
+        $(".remove-row").prop("disabled", false);
+
+        // Disable minus button in the first row when there's only one row
+        if (rowCount === 0) {
+          $(".remove-row:first").prop("disabled", true);
+        }
+
+        // Attach date validation to the newly added row
+        attachDateValidation($(".expiryd:last"));
+      });
+
+      // Remove Row
+      $("#certificationtable").on("click", ".remove-row", function () {
+        var rowCount = $("#certificationtable tbody tr").length;
+        if (rowCount > 1) {
+          $(this).closest("tr").remove();
+          updateRowNumbers();
+
+          // Disable minus button in the first row when there's only one row left
+          if (rowCount === 2) {
+            $(".remove-row:first").prop("disabled", true);
+          }
+        }
+      });
+
+      // Attach date validation to the existing rows
+      attachDateValidation($(".expiryd"));
+
+      // Update row numbers
+      function updateRowNumbers() {
+        $("#certificationtable tbody tr").each(function (index) {
+          $(this).find("td:first").text(index + 1);
+        });
+      }
+
+      // Function to attach date validation to the specified elements
+      function attachDateValidation(elements) {
+        elements.on("change", function () {
+          var issuedDateInput = $(this).closest("tr").find(".issued");
+          var expiryDateInput = $(this).closest("tr").find(".expiryd");
+
+          // Ensure expiry date is not less than issued date
+          if (expiryDateInput.val() < issuedDateInput.val()) {
+            alert('Expiry date cannot be less than Issue date');
+            expiryDateInput.val('');
+          }
+        });
+      }
+    });
+
+  </script>
+
+  <!-- expereince table -->
+  <script>
+      $(document).ready(function () {
+    // Attach the click event handler to the "+" button in the table with ID "educationtableble"
+    $("#experiencetable").on("click", ".add-row", function () {
+    var rowCount = $("#experiencetable tbody tr").length;
+    var newRow = '<tr>' +
+        '<td>' + (rowCount + 1) + '</td>' +
+        '<td><input type="text" name="institutename" class="form-control changetext " required></td>' +
+
+        '<td><input type="text" name="role" class="form-control changetext " required></td>' +
+        '<td><input type="text" name="experien" class="form-control changetext" required></td>' +
+        '<td><input type="text" name="jobdesc" class="form-control changetext" required></td>' +
+        '<td><input type="date" name="stdate"  id="dateInput" class="form-control changetext dateInput" required></td>' +
+        '<td><input type="date" name="endate"  id="endate" class="form-control changetext endate" required></td>' +
+        '<td><button type="button" class="btn btn-sm add-row btn-primary theme  "><i class="fa-solid fa-plus fa-lg"></i></button></td>'
+        +
+        '<td><button type="button" class="btn btn-danger btn-sm remove-row"><i class="fas fa-trash-alt fa-lg text-white"></i></button></td>' +
+        '</tr>';
+    $("#experiencetable tbody").append(newRow);
+
+    // Enable minus button in the previous row
+    $(".remove-row").prop("disabled", false);
+
+    // Disable minus button in the first row when there's only one row
+    if (rowCount === 0) {
+    $(".remove-row:first").prop("disabled", true);
+    }
+    attachDateValidation($(".endate:last"));
+    });
+
+    // Remove Row
+    $("#experiencetable").on("click", ".remove-row", function () {
+    var rowCount = $("#experiencetable tbody tr").length;
+    if (rowCount > 1) {
+    $(this).closest("tr").remove();
+    updateRowNumbers();
+
+    // Disable minus button in the first row when there's only one row left
+    if (rowCount === 2) {
+    $(".remove-row:first").prop("disabled", true);
+    }
+    }
+    });
+    attachDateValidation($(".endate"));
+    // Update row numbers
+    function updateRowNumbers() {
+    $("#experiencetable tbody tr").each(function (index) {
+    $(this).find("td:first").text(index + 1);
+    });
+    }
+    function attachDateValidation(elements) {
+      elements.on("change", function () {
+        var startDateInput = $(this).closest("tr").find(".dateInput");
+        var endDateInput = $(this).closest("tr").find(".endate");
+
+        // Ensure expiry date is not less than issued date
+        if (endDateInput.val() < startDateInput.val()) {
+          alert('End date cannot be less than start date');
+          endDateInput.val('');
+        }
+      });
+    }
+
+    });
+
+  </script>
+
+  <!-- upload docs table -->
+  <script>
+      $(document).ready(function () {
+    // Attach the click event handler to the "+" button in the table with ID "educationtableble"
+    $("#uploaddocstable").on("click", ".add-row", function () {
+    var rowCount = $("#uploaddocstable tbody tr").length;
+    var newRow = '<tr>' +
+        '<td>' + (rowCount + 1) + '</td>' +
+        '<td><select name="doctype" class="form-select changetext" required>'+
+          '<option selected value="">Choose </option>'+
+          '{% for docs in doc_type %}'+
+          '<option value="{{docs.FlagValue}}">{{docs.FlagValue}}</option>'+
+          '{% endfor %}'+
+          '</select> </td>' +
+
+        '<td><input type="text" name="docname" class="form-control changetext" ></td>' +
+        '<td><input type="file" name="uploaddoc" class="form-control changetext" required></td>' +
+        '<td><input type="text" name="remarks" class="form-control changetext" required></td>' +
+
+        '<td><button type="button" class="btn btn-sm add-row btn-primary theme  "><i class="fa-solid fa-plus fa-lg"></i></button></td>'
+        +
+        '<td><button type="button" class="btn btn-danger btn-sm remove-row"><i class="fas fa-trash-alt fa-lg text-white"></button></td>' +
+        '</tr>';
+    $("#uploaddocstable tbody").append(newRow);
+
+    // Enable minus button in the previous row
+    $(".remove-row").prop("disabled", false);
+
+    // Disable minus button in the first row when there's only one row
+    if (rowCount === 0) {
+    $(".remove-row:first").prop("disabled", true);
+    }
+    });
+
+    // Remove Row
+    $("#uploaddocstable").on("click", ".remove-row", function () {
+    var rowCount = $("#uploaddocstable tbody tr").length;
+    if (rowCount > 1) {
+    $(this).closest("tr").remove();
+    updateRowNumbers();
+
+    // Disable minus button in the first row when there's only one row left
+    if (rowCount === 2) {
+    $(".remove-row:first").prop("disabled", true);
+    }
+    }
+    });
+
+    // Update row numbers
+    function updateRowNumbers() {
+    $("#uploaddocstable tbody tr").each(function (index) {
+    $(this).find("td:first").text(index + 1);
+    });
+    }
+    });
+
+  </script>
+
+ <!-- date max validation certificationtable-->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      setMaxDateAttributes(document.querySelectorAll('.issued'));
+
+      // Attach event listeners for newly added rows
+      document.getElementById('certificationtable').addEventListener('click', function(event) {
+        if (event.target.classList.contains('add-row')) {
+          var newRow = event.target.closest('tr');
+          setMaxDateAttributes(newRow.querySelectorAll('.issued'));
+        }
+      });
+    });
+
+    function setMaxDateAttributes(inputs) {
+      var today = new Date().toISOString().split('T')[0];
+      inputs.forEach(function(input) {
+        input.max = today;
+      });
+    }
+  </script>
+
+  <!-- date max validation experiencetable-->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      setMaxDateAttributes(document.querySelectorAll('.dateInput'));
+
+      // Attach event listeners for newly added rows
+      document.getElementById('experiencetable').addEventListener('click', function(event) {
+        if (event.target.classList.contains('add-row')) {
+          var newRow = event.target.closest('tr');
+          setMaxDateAttributes(newRow.querySelectorAll('.dateInput'));
+        }
+      });
+    });
+
+    function setMaxDateAttributes(inputs) {
+      var today = new Date().toISOString().split('T')[0];
+      inputs.forEach(function(input) {
+        input.max = today;
+      });
+    }
+  </script>
 
 {% endblock %}

@@ -46,6 +46,7 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 AUTH_USER_MODEL = 'CustomAuth.User'
 
+LOGIN_REDIRECT_URL = '/'
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
@@ -123,12 +124,15 @@ WSGI_APPLICATION = 'eSwasthalya.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'Talos_DB',
-        'USER': 'postgres',
+        'NAME': 'talos_db',
+        'USER': 'talos_user',
         'PASSWORD': 'admin',
         'HOST': 'localhost',
         'PORT': '5432',
-    }
+        'OPTIONS': {
+            'options': '-c search_path=public',
+        },
+    },
 }
 
 # Password validation
@@ -153,11 +157,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)

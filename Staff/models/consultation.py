@@ -15,7 +15,7 @@ class Vitals(models.Model):
     spo2 = models.IntegerField()
     level_of_consciousness = models.CharField(max_length=20)
     pupillary_response = models.CharField(max_length=20)
-    
+
 class Symptoms(models.Model):
     symptoms_id = models.AutoField(primary_key=True)
     appointment = models.ForeignKey(Appointment, on_delete=models.CASCADE)
@@ -23,7 +23,7 @@ class Symptoms(models.Model):
 
     def __str__(self):
         return f"Symptoms of {self.appointment} - ID: {self.symptoms_id}"
-    
+
 class PreExisting(models.Model):
     preexisting_id = models.AutoField(primary_key=True)
     appointment = models.ForeignKey(Appointment, on_delete=models.CASCADE)
@@ -31,7 +31,8 @@ class PreExisting(models.Model):
 
     def __str__(self):
         return f"Pre-Existing Information of {self.appointment} - ID: {self.preexisting_id}"
-    
+
+
 class Diagnosis(models.Model):
     diagnosis_id = models.AutoField(primary_key=True)
     appointment = models.ForeignKey(Appointment, on_delete=models.CASCADE)
@@ -60,5 +61,4 @@ class Prescription(models.Model):
     follow_up_date = models.DateField()
     remark = models.TextField()
     rx_data = models.TextField()
-    
-    
+

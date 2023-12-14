@@ -2,6 +2,7 @@
 {% block title %} Talos {% endblock %}
 {% block body %}
 {% load static %}
+
 <style>
 
     }
@@ -284,6 +285,10 @@
 
 
 </style>
+
+{% if request.user.is_authenticated %}
+{% include 'base_menu_2.html' %}
+{% endif %}
 <div class="container-fluid w-100 m-0 p-0 ">
     <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-indicators">
@@ -565,8 +570,6 @@
     </div>
 </div>
 
-{% load static %}
-{% include 'source_js.html' %}
 <script>
     //Get the button
 let mybutton = document.getElementById("btn-back-to-top");
@@ -596,17 +599,4 @@ document.documentElement.scrollTop = 0;
 <script>
     AOS.init();
 </script>
-_____________________________________________________________________
-
-{% for i in obj %}
-    {{ i.phone }}
-    {{ i.email }}
-    {{ i.email }}
-    {{ i.profession.name }}
-    {{ i.profession.active }}
-{% endfor %}
-_____________________________________________________________________
-<br>
-<br>
-<br>
 {% endblock %}
