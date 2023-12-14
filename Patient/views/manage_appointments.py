@@ -18,7 +18,11 @@ def book_appointment(request):
     if request.user.is_authenticated:
         patient = MstPatient.get_all_patients()
         print("patient", patient)
+<<<<<<< HEAD
         doctor_list = MstHealthProfessional.get_doctors_list()
+=======
+        doctor_list = HealthProfessionalPersonalDetails.get_doctors_list()
+>>>>>>> 8bd2625677363acd3021b60a4b29a30efde36d78
         if request.method == 'POST':
             patientId = request.POST.get("patientId")
             slotId = request.POST.get("slotId")

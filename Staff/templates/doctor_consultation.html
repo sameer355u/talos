@@ -111,6 +111,13 @@
         .nav-tabs {
             border-bottom:  solid red 1px; ;
         }
+<<<<<<< HEAD
+=======
+
+
+
+
+>>>>>>> 8bd2625677363acd3021b60a4b29a30efde36d78
         .nav-tabs .nav-item .nav-link.active  {
             background: linear-gradient(to bottom, white 95%, white 5%);
 
@@ -119,7 +126,14 @@
             border-left: solid red 1px;
             border-right: solid red 1px;
             border-bottom: solid white 2px;
+<<<<<<< HEAD
         }
+=======
+
+        }
+
+
+>>>>>>> 8bd2625677363acd3021b60a4b29a30efde36d78
         @media (max-width: 768px) {
         /* Styles for small screens */
         #column1,
@@ -143,8 +157,15 @@
                     <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle"
                     width="70" />
                     <div class="mt-3">
+<<<<<<< HEAD
                         <h4 class="p-0 m-0 textlightwalacolor" > Dr. {{ request.user.first_name }} {{ request.user.last_name }}</h4>
                         <h6 class="  p-0 m-0  mb-1 textbluecolor" >{{ request.user.profession.name }}</h6>
+=======
+                        <h4 class="p-0 m-0 textlightwalacolor" > Dr. Atul Sharma</h4>
+                        <h6 class="  p-0 m-0  mb-1 textbluecolor" >Md(Medicine)</h6>
+
+
+>>>>>>> 8bd2625677363acd3021b60a4b29a30efde36d78
                     </div>
                 </div>
             </div>
@@ -190,7 +211,11 @@
                                 </div>
                                 <div class="col-lg col-md-6 col-sm-6 col-6 mb-2">
                         <h6 class="card-title p-0 m-0 "><span class="textbluecolor fw-bold" > Patient id</span></h6>
+<<<<<<< HEAD
                         <p6 class="  p-0 m-0 text-secondary mb-1" id="patient_id">{{ appointment_detail.patient_id }}</p6>
+=======
+                        <p6 class="  p-0 m-0 text-secondary mb-1" id="patient_id">PID00{{ appointment_detail.patient_id }}</p6>
+>>>>>>> 8bd2625677363acd3021b60a4b29a30efde36d78
 
                         <input type="text" class="form-control-plaintext p-0 m-0 text-secondary " value="Pat23-10-02" hidden>
 
@@ -1311,6 +1336,57 @@ $(document).ready(function() {
         // Assuming the ID is a number; adjust accordingly if it's a string or has a different format
         window.location.href = '/Doctor/consultation/' + id + '/';
     });
+<<<<<<< HEAD
+=======
+   /* $(".select-patient-btn").click(function () {
+        window.location.href='Doctor/consultation/'
+        var csrf_token = $("input[name=csrfmiddlewaretoken]").val();
+        var formData = {
+            app_id: this.value,
+            csrfmiddlewaretoken: csrf_token,
+        };
+
+        $("#loader5").show();
+        $("#overlay5").show();
+        toggleselectpat();
+        console.log(formData);
+
+        $.ajax({
+            type: "POST",
+            url: "{% url 'get_appointment_detail' %}",
+            data: formData,
+            dataType: 'json',  // Expect JSON response
+
+            success: function (response) {
+                if (response.success) {
+                    $("#loader5").hide();
+                    // Handle success, e.g., redirect to the next page
+                    $('#appointment_id').html(response.appointment.appointment_id)
+                    $('#appointment_date').html(response.appointment.appointment_date)
+                    $('#appointment_by').html(response.appointment.appointment_by)
+                    $('#patient_id').html('PID00'+response.appointment.patient_id)
+                    $('#patient_name').html(response.appointment.patient_name)
+                    $('#patient_age').html(response.appointment.age)
+                    $('#patient_gender').html(response.appointment.gender)
+                    $('#Patient_contact_number').html(response.appointment.contact_number)
+                    console.log(response.success);
+                } else {
+                    // Handle failure, show an error message
+                    console.error(response.message);
+                }
+            },
+            error: function (error) {
+                // Handle AJAX error
+                console.error("AJAX Error:", error);
+            },
+            complete: function () {
+                // Hide the loader and overlay
+                $("#loader5").hide();
+                $("#overlay5").hide();
+            }
+        });
+    });*/
+>>>>>>> 8bd2625677363acd3021b60a4b29a30efde36d78
 
 
 

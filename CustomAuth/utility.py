@@ -24,8 +24,13 @@ def custom_validator(params):
     #     error_message = 'Last Name must be 4 char long or more'
     if not params.phone:
         error_message = 'Phone Number required.'
+<<<<<<< HEAD
     elif not isinstance(params.phone, int):
         error_message = 'Phone number in not valid'
+=======
+    elif not params.phone+params.phone == 2*params.phone:
+        error_message = 'Phone number should be in number'
+>>>>>>> 8bd2625677363acd3021b60a4b29a30efde36d78
     elif len(params.phone) != 10:
         error_message = 'Phone Number must be in 10 digits.'
     elif len(params.password) < 8:
@@ -53,17 +58,25 @@ def get_user_menu(request):
 
     grp_role2 = MstGroupRole.get_gro_role_by_profession(request)
     data = []
+<<<<<<< HEAD
     # menu_menu = []
     for i in grp_role2:
         # print("Profession Grp role > RoleIdFK", i.RoleIdFK)
         role_menu = MstRoleMenuItem.get_role_menu_by_group_role_id(i.RoleIdFK)
         print(":role_menu: ", role_menu)
+=======
+    menu_menu = []
+    for i in grp_role2:
+        # print("Profession Grp role > RoleIdFK", i.RoleIdFK)
+        role_menu = MstRoleMenuItem.get_role_menu_by_group_role_id(i.RoleIdFK)
+>>>>>>> 8bd2625677363acd3021b60a4b29a30efde36d78
         list = []
         main_menu = []
         for j in role_menu:
             # print("-----Main Menu", j.MenuItemIdFK.MenuItemName)
             main_menu.append(j.MenuItemIdFK.MenuItemName)
             list.append(main_menu)
+<<<<<<< HEAD
             menu_records = MstMenuItem.objects.filter(MainMenuId=j.MenuItemIdFK.MenuItemId)
             # sub_menu = []
             for k in menu_records:
@@ -76,3 +89,23 @@ def get_user_menu(request):
     #     menu_dict[i[0][0]] = i[1]
     # print(menu_dict)
     return data
+=======
+            # menu = Menu.objects.get(name=j.MenuItemIdFK.MenuItemName)
+            # sub_menu = SubMenu.objects.filter(menu=menu)
+            # menu_menu.append(sub_menu)
+            # print(menu)
+            # print(sub_menu)
+            menu_records = MstMenuItem.objects.filter(MainMenuId=j.MenuItemIdFK.MenuItemId)
+            sub_menu = []
+            for k in menu_records:
+                sub_menu.append(k.MenuItemName)
+            list.append(sub_menu)
+        data.append(list)
+        # print("list: ", list)
+    print("data", data)
+    menu_dict = {}
+    for i in data:
+        menu_dict[i[0][0]] = i[1]
+    print(menu_dict)
+    return menu_dict
+>>>>>>> 8bd2625677363acd3021b60a4b29a30efde36d78
